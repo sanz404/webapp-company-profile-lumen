@@ -21,7 +21,7 @@
     trigger: 'hover'
   });
 
-  const totalTimeOut = 3500;
+  const totalTimeOut = 3200;
 
   export default {
     name: 'App', 
