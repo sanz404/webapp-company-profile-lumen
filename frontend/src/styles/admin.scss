@@ -12847,4 +12847,49 @@
         color: #212529;
         display: block;
     }
+
+    label.custom-file-label{
+        width: 100% !important;
+    }
+    
+    /* width */
+    #layoutSidenav_nav ::-webkit-scrollbar {
+        width: 5px;
+    }
+    
+    /* button */
+    #layoutSidenav_nav ::-webkit-scrollbar-button {
+        background: #222;
+    }
+    
+    /* Handle */
+    #layoutSidenav_nav ::-webkit-scrollbar-thumb {
+        background: #0d6efd;
+    }
+    
+    /* Handle on hover */
+    #layoutSidenav_nav ::-webkit-scrollbar-thumb:hover {
+        background: #666;
+    }
+    
+    /* Track */
+    #layoutSidenav_nav ::-webkit-scrollbar-track {
+        background: #000;
+    }
+    
+    /* The track NOT covered by the handle.
+    ::-webkit-scrollbar-track-piece {
+        background: #000;
+    }
+    
+    /* Corner */
+    #layoutSidenav_nav  ::-webkit-scrollbar-corner {
+        background: #999;
+    }
+    
+    /* Resizer */
+    #layoutSidenav_nav ::-webkit-resizer {
+        background: #111;
+    }
+
 }

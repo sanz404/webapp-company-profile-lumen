@@ -7,6 +7,21 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer"></i></div>
                     Dashboard
                 </router-link>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
+                    Categories
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <router-link to="/admin/category/article" class="nav-link">Article</router-link>
+                        <router-link to="/admin/category/project" class="nav-link">Project</router-link>
+                    </nav>
+                </div>
+                <router-link to="/admin/content/list" class="nav-link">
+                    <div class="sb-nav-link-icon"><i class="fas fa-laptop"></i></div>
+                    Content
+                </router-link>
                 <router-link to="/admin/article/list" class="nav-link">
                     <div class="sb-nav-link-icon"><i class="fas fa-clipboard"></i></div>
                     Article
@@ -46,7 +61,7 @@
                 <div class="sb-sidenav-menu-heading">Account Menu</div>
                  <router-link to="/admin/notification/list" class="nav-link">
                   <div class="sb-nav-link-icon"><i class="fas fa-bell"></i></div>
-                    Notification&nbsp;<span class="badge rounded-pill bg-primary">{{ Math.floor(Math.random() * 100) }}</span>
+                    Notification&nbsp;<span class="badge rounded-pill bg-danger">{{ Math.floor(Math.random() * 100) }}</span>
                 </router-link>
                 <router-link to="/admin/account/profile" class="nav-link">
                     <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
