@@ -10,6 +10,7 @@ use App\Models\CategoryArticle;
 use App\Models\CategoryProduct;
 use App\Models\CategoryProject;
 use App\Models\Content;
+use App\Models\Contact;
 use App\Models\Country;
 use App\Models\EmailVerification;
 use App\Models\Faq;
@@ -29,6 +30,21 @@ class DatabaseSeeder extends Seeder
     {
         $this->createCountries();
         $this->createUsers();
+        $this->createContacts();
+    }
+
+    private function createContacts(){
+        for($i = 1; $i <= 100; $i++){
+            $faker = Faker::create();
+            $formData = array(
+                'name'=> $faker->city,
+                'email'=> $faker->email,
+                'phone'=> $faker->phoneNumber,
+                'website'=> $faker->freeEmailDomain,
+                'address'=> $faker->streetAddress
+            );
+            Contact::create($formData);
+        }
     }
 
     private function createCountries(){

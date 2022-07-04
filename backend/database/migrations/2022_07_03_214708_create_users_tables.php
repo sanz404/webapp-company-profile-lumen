@@ -15,14 +15,14 @@ class CreateUsersTables extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('country_id')->index();
+            $table->unsignedBigInteger('country_id')->nullable()->index();
             $table->string('username', 64)->unique();
             $table->string('email', 64)->unique();
             $table->string('phone')->unique()->nullable();
             $table->text('address1')->nullable();
             $table->text('address2')->nullable();
             $table->string('city')->unique()->nullable();
-            $table->string('zip_code', 64)->unique();
+            $table->string('zip_code', 64)->nullable()->index();
             $table->string('password')->index();
             $table->text('password_reset_token')->nullable();
             $table->tinyInteger('is_admin')->default(0)->index();

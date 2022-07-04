@@ -12,5 +12,13 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return abort(404);
+});
+
+$router->post('/connect', function () use ($router) {
+    $response = array(
+        "message"=> "Success !!",
+        "data"=> time()
+    );
+    return response()->json($response);
 });
