@@ -25,7 +25,16 @@
         },
         methods: {
             initApp() {
-                document.body.classList.add('d-flex', 'flex-column', 'h-100')
+                
+                document.body.classList.add('d-flex', 'flex-column', 'h-100');
+
+                let user = JSON.parse(localStorage.getItem('user'));
+                if (user && user.token) {
+                    this.isAuth = true;
+                }else{
+                    this.isAuth = false;
+                }
+
             }
         }
     }

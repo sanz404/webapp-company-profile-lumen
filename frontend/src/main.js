@@ -1,7 +1,9 @@
 import { createApp } from 'vue'
+import { createStore } from "vuex";
 import router from "./router"
 import App from './App.vue'
 import { createMetaManager } from 'vue-meta'
+import storeApp from './stores/index'
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -32,9 +34,12 @@ router.afterEach((to, from) => {
   if (tooltip !== null) document.body.removeChild(tooltip)
 })
 
+const store = createStore({ modules: storeApp });
+
 createApp(App)
     .use(createMetaManager())
     .use(VueSweetalert2)
     .use(router)
+    .use(store)
     .component("font-awesome-icon", FontAwesomeIcon)
     .mount('#app')

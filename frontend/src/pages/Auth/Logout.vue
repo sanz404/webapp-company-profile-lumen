@@ -27,13 +27,20 @@
     import {
         useMeta
     } from 'vue-meta'
+    import {  mapActions } from 'vuex'
     import Layout from "../../components/Public/Layout.vue"
     import Footer from "../../components/Public/Footer.vue"
     export default {
         name: "Logout",
+        created() {
+            this.logout();
+        },
         components: {
             Footer,
             Layout
+        },
+        methods: {
+             ...mapActions('auth', ['logout']),
         },
         setup() {
             useMeta({
