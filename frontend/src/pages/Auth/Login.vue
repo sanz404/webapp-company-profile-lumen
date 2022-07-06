@@ -5,7 +5,7 @@
                 <div class="row gx-5 d-flex justify-content-center">
                     <div class="col-md-4 mt-4">
                         <div v-if="alert.message" :class="`alert alert-dismissible fade show ${alert.type}`" role="alert">
-                            <i class="fa" v-bind:class="[ alert.type === 'alert-success' ? 'fa-check' : 'fa-warning']"></i> &nbsp;{{alert.message}}
+                            <small><i class="fa" v-bind:class="[ alert.type === 'alert-success' ? 'fa-check' : 'fa-warning']"></i> &nbsp;{{alert.message}}</small>
                             <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         <div class="card mb-5 mb-xl-0">
@@ -20,10 +20,8 @@
                                             <span class="input-group-text">
                                                 <i class="fas fa-user-plus"></i>
                                             </span>
-                                            <input type="text" v-model="username" name="username"  class="form-control"  :class="{ 'is-invalid': submitted && !username }">
-                                            <small v-show="submitted && !username" class="invalid-feedback">
-                                               The field is required. !!
-                                            </small>
+                                            <input type="text" v-model="username" name="username"  class="form-control"  :class="{ 'is-invalid': submitted && v$.username.$error }" :disabled="status.loggingIn">
+                                            <span v-if="v$.username.$error" class="invalid-feedback"> {{ v$.username.$errors[0].$message }} </span>
                                         </div>
                                     </div>
                                     <div class="mb-3">
@@ -36,21 +34,19 @@
                                                <i class="fas fa-eye-slash"></i>
                                             </span>
                                             <template v-if="showPassword">
-                                                <input type="text" v-model="password" name="password"  class="form-control"  :class="{ 'is-invalid': submitted && !password }">
+                                                <input type="text" v-model="password" name="password"  class="form-control"  :class="{ 'is-invalid': submitted && v$.password.$error }" :disabled="status.loggingIn">
                                             </template>
                                             <template v-else>
-                                                <input type="password" v-model="password" name="password"  class="form-control"  :class="{ 'is-invalid': submitted && !password }">
+                                                <input type="password" v-model="password" name="password"  class="form-control"  :class="{ 'is-invalid': submitted && v$.password.$error }" :disabled="status.loggingIn">
                                             </template>
-                                            <small v-show="submitted && !password" class="invalid-feedback">
-                                               The field is required. !!
-                                            </small>
+                                            <span v-if="v$.password.$error" class="invalid-feedback"> {{ v$.password.$errors[0].$message }} </span>
                                         </div>
                                     </div>
                                     <div class="mb-3 form-check">
-                                        <input type="checkbox" class="form-check-input" name="remember_me" v-model="remember_me" id="remember_me" >
+                                        <input type="checkbox" class="form-check-input" name="remember_me" v-model="remember_me" id="remember_me" :disabled="status.loggingIn">
                                         <label class="form-check-label" for="exampleCheck1">Remember Me</label>
                                     </div>
-                                    <button type="submit" class="btn btn-success w-100" data-bs-toggle="tooltip" data-bs-placement="top" title="Sign In">
+                                    <button type="submit" class="btn btn-success w-100" data-bs-toggle="tooltip" data-bs-placement="top" title="Sign In" :disabled="status.loggingIn">
                                         <template v-if="status.loggingIn === true">
                                             <i class="fa fa-spinner fa-spin"></i>&nbsp;Send Data...
                                         </template>
@@ -77,6 +73,9 @@
     
     import { useMeta } from 'vue-meta'
     import { mapState, mapActions } from 'vuex'
+    import useValidate from '@vuelidate/core'
+    import { required, minLength } from '@vuelidate/validators'
+
     import Layout from "../../components/Public/Layout.vue"
     import Footer from "../../components/Public/Footer.vue"
 
@@ -88,6 +87,7 @@
         },
         data(){
             return {
+                v$: useValidate(),
                 username: '',
                 password: '',
                 remember_me: false,
@@ -109,7 +109,7 @@
             toggleShow() {
                 this.showPassword = !this.showPassword;
             },
-            ...mapActions('auth', ['login', 'logout', 'logged']),
+            ...mapActions('auth', ['login', 'logged']),
             ...mapActions({
                 clearAlert: 'alert/clear' 
             }),
@@ -120,7 +120,8 @@
                     password,
                     remember_me
                 } = this;
-                if (username && password) {
+                this.v$.$validate()
+                if (!this.v$.$error) {
                     this.login({
                         username,
                         password,
@@ -139,6 +140,12 @@
                 // clear alert on location change
                 this.clearAlert();
             }
-        } 
+        },
+        validations() {
+            return {
+                username: { required },
+                password: { required, minLength: minLength(6) },
+            }
+        },
     }
 </script>

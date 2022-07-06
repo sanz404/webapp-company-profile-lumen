@@ -31,6 +31,7 @@
                 let user = JSON.parse(localStorage.getItem('user'));
                 if (user && user.token) {
                     this.isAuth = true;
+                    this.isAdmin = parseInt(user.is_admin) === 1 ? true : false;
                 }else{
                     this.isAuth = false;
                 }

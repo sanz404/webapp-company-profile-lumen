@@ -57,7 +57,8 @@ class AuthController extends BaseController
         return response()->json([
             'token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => $expired
+            'expires_in' => $expired,
+            'is_admin'=> $user->is_admin
         ], 200);
     }
 
@@ -158,7 +159,7 @@ class AuthController extends BaseController
             return response()->json(['message' => 'The token field is required. !!'], 401);
         }
 
-        $verification = Verification::where("token", $token)->first();
+        $verification = EmailVerification::where("token", $token)->first();
         if(is_null($verification)){
             return response()->json(['message' => 'The token is invalid. !!'], 401);
         }
@@ -173,7 +174,6 @@ class AuthController extends BaseController
             return response()->json(['message' => 'The token is expired. !!'], 401);
         }
 
-        $verification->phone_confirmed = 1;
         $verification->email_confirmed = 1;
         $verification->is_expired = 1;
         $verification->expired_at = $date_now;
