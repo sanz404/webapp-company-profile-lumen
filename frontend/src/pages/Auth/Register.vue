@@ -24,7 +24,7 @@
                                             <span v-if="v$.username.$error" class="invalid-feedback"> {{ v$.username.$errors[0].$message }} </span>
                                         </div>
                                     </div>
-                                     <div class="mb-3">
+                                    <div class="mb-3">
                                         <label for="email" class="form-label">Email Address<span class="text-danger">*</span></label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text">
