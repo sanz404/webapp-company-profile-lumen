@@ -26,8 +26,10 @@
     "vue-loading-overlay": "^5.0.3",
     "vue-meta": "^3.0.0-alpha.10",
     "vue-router": "^4.0.16",
+    "vue-select": "^4.0.0-beta.3",
     "vue-sweetalert2": "^5.0.5",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.13",

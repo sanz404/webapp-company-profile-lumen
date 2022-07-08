@@ -4,6 +4,7 @@ import router from "./router"
 import App from './App.vue'
 import { createMetaManager } from 'vue-meta'
 import storeApp from './stores/index'
+import createPersistedState from "vuex-persistedstate";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -12,7 +13,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { dom } from "@fortawesome/fontawesome-svg-core";
 import VueSweetalert2 from 'vue-sweetalert2';
-
+import vSelect from 'vue-select'
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-icons/font/bootstrap-icons.scss"
@@ -21,8 +22,8 @@ import '@/styles/main.scss';
 import '@/styles/error.scss';
 import "bootstrap"
 
-
 import 'sweetalert2/dist/sweetalert2.min.css';
+import 'vue-select/dist/vue-select.css';
 
 library.add(fas);
 library.add(fab);
@@ -34,7 +35,7 @@ router.afterEach((to, from) => {
   if (tooltip !== null) document.body.removeChild(tooltip)
 })
 
-const store = createStore({ modules: storeApp });
+const store = createStore({ modules: storeApp, plugins: [createPersistedState()] });
 
 createApp(App)
     .use(createMetaManager())
@@ -42,4 +43,5 @@ createApp(App)
     .use(router)
     .use(store)
     .component("font-awesome-icon", FontAwesomeIcon)
+    .component("v-select", vSelect)
     .mount('#app')
