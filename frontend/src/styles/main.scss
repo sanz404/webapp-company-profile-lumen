@@ -11316,3 +11316,22 @@ html {
 .vs__dropdown-toggle {
   padding: 0 0 8px !important;
 }
+
+div.dataTables_processing {
+  position: absolute !important;
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+  margin-left: .5em !important;
+  display: inline-block !important;
+  width: auto !important;
+}
+
+div.dataTables_wrapper div.dataTables_length select {
+  width: auto !important;
+  display: inline-block !important;
+}
+
+.svg-inline--fa{
+  pointer-events:none !important;
+}

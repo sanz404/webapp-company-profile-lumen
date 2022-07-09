@@ -6,7 +6,6 @@
                     <div class="col-md-12 mt-4">
                         <div v-if="alert.message" :class="`alert alert-dismissible fade show ${alert.type}`" role="alert">
                             <small><i class="fa" v-bind:class="[ alert.type === 'alert-success' ? 'fa-check' : 'fa-warning']"></i> &nbsp;{{alert.message}}</small>
-                            <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         <div class="card mb-5 mb-xl-0">
                             <div class="card-header bg-primary text-white">
@@ -99,9 +98,7 @@
                 city:"",
                 stateSelected: { label: "", code: "" },
                 stateOptions:[],
-                zip_code:"",
-                myValue: '',
-                myOptions: ['op1', 'op2', 'op3']
+                zip_code:""
             }
         },
         setup() {

@@ -24,6 +24,8 @@ import "bootstrap"
 
 import 'sweetalert2/dist/sweetalert2.min.css';
 import 'vue-select/dist/vue-select.css';
+import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
+
 
 library.add(fas);
 library.add(fab);
@@ -73,6 +75,7 @@ router.beforeEach((to, from, next) => {
       next()
     }
 })
+
 
 
 const store = createStore({ modules: storeApp, plugins: [createPersistedState()] });

@@ -8,7 +8,6 @@
                             <div class="card-body p-3 text-center">
                                 <div v-if="alert.message" :class="`alert alert-dismissible fade show ${alert.type}`" role="alert">
                                     <small><i class="fa" v-bind:class="[ alert.type === 'alert-success' ? 'fa-check' : 'fa-warning']"></i> &nbsp;{{alert.message}}</small>
-                                    <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                                 <div class="text-center">
                                     <router-link to="/auth/login" class="btn w-100 btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Click here to continue">Click here to continue...</router-link>

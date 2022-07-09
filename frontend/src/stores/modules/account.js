@@ -8,29 +8,18 @@ const state = {
 
 const mutations = {
     passwordRequest(state) {
-        state.status = {};
+        state.status = { sendRequest: true };
     },
     passwordSuccess(state) {
         state.status = {};
     },
-    passwordFailure(state) {
-        state.status = {};
-    },
-    getAccountRequest(state){
-        state.status = { loadingAccount: true};
-    },
     getAccountSuccess(state, data){
-        state.status = { profile : true };
         state.profile = data;
     },
     getAccountFailure(state){
         state.status = {};
     },
-    getCountriesRequest(state){
-        state.status = { loadingCountries: true};
-    },
     getCountriesSuccess(state, data){
-        state.status = { countries : true };
         state.countries = data;
     },
     getCountriesFailure(state){
@@ -59,13 +48,11 @@ const actions = {
                     })
                 },
                 error => {
-                    commit('passwordFailure', error);
                     dispatch('alert/error', error, { root: true });
                 }
             );
     },
     profile({ commit } ) {
-        commit('getAccountRequest');
         accountService.getProfile()
             .then(
                 response => commit('getAccountSuccess', response.data),
@@ -73,7 +60,6 @@ const actions = {
             );
     },
     countries({ commit } ) {
-        commit('getCountriesRequest');
         accountService.getCountries()
             .then(
                 response => commit('getCountriesSuccess', response.data),

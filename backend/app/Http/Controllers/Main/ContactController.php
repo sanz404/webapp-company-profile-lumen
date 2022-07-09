@@ -22,11 +22,7 @@ class ContactController extends AppController{
             'address'
         );
         $data = DataTable::build($postData, $columns, Contact::class);
-        $response = array(
-            "message"=> "Data has been fetched !",
-            "data"=> $data
-        );
-        return response()->json($response);
+        return response()->json($data);
     }
 
     public function create(Request $request){
