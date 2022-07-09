@@ -30,10 +30,50 @@ library.add(fab);
 library.add(far);
 dom.watch();
 
+const publicRoutes = [
+  "Profile",
+  "ChangePassword",
+]
+
+const adminRoutes = [
+  "AdminDashboard",
+  "AdminChangePassword",
+  "AdminProfile"
+]
+
+const authUser = JSON.parse(localStorage.getItem('user'));
+
 router.afterEach((to, from) => {
   const tooltip = document.querySelector('.tooltip')
   if (tooltip !== null) document.body.removeChild(tooltip)
 })
+
+router.beforeEach((to, from, next) => {
+    if(publicRoutes.includes(to.name)){
+        if(authUser && authUser.token) {
+            if(parseInt(authUser.is_admin) === 0){
+              next()  
+            }else{
+              next({ name: 'error403' })
+            }  
+        }else{
+            next({ name: 'Login' })
+        }
+    }else if(adminRoutes.includes(to.name)){
+      if(authUser && authUser.token) {
+          if(parseInt(authUser.is_admin) === 1){
+            next()  
+          }else{
+            next({ name: 'error403' })
+          }
+      }else{
+          next({ name: 'Login' })
+      }
+    }else{
+      next()
+    }
+})
+
 
 const store = createStore({ modules: storeApp, plugins: [createPersistedState()] });
 

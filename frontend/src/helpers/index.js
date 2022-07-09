@@ -10,13 +10,4 @@ function authHeader(){
     }
 }
 
-function isAuth(){
-    let user = JSON.parse(localStorage.getItem('user'));
-    if (user && user.token) {
-        return true;
-    }
-    return false;
-}
-
-
-export default { authHeader, isAuth }
+export default { authHeader }

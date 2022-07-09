@@ -14,7 +14,9 @@ export default [
     {
         path: "/",
         name: "Welcome",
-        component: PublicHome
+        redirect: to => {
+            return { path: '/home'}
+        }
     },
     {
         path: "/home",
