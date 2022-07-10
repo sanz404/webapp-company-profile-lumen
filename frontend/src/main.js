@@ -54,7 +54,13 @@ router.beforeEach((to, from, next) => {
     if(publicRoutes.includes(to.name)){
         if(authUser && authUser.token) {
             if(parseInt(authUser.is_admin) === 0){
-              next()  
+              let date_now = Math.floor(Date.now() / 1000)
+              let expired = authUser.expires_in
+              if(parseInt(date_now) > parseInt(expired)){
+                next({ name: 'Logout' })
+              }else{
+                next()  
+              }
             }else{
               next({ name: 'error403' })
             }  
@@ -64,7 +70,13 @@ router.beforeEach((to, from, next) => {
     }else if(adminRoutes.includes(to.name)){
       if(authUser && authUser.token) {
           if(parseInt(authUser.is_admin) === 1){
-            next()  
+            let date_now = Math.floor(Date.now() / 1000)
+            let expired = authUser.expires_in
+            if(parseInt(date_now) > parseInt(expired)){
+              next({ name: 'Logout' })
+            }else{
+              next()  
+            }
           }else{
             next({ name: 'error403' })
           }
@@ -78,7 +90,10 @@ router.beforeEach((to, from, next) => {
 
 
 
-const store = createStore({ modules: storeApp, plugins: [createPersistedState()] });
+const store = createStore({ 
+    modules: storeApp, 
+    plugins: [createPersistedState()] 
+});
 
 createApp(App)
     .use(createMetaManager())

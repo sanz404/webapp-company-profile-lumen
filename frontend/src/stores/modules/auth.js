@@ -32,6 +32,7 @@ const actions = {
 
         router.push('/home');
         setTimeout(() => {
+            localStorage.clear();
             location.reload(true)
         })
     },

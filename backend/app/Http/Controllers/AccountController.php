@@ -73,6 +73,7 @@ class AccountController extends AppController{
 
     public function getAuthUser(Request $request){
         $user = \Auth::User();
+        $user->country = Country::where("id", $user->country_id)->first();
         $response = array(
             "data"=> $user
         );

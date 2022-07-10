@@ -14,6 +14,10 @@ const mutations = {
         state.status = {};
     },
     getAccountSuccess(state, data){
+        data.countrySelected = {
+            code: data.country ? data.country.id : null,
+            label: data.country ? data.country.name : null
+        }
         state.profile = data;
     },
     getAccountFailure(state){
@@ -68,6 +72,7 @@ const actions = {
     },
     updateProfile({ dispatch, commit }, data) {
         commit('updateAccountRequest', data);
+        data.country_id = data.countrySelected.code
         accountService.updateProfile(data)
             .then(
                 data => {

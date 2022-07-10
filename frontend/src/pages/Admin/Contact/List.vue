@@ -36,6 +36,7 @@
 
     import Layout from "../../../components/Admin/Layout.vue"
     import { useMeta } from 'vue-meta'
+    import { mapState, mapActions } from 'vuex'
     import helper from '../../../helpers/index'
 
     const SITE_TITLE = "Contact";
@@ -53,9 +54,44 @@
         mounted() {
             this.showDataTable();
         },
+        computed: {
+            ...mapState('contact', ['status']),
+            ...mapState({
+                alert: state => state.alert
+            })
+        },
+        created() { 
+           this.alert.message = ''
+        },
         methods:{
-            showAlert: function(){
-                this.$swal('Hello Vue world!!!');
+            ...mapActions('contact', ['delete']),
+            ...mapActions({
+                clearAlert: 'alert/clear' 
+            }),
+            deleteConfirm: function(id){
+                let app = this
+                app.$swal({ 
+                    title: 'Confirmation',
+                    text: "Are you sure you want to delete this item ?",
+                    icon: 'warning',
+                    showCancelButton: !0, 
+                    confirmButtonColor: "#31ce77", 
+                    cancelButtonColor: "#f34943", 
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No',
+                }).then(
+                    function (t) {
+                        app.delete(id)
+                        setTimeout(function(){
+                            app.$swal({
+                                title: "Success!", 
+                                text: "Your item has been deleted!", 
+                                icon: "success"
+                            })
+                            app.showDataTable()
+                        }, 500)
+                    }
+                );
             },
             showDataTable: function(){
                 let element = "#table-contact";
@@ -111,7 +147,7 @@
                         this.$router.push({ path: '/admin/contact/edit/'+id});
                     }
                     if (e.target.classList.contains('btn-delete')) {
-                        this.showAlert()
+                        this.deleteConfirm(id)
                     }
                 }
             }

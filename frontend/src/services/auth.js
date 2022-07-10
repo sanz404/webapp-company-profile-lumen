@@ -102,6 +102,5 @@ function logout() {
     if(user){
         VueCookies.remove('user');
     }
-
     localStorage.removeItem('user');
 }

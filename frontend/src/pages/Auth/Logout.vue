@@ -32,7 +32,7 @@
     import Footer from "../../components/Public/Footer.vue"
     export default {
         name: "Logout",
-        created() {
+        mounted() {
             this.logout();
         },
         components: {

@@ -25,13 +25,17 @@
         },
         methods: {
             initApp() {
-                
                 document.body.classList.add('d-flex', 'flex-column', 'h-100');
-
                 let user = JSON.parse(localStorage.getItem('user'));
                 if (user && user.token) {
-                    this.isAuth = true;
-                    this.isAdmin = parseInt(user.is_admin) === 1 ? true : false;
+                    let date_now = Math.floor(Date.now() / 1000)
+                    let expired = user.expires_in
+                    if(parseInt(date_now) > parseInt(expired)){
+                        this.isAuth = false;
+                    }else{  
+                        this.isAuth = true;
+                        this.isAdmin = parseInt(user.is_admin) === 1 ? true : false;
+                    }
                 }else{
                     this.isAuth = false;
                 }
