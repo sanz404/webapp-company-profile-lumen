@@ -15,6 +15,7 @@
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <router-link to="/admin/category/article" class="nav-link">Article</router-link>
+                        <router-link to="/admin/category/product" class="nav-link">Product</router-link>
                         <router-link to="/admin/category/project" class="nav-link">Project</router-link>
                     </nav>
                 </div>
@@ -79,19 +80,26 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
-            {{ user.full_name }}
+            {{ profile.email }}
         </div>
     </nav>
 </template>
 <script>
+    import { mapState, mapActions } from 'vuex'
     export default {
         name: "SideBar",
-        data(){
-            return {
-                user: {
-                    full_name: "Sandy Andryanto"
-                }
-            }
-        }
+        computed: {
+            ...mapState({
+                profile: state=> state.account.profile,
+            })
+        },
+        mounted() {
+           this.getProfile()
+        },
+        methods: {
+            ...mapActions('account', {
+                getProfile: 'profile',
+            })
+        },
     }
 </script>

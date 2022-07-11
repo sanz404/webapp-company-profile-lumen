@@ -48,7 +48,8 @@ class AuthController extends BaseController
             return response()->json(['message' => 'You need to confirm your account. We have sent you an activation code, please check your email. !!'], 401);
         }
 
-        $expired = Carbon::now()->addDays(1)->timestamp;
+        $day_expired = env("APP_ENV") == 'production' ? 1 : 30;
+        $expired = Carbon::now()->addDays($day_expired)->timestamp;
         $token = Auth::attempt(["email"=> $user->email, "password"=> $password], ['exp' => $expired]);
 
         $user->password_reset_token = null;
