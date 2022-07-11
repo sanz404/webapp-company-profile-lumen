@@ -120,6 +120,7 @@ $app->router->group([
     require __DIR__.'/../routes/auth.php';
     require __DIR__.'/../routes/account.php';
     require __DIR__.'/../routes/main/contacts.php';
+    require __DIR__.'/../routes/main/users.php';
 });
 
 
