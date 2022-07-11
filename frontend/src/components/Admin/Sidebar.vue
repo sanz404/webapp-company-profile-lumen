@@ -62,7 +62,7 @@
                 <div class="sb-sidenav-menu-heading">Account Menu</div>
                  <router-link to="/admin/notification/list" class="nav-link">
                   <div class="sb-nav-link-icon"><i class="fas fa-bell"></i></div>
-                    Notification&nbsp;<span class="badge rounded-pill bg-danger">{{ Math.floor(Math.random() * 100) }}</span>
+                    Notification&nbsp;<span class="badge rounded-pill bg-danger">{{ total_unread }}</span>
                 </router-link>
                 <router-link to="/admin/account/profile" class="nav-link">
                     <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
@@ -91,14 +91,19 @@
         computed: {
             ...mapState({
                 profile: state=> state.account.profile,
+                total_unread: state=> state.notification.current.total_unread,
             })
         },
         mounted() {
            this.getProfile()
+           this.getCurrent()
         },
         methods: {
             ...mapActions('account', {
                 getProfile: 'profile',
+            }),
+            ...mapActions('notification', {
+                getCurrent: 'current',
             })
         },
     }

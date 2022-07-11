@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Http\Request;
 
 $router->group(['middleware' => 'auth:api'], function ($router){
@@ -28,6 +29,31 @@ $router->group(['middleware' => 'auth:api'], function ($router){
         $response = new AccountController;
         return $response->getCountries();
     });
+
+    // Detail Notification
+    $router->get("account/notifications/detail/{id}",function($id){
+        $response = new NotificationController;
+        return $response->detail($id);
+    });
+
+    // Delete Notification
+    $router->delete("account/notifications/delete/{id}",function($id){
+        $response = new NotificationController;
+        return $response->delete($id);
+    });
+
+     // Current Notification
+     $router->get("account/notifications/current",function(){
+        $response = new NotificationController;
+        return $response->current();
+    });
+
+    // List Notification Datatable
+    $router->post("account/notifications/list",function(Request $request){
+        $response = new NotificationController;
+        return $response->list($request);
+    });
+
 
 });
 

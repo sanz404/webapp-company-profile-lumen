@@ -31,7 +31,26 @@ class DatabaseSeeder extends Seeder
         $this->createCountries();
         $this->createUsers();
         $this->createContacts();
+        $this->createNotification();
     }
+
+    private function createNotification(){
+        $max = 100;
+        for($i = 1; $i <= $max; $i++){
+            $faker = Faker::create();
+            $user = User::inRandomOrder()->first();
+            if(!is_null($user)){
+                $notifiaction = array(
+                    "user_id"=> $user->id,
+                    "subject"=> $faker->company,
+                    "sort_content"=> $faker->sentence,
+                    "full_content"=> $faker->text,
+                );
+                Notification::create($notifiaction);
+            }
+        }
+    }
+
 
     private function createContacts(){
         for($i = 1; $i <= 100; $i++){

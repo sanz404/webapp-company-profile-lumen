@@ -9,45 +9,17 @@
         <ul class="navbar-nav ms-auto me-3 me-lg-4">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-bell fa-fw"></i><sup><span class="badge rounded-pill bg-danger">{{ Math.floor(Math.random() * 100) }}</span></sup>
+                    <i class="fas fa-bell fa-fw"></i><sup><span class="badge rounded-pill bg-danger">{{ total_unread }}</span></sup>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end p-3 notification-dropdown">
-                    <router-link :to="'/admin/notification/detail/'+Math.floor(Math.random() * 100)" class="text-notification">
-                        <div class="clearfix">
-                            <div class="float-start">
-                                <strong><small>Lorem Ipsum</small></strong>
-                            </div>
-                            <div class="float-end">
-                                <strong><small>1 days ago</small></strong>
-                            </div>
-                        </div>
-                        <p class="text-justify mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </router-link>
-                    <hr class="dropdown-divider" />
-                    <router-link :to="'/admin/notification/detail/'+Math.floor(Math.random() * 100)" class="text-notification">
-                        <div class="clearfix">
-                            <div class="float-start">
-                                <strong><small>Lorem Ipsum</small></strong>
-                            </div>
-                            <div class="float-end">
-                                <strong><small>1 days ago</small></strong>
-                            </div>
-                        </div>
-                        <p class="text-justify mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </router-link>
-                    <hr class="dropdown-divider" />
-                    <router-link :to="'/admin/notification/detail/'+Math.floor(Math.random() * 100)" class="text-notification">
-                        <div class="clearfix">
-                            <div class="float-start">
-                                <strong><small>Lorem Ipsum</small></strong>
-                            </div>
-                            <div class="float-end">
-                                <strong><small>1 days ago</small></strong>
-                            </div>
-                        </div>
-                        <p class="text-justify mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </router-link>
-                    <hr class="dropdown-divider" />
+                    <div v-for="(item) in list_notif" :key="item.id">
+                        <router-link :to="'/admin/notification/detail/'+item.id" class="text-notification">
+                            <strong><small>{{ item.subject }}</small></strong>
+                            <p><span><small>{{ item.created_at }}</small></span></p>
+                            <p class="text-justify mt-3">{{ item.sort_content }}</p>
+                        </router-link>
+                        <hr class="dropdown-divider" />
+                    </div>
                     <router-link to="/admin/notification/list" class="btn btn-sm btn-warning text-white w-100">See All Notifiaction</router-link>
                 </div>
             </li>
@@ -77,6 +49,7 @@
     </nav>
 </template>
 <script>
+    import { mapState, mapActions } from 'vuex'
     export default{
         name: "Navigation",
         props:['isAuth', 'isAdmin'],
@@ -84,6 +57,20 @@
             return {
                 siteName: process.env.VUE_APP_TITLE
             }
+        },
+        computed: {
+            ...mapState({
+                list_notif: state=> state.notification.current.list_notif,
+                total_unread: state=> state.notification.current.total_unread,
+            })
+        },
+        methods: {
+            ...mapActions('notification', {
+                getCurrent: 'current',
+            })
+        },
+        mounted() {
+            this.getCurrent()
         },
         setup(){
 

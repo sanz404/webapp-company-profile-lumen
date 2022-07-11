@@ -17,9 +17,9 @@ class CreateNotificationsTables extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->index();
             $table->string('subject', 64);
-            $table->string('sort_content', 64)->nullable();
+            $table->string('sort_content', 191)->nullable();
             $table->text('full_content')->nullable();
-            $table->dateTime('readed_at')->index();
+            $table->dateTime('readed_at')->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
             $table->engine = 'InnoDB';

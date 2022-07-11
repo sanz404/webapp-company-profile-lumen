@@ -16,31 +16,31 @@
                     <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Created Date </label>
                         <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" value="XXX" />
+                            <input type="text" readonly class="form-control-plaintext" v-model="notification.created_at" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Subject </label>
                         <div class="col-sm-10">
-                             <input type="text" readonly class="form-control-plaintext" value="XXX" />
+                             <input type="text" readonly class="form-control-plaintext" v-model="notification.subject" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Sort Message </label>
                         <div class="col-sm-10">
-                           <input type="text" readonly class="form-control-plaintext" value="XXX" />
+                           <input type="text" readonly class="form-control-plaintext" v-model="notification.sort_content" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Full Message</label>
                         <div class="col-sm-10">
-                             <input type="text" readonly class="form-control-plaintext" value="XXX" />
+                             <input type="text" readonly class="form-control-plaintext" v-model="notification.full_content" />
                         </div>
                     </div>
                      <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Status </label>
                         <div class="col-sm-10">
-                             <input type="text" readonly class="form-control-plaintext" value="XXX" />
+                             <input type="text" readonly class="form-control-plaintext" v-model="statusNotification" />
                         </div>
                     </div>
                 </div>
@@ -61,6 +61,7 @@
 
     import Layout from "../../../components/Admin/Layout.vue"
     import { useMeta } from 'vue-meta'
+    import { mapState, mapActions } from 'vuex'
 
     const SITE_TITLE = "Notification";
 
@@ -69,15 +70,44 @@
         components: {
             Layout
         },
+        props: ['param'],
         data(){
             return {
                 title: SITE_TITLE
             }
         },
+        computed: {
+            ...mapState({
+                alert: state => state.alert,
+                status: state=> state.notification.status,
+                notification: state=> state.notification.data,
+                statusNotification: state=> state.notification.data.readed_at ? 'Readed' : 'Unreaded',
+            })
+        },
+        created() {
+            this.alert.message = ''  
+        },
+        mounted() {
+            this.getNotification(this.param)
+        },
+        methods: {
+            ...mapActions('notification', {
+                getNotification: 'detail'
+            }),
+            ...mapActions({
+                clearAlert: 'alert/clear' 
+            }),
+        },
         setup() {
             useMeta({
                 title: SITE_TITLE
             })
-        }
+        },
+        watch: {
+            $route (to, from){
+                // clear alert on location change
+                this.clearAlert();
+            }
+        },
     }
 </script>
