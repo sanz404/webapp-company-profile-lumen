@@ -3,7 +3,7 @@
         <h1 class="mt-4">{{ title }}</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><router-link to="/admin/dashboard">Home</router-link></li>
-            <li class="breadcrumb-item"><a href="#">Categroies</a></li>
+            <li class="breadcrumb-item"><a href="#">Categories</a></li>
             <li class="breadcrumb-item"><router-link to="/admin/categories/article/list">{{ title }}</router-link></li>
             <li class="breadcrumb-item active">Create</li>
         </ol>
