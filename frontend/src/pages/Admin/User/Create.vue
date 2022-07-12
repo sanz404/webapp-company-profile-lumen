@@ -37,6 +37,42 @@
                             <span v-if="v$.user.password.$error" class="invalid-feedback"> {{ v$.user.password.$errors[0].$message }} </span>
                         </div>
                     </div>
+                     <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Phone Number </label>
+                        <div class="col-sm-10">
+                            <input type="text" v-model="user.phone"  class="form-control" :disabled="status.sendRequest">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">City </label>
+                        <div class="col-sm-10">
+                            <input type="text" v-model="user.city"  class="form-control" :disabled="status.sendRequest">
+                        </div>
+                    </div>
+                     <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Zip Code </label>
+                        <div class="col-sm-10">
+                           <input type="text" v-model="user.zip_code"  class="form-control" :disabled="status.sendRequest">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">State </label>
+                        <div class="col-sm-10">
+                            <v-select :options="countries" v-model="user.countrySelected"></v-select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Adderss 1 </label>
+                       <div class="col-sm-10">
+                            <textarea class="form-control" v-model="user.address1" rows="6" :disabled="status.sendRequest"></textarea>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Adderss 2 </label>
+                       <div class="col-sm-10">
+                            <textarea class="form-control" v-model="user.address2" rows="6" :disabled="status.sendRequest"></textarea>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer clearfix">
                     <div class="float-start">
@@ -89,7 +125,11 @@
             }
         },
         computed: {
-            ...mapState('user', ['status']),
+             ...mapState({
+                alert: state => state.alert,
+                status: state=> state.user.status,
+                countries: state=> state.account.countries,
+            }),
             ...mapState({
                 alert: state => state.alert
             })
@@ -97,10 +137,16 @@
         created() { 
            this.alert.message = ''
         },
+        mounted() {
+            this.getCountries()
+        },
         methods: {
             ...mapActions('user', ['create']),
             ...mapActions({
                 clearAlert: 'alert/clear' 
+            }),
+            ...mapActions('account', {
+                getCountries: 'countries'
             }),
             handleSubmit(e) {
                 this.submitted = true;

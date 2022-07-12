@@ -8,6 +8,10 @@ const state = {
 
 const mutations = {
     setUserSuccess(state, data){
+        data.countrySelected = {
+            code: data.country_id,
+            label: data.country_name 
+        }
         state.data = data
         state.status = {};
     },
@@ -45,6 +49,7 @@ const actions = {
     },
     create({ dispatch, commit }, data) {
         commit('submit', data);
+        data.country_id = data.countrySelected.code
         userService.createUser(data)
             .then(
                 response => {
@@ -62,6 +67,7 @@ const actions = {
     },
     update({ dispatch, commit }, data) {
         commit('submit', data.user);
+        data.user.country_id = data.user.countrySelected.code
         userService.updateUser(data.user, data.param)
             .then(
                 response => {

@@ -37,11 +37,6 @@ const publicRoutes = [
   "ChangePassword",
 ]
 
-const adminRoutes = [
-  "AdminDashboard",
-  "AdminChangePassword",
-  "AdminProfile"
-]
 
 const authUser = JSON.parse(localStorage.getItem('user'));
 
@@ -51,6 +46,10 @@ router.afterEach((to, from) => {
 })
 
 router.beforeEach((to, from, next) => {
+
+    let pathArray = window.location.pathname.split('/');
+    let pathAdmin = pathArray[1];
+
     if(publicRoutes.includes(to.name)){
         if(authUser && authUser.token) {
             if(parseInt(authUser.is_admin) === 0){
@@ -67,7 +66,7 @@ router.beforeEach((to, from, next) => {
         }else{
             next({ name: 'Login' })
         }
-    }else if(adminRoutes.includes(to.name)){
+    }else if(pathAdmin === 'admin'){
       if(authUser && authUser.token) {
           if(parseInt(authUser.is_admin) === 1){
             let date_now = Math.floor(Date.now() / 1000)

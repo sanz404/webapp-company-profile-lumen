@@ -29,6 +29,42 @@
                         </div>
                     </div>
                     <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Phone </label>
+                        <div class="col-sm-10">
+                             <input type="text" readonly class="form-control-plaintext" v-model="user.phone" />
+                        </div>
+                    </div>
+                     <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">City </label>
+                        <div class="col-sm-10">
+                             <input type="text" readonly class="form-control-plaintext" v-model="user.city" />
+                        </div>
+                    </div>
+                     <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Zip Code </label>
+                        <div class="col-sm-10">
+                             <input type="text" readonly class="form-control-plaintext" v-model="user.zip_code" />
+                        </div>
+                    </div>
+                     <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">State </label>
+                        <div class="col-sm-10">
+                             <input type="text" readonly class="form-control-plaintext" v-model="user.country_name" />
+                        </div>
+                    </div>
+                     <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Address 1 </label>
+                        <div class="col-sm-10">
+                             <input type="text" readonly class="form-control-plaintext" v-model="user.address1" />
+                        </div>
+                    </div>
+                     <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Address 2 </label>
+                        <div class="col-sm-10">
+                             <input type="text" readonly class="form-control-plaintext" v-model="user.address2" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Status </label>
                         <div class="col-sm-10">
                            <input type="text" readonly class="form-control-plaintext" v-model="statusUser"  />

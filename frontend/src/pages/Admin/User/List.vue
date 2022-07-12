@@ -22,6 +22,8 @@
                             <th>#</th>
                             <th>Username</th>
                             <th>Email</th>
+                            <th>Phone</th>
+                            <th>State</th>
                             <th>Status</th>
                             <th class="text-center">Created At</th>
                             <th class="text-center">Action</th>
@@ -109,6 +111,12 @@
                     },
                     {
                         data: 'email',
+                    },
+                    {
+                        data: 'phone',
+                    },
+                    {
+                        data: 'country_name',
                     },
                     {
                         data: 'status',

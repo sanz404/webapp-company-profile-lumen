@@ -1,4 +1,5 @@
 import accountService from '../../services/account';
+import router from '../../router'
 
 const state = {
     status: {},
@@ -59,8 +60,12 @@ const actions = {
     profile({ commit } ) {
         accountService.getProfile()
             .then(
-                response => commit('getAccountSuccess', response.data),
-                error => commit('getAccountFailure', error)
+                data => {
+                    commit('getAccountSuccess', data);
+                },
+                error => {
+                    router.push('/auth/logout');
+                }
             );
     },
     countries({ commit } ) {

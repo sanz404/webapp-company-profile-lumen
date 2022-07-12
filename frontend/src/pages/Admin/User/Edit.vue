@@ -36,6 +36,42 @@
                             <input type="password" v-model="user.password"  class="form-control" :disabled="status.sendRequest">
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Phone Number </label>
+                        <div class="col-sm-10">
+                            <input type="text" v-model="user.phone"  class="form-control" :disabled="status.sendRequest">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">City </label>
+                        <div class="col-sm-10">
+                            <input type="text" v-model="user.city"  class="form-control" :disabled="status.sendRequest">
+                        </div>
+                    </div>
+                     <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Zip Code </label>
+                        <div class="col-sm-10">
+                           <input type="text" v-model="user.zip_code"  class="form-control" :disabled="status.sendRequest">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">State </label>
+                        <div class="col-sm-10">
+                            <v-select :options="countries" v-model="user.countrySelected"></v-select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Adderss 1 </label>
+                       <div class="col-sm-10">
+                            <textarea class="form-control" v-model="user.address1" rows="6" :disabled="status.sendRequest"></textarea>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Adderss 2 </label>
+                       <div class="col-sm-10">
+                            <textarea class="form-control" v-model="user.address2" rows="6" :disabled="status.sendRequest"></textarea>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer clearfix">
                     <div class="float-start">
@@ -87,7 +123,8 @@
             ...mapState({
                 alert: state => state.alert,
                 status: state=> state.user.status,
-                user: state=> state.user.data
+                user: state=> state.user.data,
+                countries: state=> state.account.countries,
             }),
             ...mapState({
                 alert: state => state.alert
@@ -98,11 +135,15 @@
         },
         mounted() {
             this.getUser(this.param)
+            this.getCountries()
         },
         methods: {
             ...mapActions('user', {
                 getUser: 'detail',
                 updateUser: 'update'
+            }),
+            ...mapActions('account', {
+                getCountries: 'countries'
             }),
             ...mapActions({
                 clearAlert: 'alert/clear' 

@@ -74,11 +74,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public static function getAll($postData, $user_id){
         $columns = array(
-            "id",
-            "username",
-            "email",
-            "status",
-            "created_at",
+            "users.id",
+            "users.username",
+            "users.email",
+            "users.phone",
+            "countries.name as country_name",
+            "users.status",
+            "users.created_at",
         );
         return self::build($postData, $columns, $user_id);
     }
@@ -104,23 +106,33 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function dataTableRecord(array $postData, array $columns, $user_id, $count = false){
 
+        $columnFilters = array(
+            "users.id",
+            "users.username",
+            "users.email",
+            "users.phone",
+            "countries.name",
+            "users.status",
+            "users.created_at",
+        );
+
 		$row = isset($postData["start"]) ? $postData["start"] : 1;
 		$rowperpage = isset($postData["length"]) ? $postData["length"] : 10;
 
         $columnSortTarget = isset($postData["order"][0]["column"]) ? $postData["order"][0]["column"] : 0;
         $columnSortDesc = isset($postData["order"][0]["dir"]) ? $postData["order"][0]["dir"] : "desc";
 
-		$columnIndex =  $columns[$columnSortTarget];
+		$columnIndex =  $columnFilters[$columnSortTarget];
 		$columnSortOrder = $columnSortDesc;
 		$searchValue = isset($postData["search"]["value"]) ? $postData["search"]["value"] : "";
 
         $mdl = new self;
         $data = $mdl->select($columns);
-        $data = $data->where("id","!=",$user_id);
+        $data = $data->where("users.id","!=",$user_id)->leftJoin("countries", "countries.id", "users.country_id");
 
         if(strlen($searchValue) > 0){
             $i = 1;
-            foreach($columns as $column){
+            foreach($columnFilters as $column){
                 if($i == 1){
                     $data = $data->where($column, 'LIKE', '%' . $searchValue . '%');
                 }else{
