@@ -4,11 +4,17 @@ import Profile from "../../pages/Admin/Profile.vue"
 import Contact from "./contact"
 import User from "./user"
 import Notification from "./notification"
+import CategoryArticle from "../../router/admin/categories/article"
+import CategoryProduct from "../../router/admin/categories/product"
+import CategoryProject from "../../router/admin/categories/project"
 
 export default [
     ...Contact,
     ...User,
     ...Notification,
+    ...CategoryArticle,
+    ...CategoryProduct,
+    ...CategoryProject,
     {
         path: "/admin/dashboard",
         name: "AdminDashboard",

@@ -14,9 +14,9 @@
                 </a>
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <router-link to="/admin/category/article" class="nav-link">Article</router-link>
-                        <router-link to="/admin/category/product" class="nav-link">Product</router-link>
-                        <router-link to="/admin/category/project" class="nav-link">Project</router-link>
+                        <router-link to="/admin/categories/article/list" class="nav-link">Article</router-link>
+                        <router-link to="/admin/categories/product/list" class="nav-link">Product</router-link>
+                        <router-link to="/admin/categories/project/list" class="nav-link">Project</router-link>
                     </nav>
                 </div>
                 <router-link to="/admin/content/list" class="nav-link">

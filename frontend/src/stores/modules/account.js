@@ -14,12 +14,12 @@ const mutations = {
     passwordSuccess(state) {
         state.status = {};
     },
-    getAccountSuccess(state, data){
-        data.countrySelected = {
-            code: data.country ? data.country.id : null,
-            label: data.country ? data.country.name : null
+    getAccountSuccess(state, authProfile){
+        authProfile.countrySelected = {
+            code: authProfile.country ? authProfile.country.id : null,
+            label: authProfile.country ? authProfile.country.name : null
         }
-        state.profile = data;
+        state.profile = authProfile.data;
     },
     getAccountFailure(state){
         state.status = {};
