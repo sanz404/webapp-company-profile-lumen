@@ -40,7 +40,7 @@ class CreateSitesTables extends Migration
         // category_articles
         Schema::create('category_articles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 64)->unique();
+            $table->string('name', 64);
             $table->longText('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -70,7 +70,7 @@ class CreateSitesTables extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id')->index();
-            $table->string('name', 64)->unique();
+            $table->string('name', 64);
             $table->longText('images')->nullable();
             $table->longText('description')->nullable();
             $table->tinyInteger('is_published')->default(0)->index();
@@ -82,7 +82,7 @@ class CreateSitesTables extends Migration
         // category_projects
         Schema::create('category_projects', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 64)->unique();
+            $table->string('name', 64);
             $table->longText('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -93,7 +93,7 @@ class CreateSitesTables extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id')->index();
-            $table->string('name', 64)->unique();
+            $table->string('name', 64);
             $table->longText('images')->nullable();
             $table->decimal('price', 18, 4)->default(0)->index();
             $table->longText('description')->nullable();
@@ -106,7 +106,7 @@ class CreateSitesTables extends Migration
         // category_products
         Schema::create('category_products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 64)->unique();
+            $table->string('name', 64);
             $table->longText('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -116,8 +116,8 @@ class CreateSitesTables extends Migration
         // faqs
         Schema::create('faqs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('question', 100)->unique();
-            $table->longText('answer')->nullable();
+            $table->string('question', 100);
+            $table->longText('answer');
             $table->Integer('sort')->default(0)->index();
             $table->tinyInteger('is_published')->default(0)->index();
             $table->timestamps();

@@ -2,6 +2,9 @@ import Dashboard from "../../pages/Admin/Dashboard.vue"
 import ChangePassword from "../../pages/Admin/ChangePassword.vue"
 import Profile from "../../pages/Admin/Profile.vue"
 import Contact from "./contact"
+import Content from "./content"
+import Faq from "./faq"
+import Message from "./message"
 import User from "./user"
 import Notification from "./notification"
 import CategoryArticle from "../../router/admin/categories/article"
@@ -10,11 +13,14 @@ import CategoryProject from "../../router/admin/categories/project"
 
 export default [
     ...Contact,
+    ...Content,
+    ...Faq,
     ...User,
     ...Notification,
     ...CategoryArticle,
     ...CategoryProduct,
     ...CategoryProject,
+    ...Message,
     {
         path: "/admin/dashboard",
         name: "AdminDashboard",
