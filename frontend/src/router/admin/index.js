@@ -6,6 +6,7 @@ import Content from "./content"
 import Faq from "./faq"
 import Feature from "./feature"
 import Message from "./message"
+import Team from "./team"
 import User from "./user"
 import Notification from "./notification"
 import CategoryArticle from "../../router/admin/categories/article"
@@ -16,6 +17,7 @@ export default [
     ...Contact,
     ...Content,
     ...Feature,
+    ...Team,
     ...Faq,
     ...User,
     ...Notification,
