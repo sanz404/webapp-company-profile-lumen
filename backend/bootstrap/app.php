@@ -124,6 +124,7 @@ $app->router->group([
     require __DIR__.'/../routes/main/users.php';
     require __DIR__.'/../routes/main/content.php';
     require __DIR__.'/../routes/main/faq.php';
+    require __DIR__.'/../routes/main/feature.php';
     require __DIR__.'/../routes/main/categories/article.php';
     require __DIR__.'/../routes/main/categories/product.php';
     require __DIR__.'/../routes/main/categories/project.php';

@@ -47,6 +47,10 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-share-alt-square"></i></div>
                     Faq
                 </router-link>
+                 <router-link to="/admin/feature/list" class="nav-link">
+                    <div class="sb-nav-link-icon"><i class="fas fa-check"></i></div>
+                    Feature
+                </router-link>
                  <router-link to="/admin/product/list" class="nav-link">
                     <div class="sb-nav-link-icon"><i class="fas fa-cubes"></i></div>
                     Product

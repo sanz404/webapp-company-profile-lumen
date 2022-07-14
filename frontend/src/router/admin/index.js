@@ -4,6 +4,7 @@ import Profile from "../../pages/Admin/Profile.vue"
 import Contact from "./contact"
 import Content from "./content"
 import Faq from "./faq"
+import Feature from "./feature"
 import Message from "./message"
 import User from "./user"
 import Notification from "./notification"
@@ -14,6 +15,7 @@ import CategoryProject from "../../router/admin/categories/project"
 export default [
     ...Contact,
     ...Content,
+    ...Feature,
     ...Faq,
     ...User,
     ...Notification,

@@ -4,6 +4,7 @@ import account from './modules/account';
 import contact from './modules/contact';
 import content from './modules/content';
 import faq from './modules/faq';
+import feature from './modules/feature';
 import message from './modules/message';
 import user from './modules/user';
 import notification from './modules/notification';
@@ -19,6 +20,7 @@ export default {
     content,
     message,
     faq,
+    feature,
     user, 
     notification,
     categoryArticle,

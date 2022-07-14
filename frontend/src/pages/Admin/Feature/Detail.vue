@@ -4,7 +4,7 @@
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><router-link to="/admin/dashboard">Home</router-link></li>
             <li class="breadcrumb-item"><a href="#">Reference</a></li>
-            <li class="breadcrumb-item"><router-link to="/admin/faq/list">{{ title }}</router-link></li>
+            <li class="breadcrumb-item"><router-link to="/admin/feature/list">{{ title }}</router-link></li>
             <li class="breadcrumb-item active">Detail</li>
         </ol>
         <div v-if="alert.message" :class="`alert alert-dismissible fade show ${alert.type}`" role="alert">
@@ -17,33 +17,33 @@
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
-                        <label  class="col-sm-2 col-form-label">Question </label>
+                        <label  class="col-sm-2 col-form-label">Title </label>
                         <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" v-model="faq.question" />
-                        </div>
-                    </div>
-                     <div class="row mb-3">
-                        <label  class="col-sm-2 col-form-label">Answer</label>
-                        <div class="col-sm-10">
-                             <input type="text" readonly class="form-control-plaintext" v-model="faq.answer"  />
+                            <input type="text" readonly class="form-control-plaintext" v-model="feature.title" />
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label  class="col-sm-2 col-form-label">Sort</label>
+                        <label  class="col-sm-2 col-form-label">Icon </label>
                         <div class="col-sm-10">
-                             <input type="text" readonly class="form-control-plaintext" v-model="faq.sort"  />
+                             <input type="text" readonly class="form-control-plaintext" v-model="feature.icon"  />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Description </label>
+                        <div class="col-sm-10">
+                           <input type="text" readonly class="form-control-plaintext" v-model="feature.description"  />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Status</label>
                         <div class="col-sm-10">
-                             <input type="text" readonly class="form-control-plaintext" v-model="faq_status"  />
+                             <input type="text" readonly class="form-control-plaintext" v-model="feature_status"  />
                         </div>
                     </div>
                 </div>
                 <div class="card-footer clearfix">
                     <div class="float-start">
-                         <router-link to="/admin/faq/list" data-bs-toggle="tooltip" data-bs-placement="top" title="Back To List" class="btn btn-secondary">
+                         <router-link to="/admin/feature/list" data-bs-toggle="tooltip" data-bs-placement="top" title="Back To List" class="btn btn-secondary">
                             <i class="fas fa-arrow-left"></i>&nbsp;Back To List
                         </router-link>
                         &nbsp;
@@ -60,10 +60,10 @@
     import { useMeta } from 'vue-meta'
     import { mapState, mapActions } from 'vuex'
 
-    const SITE_TITLE = "Faq";
+    const SITE_TITLE = "Contact";
 
     export default {
-        name: "DetailFaq",
+        name: "DetailContact",
         components: {
             Layout
         },
@@ -76,20 +76,21 @@
         computed: {
             ...mapState({
                 alert: state => state.alert,
-                status: state=> state.faq.status,
-                faq: state=> state.faq.data,
-                faq_status: state=> parseInt(state.faq.data.is_published) === 1 ? 'Published' : 'Draft'
+                status: state=> state.feature.status,
+                feature: state=> state.feature.data,
+                feature_status: state=> parseInt(state.feature.data.is_published) === 1 ? 'Published' : 'Draft'
             })
         },
         created() {
             this.alert.message = ''  
         },
         mounted() {
-            this.getDataById(this.param)
+            this.getContact(this.param)
         },
         methods: {
-            ...mapActions('faq', {
-                getDataById: 'detail'
+            ...mapActions('feature', {
+                getContact: 'detail',
+                updateContact: 'update'
             }),
             ...mapActions({
                 clearAlert: 'alert/clear' 
