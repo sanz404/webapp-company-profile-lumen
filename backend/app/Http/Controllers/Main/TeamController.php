@@ -27,11 +27,24 @@ class TeamController extends AppController{
 
     public function create(Request $request){
 
+        $imagePath = null;
+        if($request->get("image")){
+            $uuid = $this->getUUID();
+            $image = $request->get("image");
+            $imagePath = $this->save_base64_image($image, $uuid, $this->getPublicPath("uploads/"));
+        }
+
+
         $data = new Team;
         $data->name = $request->get("name");
         $data->position = $request->get("position");
         $data->description = $request->get("description");
         $data->is_published = $request->get("is_published") ? $request->get("is_published") : 0;
+
+        if(!is_null($imagePath)){
+            $data->image = $imagePath;
+        }
+
         $data->save();
 
         $response = array(
@@ -58,16 +71,33 @@ class TeamController extends AppController{
 
     public function update($id, Request $request){
 
+
         $data = Team::where("id", $id)->first();
 
         if(is_null($data)){
             return abort(404);
         }
 
+        $imagePath = $data->image;
+        if($request->get("image")){
+            $uuid = $this->getUUID();
+            $image = $request->get("image");
+            $fileUploaded = $this->save_base64_image($image, $uuid, $this->getPublicPath("uploads/"));
+            if(!is_null($fileUploaded)){
+                $imagePath = $fileUploaded;
+                // delete old files
+                if(file_exists($this->getPublicPath("uploads/".$data->image))){
+                    @unlink($this->getPublicPath("uploads/".$data->image));
+                }
+            }
+        }
+
+
         $data->name = $request->get("name");
         $data->position = $request->get("position");
         $data->description = $request->get("description");
         $data->is_published = $request->get("is_published") ? $request->get("is_published") : 0;
+        $data->image = $imagePath;
         $data->save();
 
         $response = array(

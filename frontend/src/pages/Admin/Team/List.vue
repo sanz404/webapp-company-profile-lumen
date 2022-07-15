@@ -97,6 +97,7 @@
             showDataTable: function(){
                 let element = "#table-contact";
                 let url = `${process.env.VUE_APP_SERVICE}/main/teams/list`;
+                let uploadURL = `${process.env.VUE_APP_SERVICE}/uploads`;
                 let  columns = [
                     {
                         "data": "id",
@@ -107,6 +108,14 @@
                     },
                     {
                         data: 'image',
+                        render: function (data, type, row, meta) {
+                            let baseUrl = window.location.origin
+                            if(data){
+                                 return `<img src="`+uploadURL+`/`+data+`" width="100" class="img-thumbnail" />`;
+                            }else{  
+                                 return `<img src="`+baseUrl+`/images/no-image.png" width="100" class="img-thumbnail" />`;
+                            }
+                        }
                     },
                     {
                         data: 'name',

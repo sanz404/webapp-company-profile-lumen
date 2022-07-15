@@ -27,7 +27,7 @@ class CreateSitesTables extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->index();
-            $table->string('image')->nullable();
+            $table->longText('image')->nullable();
             $table->string('slug', 64)->unique();
             $table->string('title', 64)->unique();
             $table->longText('content')->nullable();
@@ -140,7 +140,7 @@ class CreateSitesTables extends Migration
         // teams
         Schema::create('teams', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('image')->nullable();
+            $table->longText('image')->nullable();
             $table->string('name', 64);
             $table->string('position', 64);
             $table->longText('description')->nullable();
@@ -163,7 +163,7 @@ class CreateSitesTables extends Migration
         // abouts
         Schema::create('abouts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('image')->nullable();
+            $table->longText('image')->nullable();
             $table->string('title', 64);
             $table->longText('description')->nullable();
             $table->tinyInteger('is_published')->default(0)->index();

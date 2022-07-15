@@ -19,7 +19,12 @@
                     <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Image </label>
                         <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" v-model="team.image" />
+                             <template v-if="team.image">
+                                <img :src="this.backendURL+'/uploads/'+team.image" class="img-thumbnail" width="400" />
+                            </template>
+                            <template v-else>
+                                 <img :src="'/images/no-image.png'" class="img-thumbnail" width="400" />
+                            </template>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -76,7 +81,8 @@
         props: ['param'],
         data(){
             return {
-                title: SITE_TITLE
+                title: SITE_TITLE,
+                backendURL: process.env.VUE_APP_SERVICE
             }
         },
         computed: {
@@ -84,7 +90,7 @@
                 alert: state => state.alert,
                 status: state=> state.team.status,
                 team: state=> state.team.data,
-                team_status: state=> parseInt(state.team.is_published) === 1 ? 'Published' : 'Draft'
+                team_status: state=> parseInt(state.team.data.is_published) === 1 ? 'Published' : 'Draft'
             })
         },
         created() {

@@ -14,9 +14,6 @@ function authHeader(){
 
 function setDataTable(url, columns, element){
     new DataTable(element, {
-        "language": {
-            "sLengthMenu": "Show Entries : _MENU_"
-        },
         "ajax": {
             'url': url,
             'type': 'POST',
@@ -36,5 +33,13 @@ function setDataTable(url, columns, element){
     })
 }
 
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
 
-export default { authHeader, setDataTable }
+export default { authHeader, setDataTable, getBase64 }
