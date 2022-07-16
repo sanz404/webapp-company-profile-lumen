@@ -11,6 +11,7 @@ import product from './modules/product';
 import project from './modules/project';
 import article from './modules/article';
 import message from './modules/message';
+import publication from './modules/publication';
 import user from './modules/user';
 import dashboard from './modules/dashboard';
 import notification from './modules/notification';
@@ -31,6 +32,7 @@ export default {
     project,
     faq,
     team,
+    publication,
     dashboard,
     feature,
     product,

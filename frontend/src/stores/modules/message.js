@@ -10,7 +10,7 @@ const mutations = {
         state.data = data
         state.status = {};
     },
-    setMessageFailyre(state){
+    setMessageFailure(state){
         state.data = {};
         state.status = {};
     },
@@ -24,7 +24,7 @@ const actions = {
         messageService.detailMessage(id)
             .then(
                 response => commit('setMessageSuccess', response.data),
-                error => commit('setMessageFailyre', error)
+                error => commit('setMessageFailure', error)
             );
     }
 }

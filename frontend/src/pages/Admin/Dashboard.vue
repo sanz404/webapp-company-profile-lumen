@@ -90,7 +90,7 @@
         </div>
 
         <div class="row">
-            <div class="col-xl-6">
+            <div class="col-xl-6" v-if="pieChart">
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-white">
                         <i class="fas fa-chart-pie me-1"></i>
@@ -99,7 +99,7 @@
                     <div class="card-body"><PieChart :height="383" :dataChart="pieChart" /></div>
                 </div>
             </div>
-            <div class="col-xl-6">
+            <div class="col-xl-6" v-if="barChart">
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-white">
                         <i class="fas fa-chart-bar me-1"></i>

@@ -13,51 +13,36 @@
                     </div>
                     <div class="row gx-5 justify-content-center">
                         <div class="col-lg-8 col-xl-6">
-                            <!-- * * * * * * * * * * * * * * *-->
-                            <!-- * * SB Forms Contact Form * *-->
-                            <!-- * * * * * * * * * * * * * * *-->
-                            <!-- This form is pre-integrated with SB Forms.-->
-                            <!-- To make this form functional, sign up at-->
-                            <!-- https://startbootstrap.com/solution/contact-forms-->
-                            <!-- to get an API token!-->
-                            <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                                <!-- Name input-->
+                            <div v-if="alert.message" :class="`alert alert-dismissible fade show ${alert.type}`" role="alert">
+                                <small><i class="fa" v-bind:class="[ alert.type === 'alert-success' ? 'fa-check' : 'fa-warning']"></i> &nbsp;{{alert.message}}</small>
+                            </div>
+                           <form autocomplete="off" @submit.prevent="handleSubmit">
+                               
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="name" type="text" placeholder="Enter your name..."
-                                        data-sb-validations="required" />
-                                    <label for="name">Full name</label>
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                    <input type="text" v-model="contact.full_name" placeholder="Enter your name..."  class="form-control" :disabled="status.sendRequest" :class="{ 'is-invalid': submitted && v$.contact.full_name.$error }">
+                                    <label for="full_name">Full name</label>
+                                    <div v-if="v$.contact.full_name.$error" class="invalid-feedback"> {{ v$.contact.full_name.$errors[0].$message }} </div>
                                 </div>
-                                <!-- Email address input-->
+
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="email" type="email" placeholder="name@example.com"
-                                        data-sb-validations="required,email" />
+                                    <input type="email" v-model="contact.email" placeholder="name@example.com"  class="form-control" :disabled="status.sendRequest" :class="{ 'is-invalid': submitted && v$.contact.email.$error }">
                                     <label for="email">Email address</label>
-                                    <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.
-                                    </div>
-                                    <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                    <div v-if="v$.contact.email.$error" class="invalid-feedback"> {{ v$.contact.email.$errors[0].$message }} </div>
                                 </div>
-                                <!-- Phone number input-->
+
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890"
-                                        data-sb-validations="required" />
+                                    <input type="text" v-model="contact.phone" placeholder="(123) 456-7890"  class="form-control" :disabled="status.sendRequest" :class="{ 'is-invalid': submitted && v$.contact.phone.$error }">
                                     <label for="phone">Phone number</label>
-                                    <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is
-                                        required.</div>
+                                    <div v-if="v$.contact.phone.$error" class="invalid-feedback"> {{ v$.contact.phone.$errors[0].$message }} </div>
                                 </div>
-                                <!-- Message input-->
-                                <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="message" type="text"
-                                        placeholder="Enter your message here..." style="height: 10rem"
-                                        data-sb-validations="required"></textarea>
+
+                                 <div class="form-floating mb-3">
+                                    <input type="text" v-model="contact.message" placeholder="Enter your message here..." style="height: 10rem" class="form-control" :disabled="status.sendRequest" :class="{ 'is-invalid': submitted && v$.contact.message.$error }">
                                     <label for="message">Message</label>
-                                    <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.
-                                    </div>
+                                    <div v-if="v$.contact.message.$error" class="invalid-feedback"> {{ v$.contact.message.$errors[0].$message }} </div>
                                 </div>
-                                <!-- Submit success message-->
-                                <!---->
-                                <!-- This is what your users will see when the form-->
-                                <!-- has successfully submitted-->
+                               
+                              
                                 <div class="d-none" id="submitSuccessMessage">
                                     <div class="text-center mb-3">
                                         <div class="fw-bolder">Form submission successful!</div>
@@ -67,16 +52,21 @@
                                             href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
                                     </div>
                                 </div>
-                                <!-- Submit error message-->
-                                <!---->
-                                <!-- This is what your users will see when there is-->
-                                <!-- an error submitting the form-->
+                                
                                 <div class="d-none" id="submitErrorMessage">
                                     <div class="text-center text-danger mb-3">Error sending message!</div>
                                 </div>
                                 <!-- Submit Button-->
-                                <div class="d-grid"><button class="btn btn-primary btn-lg disabled" id="submitButton"
-                                        type="submit">Submit</button></div>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-lg" id="submitButton" type="submit">
+                                         <template v-if="status.sendRequest === true">
+                                            <i class="fa fa-spinner fa-spin"></i>&nbsp;Send Data...
+                                        </template>
+                                        <template v-else>
+                                            Submit
+                                        </template>
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -114,16 +104,77 @@
     </Layout>
 </template>
 <script>
-    import {
-        useMeta
-    } from 'vue-meta'
+
+    import { useMeta } from 'vue-meta'
+    import useValidate from '@vuelidate/core'
+    import { required, email, numeric, minLength, maxLength } from '@vuelidate/validators'
+    import { mapState, mapActions } from 'vuex'
     import Layout from "../../components/Public/Layout.vue"
     import Footer from "../../components/Public/Footer.vue"
+
     export default {
-        name: "Contact",
+       name: "Contact",
        components: {
             Footer,
             Layout
+        },
+        data() {
+            return {
+                submitted: false,
+                v$: useValidate(),
+                contact:{
+                    full_name: "",
+                    email: "",
+                    phone: "",
+                    message: "",
+                }
+            }
+        },
+        computed: {
+            ...mapState('publication', ['status']),
+            ...mapState({
+                alert: state => state.alert
+            })
+        },
+        created() { 
+           this.alert.message = ''
+        },
+        mounted() {
+            this.getContent()
+        },
+        methods: {
+            ...mapActions('publication', ['sendContact', 'getContent']),
+            ...mapActions({
+                clearAlert: 'alert/clear' 
+            }),
+            handleSubmit(e) {
+                this.submitted = true;
+                this.v$.contact.$validate()
+                if (!this.v$.contact.$error) {
+                    this.sendContact(this.contact)
+                } 
+            }
+        },
+        watch: {
+            $route (to, from){
+                // clear alert on location change
+                this.clearAlert();
+            }
+        },
+        validations() {
+            return {
+                contact: {
+                    full_name: { required },
+                    email: { required, email },
+                    phone: { 
+                        required,
+                        numeric,
+                        minLength: minLength(7),
+                        maxLength: maxLength(13)
+                    },
+                    message: { required }
+                }
+            }
         },
         setup() {
             useMeta({
