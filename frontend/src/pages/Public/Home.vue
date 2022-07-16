@@ -6,23 +6,23 @@
                 <div class="row gx-5 align-items-center justify-content-center">
                     <div class="col-lg-8 col-xl-7 col-xxl-6">
                         <div class="my-5 text-center text-xl-start">
-                            <h1 class="display-5 fw-bolder text-white mb-2">{{ this.getContentByKey('page-home-header-heading', contents) }}
+                            <h1 class="display-5 fw-bolder text-white mb-2">{{ helper.getContentByKey('page-home-header-heading', contents) }}
                             </h1>
-                            <p class="lead fw-normal text-white-50 mb-4">{{ this.getContentByKey('page-home-header-information', contents) }}
+                            <p class="lead fw-normal text-white-50 mb-4">{{ helper.getContentByKey('page-home-header-information', contents) }}
                             </p>
                             <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                                 <router-link to="/contact" class="btn btn-primary btn-lg px-4 me-sm-3">
-                                    {{ this.getContentByKey('page-home-header-button1', contents) }}
+                                    {{ helper.getContentByKey('page-home-header-button1', contents) }}
                                 </router-link>
                                  <router-link to="/about" class="btn btn-outline-light btn-lg px-4">
-                                   {{ this.getContentByKey('page-home-header-button2', contents) }}
+                                   {{ helper.getContentByKey('page-home-header-button2', contents) }}
                                 </router-link>
 
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5"
-                            :src="this.getContentByKey('page-home-header-image', contents)" alt="..." /></div>
+                            :src="helper.getContentByKey('page-home-header-image', contents)" alt="..." /></div>
                 </div>
             </div>
         </header>
@@ -31,7 +31,7 @@
             <div class="container px-5 my-5">
                 <div class="row gx-5">
                     <div class="col-lg-4 mb-5 mb-lg-0">
-                        <h2 class="fw-bolder mb-0">{{ this.getContentByKey('page-home-feature-section-title', contents) }}</h2>
+                        <h2 class="fw-bolder mb-0">{{ helper.getContentByKey('page-home-feature-section-title', contents) }}</h2>
                     </div>
                     <div class="col-lg-8">
                         <div class="row gx-5 row-cols-1 row-cols-md-2">
@@ -52,14 +52,14 @@
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-10 col-xl-7">
                         <div class="text-center">
-                            <div class="fs-4 mb-4 fst-italic">"{{ this.getContentByKey('page-home-testimonial-content', contents) }}"</div>
+                            <div class="fs-4 mb-4 fst-italic">"{{ helper.getContentByKey('page-home-testimonial-content', contents) }}"</div>
                             <div class="d-flex align-items-center justify-content-center">
-                                <img class="rounded-circle me-3" width="85" :src="this.getContentByKey('page-home-testimonial-image', contents)"
+                                <img class="rounded-circle me-3" width="85" :src="helper.getContentByKey('page-home-testimonial-image', contents)"
                                     alt="..." />
                                 <div class="fw-bold">
-                                    {{ this.getContentByKey('page-home-testimonial-name', contents) }}
+                                    {{ helper.getContentByKey('page-home-testimonial-name', contents) }}
                                     <span class="fw-bold text-primary mx-1">/</span>
-                                    {{ this.getContentByKey('page-home-testimonial-position', contents) }}, {{ this.getContentByKey('page-home-testimonial-company', contents) }}
+                                    {{ helper.getContentByKey('page-home-testimonial-position', contents) }}, {{ helper.getContentByKey('page-home-testimonial-company', contents) }}
                                 </div>
                             </div>
                         </div>
@@ -73,8 +73,8 @@
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6">
                         <div class="text-center">
-                            <h2 class="fw-bolder">{{ this.getContentByKey('page-home-blog-title', contents) }}</h2>
-                            <p class="lead fw-normal text-muted mb-5">{{ this.getContentByKey('page-home-blog-subtitle', contents) }}</p>
+                            <h2 class="fw-bolder">{{ helper.getContentByKey('page-home-blog-title', contents) }}</h2>
+                            <p class="lead fw-normal text-muted mb-5">{{ helper.getContentByKey('page-home-blog-subtitle', contents) }}</p>
                         </div>
                     </div>
                 </div>
@@ -162,8 +162,8 @@
                     <div
                         class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
                         <div class="mb-4 mb-xl-0">
-                            <div class="fs-3 fw-bold text-white">{{ this.getContentByKey('page-home-call-to-action-info1', contents) }}</div>
-                            <div class="text-white-50">{{ this.getContentByKey('page-home-call-to-action-info2', contents) }}</div>
+                            <div class="fs-3 fw-bold text-white">{{ helper.getContentByKey('page-home-call-to-action-info1', contents) }}</div>
+                            <div class="text-white-50">{{ helper.getContentByKey('page-home-call-to-action-info2', contents) }}</div>
                         </div>
                         <div class="ms-xl-4">
                             <div class="input-group mb-2">
@@ -171,7 +171,7 @@
                                     aria-label="Email address..." aria-describedby="button-newsletter" />
                                 <button class="btn btn-outline-light" id="button-newsletter" type="button">Sign up</button>
                             </div>
-                            <div class="small text-white-50">{{ this.getContentByKey('page-home-call-to-action-info3', contents) }}</div>
+                            <div class="small text-white-50">{{ helper.getContentByKey('page-home-call-to-action-info3', contents) }}</div>
                         </div>
                     </div>
                 </aside>
@@ -182,10 +182,13 @@
 </template>
 
 <script>
+
     import { useMeta } from 'vue-meta'
     import { mapState, mapActions } from 'vuex'
     import Layout from "../../components/Public/Layout.vue"
     import Footer from "../../components/Public/Footer.vue"
+    import helper from "../../helpers/index"
+
     export default {
         name: "Home",
         components: {
@@ -198,19 +201,17 @@
                 features: state=> state.publication.features
             })
         },
+        data(){
+            return {
+                helper: helper
+            }
+        },
         mounted() {
             this.getContent()
             this.getFeature()
         },
         methods: {
-            ...mapActions('publication', [ 'getContent', 'getFeature']),
-            getContentByKey(key, arr){
-                if(arr.length > 0){
-                    let obj = arr.find(o => o.key_name === key);
-                    return obj ? obj.key_value : key
-                }
-                return key
-            }
+            ...mapActions('publication', [ 'getContent', 'getFeature'])
         },
         setup(){
             useMeta({  title: 'Home' })

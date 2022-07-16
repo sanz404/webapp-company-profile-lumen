@@ -42,4 +42,12 @@ function getBase64(file) {
     });
   }
 
-export default { authHeader, setDataTable, getBase64 }
+  function  getContentByKey(key, arr){
+    if(arr.length > 0){
+        let obj = arr.find(o => o.key_name === key);
+        return obj ? obj.key_value : key
+    }
+    return key
+}
+
+export default { authHeader, setDataTable, getBase64, getContentByKey }
