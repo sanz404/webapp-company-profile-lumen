@@ -1,7 +1,7 @@
 <template>
   <Bar
     :chart-options="chartOptions"
-    :chart-data="chartData"
+    :chart-data="dataChart"
     :chart-id="chartId"
     :dataset-id-key="datasetIdKey"
     :plugins="plugins"
@@ -22,6 +22,10 @@ export default {
   name: 'BarChart',
   components: { Bar },
   props: {
+    dataChart:{
+      type: Object,
+      default: () => {}
+    },
     chartId: {
       type: String,
       default: 'bar-chart'
@@ -53,10 +57,6 @@ export default {
   },
   data() {
     return {
-      chartData: {
-        labels: [ 'January', 'February', 'March' ],
-        datasets: [ { label: 'My First Dataset',  data: [40, 20, 12] } ]
-      },
       chartOptions: {
         responsive: true
       }

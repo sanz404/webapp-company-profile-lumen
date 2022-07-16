@@ -94,18 +94,18 @@
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-white">
                         <i class="fas fa-chart-pie me-1"></i>
-                        Pie Chart Example
+                        Project By Category
                     </div>
-                    <div class="card-body"><PieChart :height="383" /></div>
+                    <div class="card-body"><PieChart :height="383" :dataChart="pieChart" /></div>
                 </div>
             </div>
             <div class="col-xl-6">
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-white">
                         <i class="fas fa-chart-bar me-1"></i>
-                        Bar Chart Example
+                        Article on this year
                     </div>
-                    <div class="card-body"><BarChart :height="200"  /></div>
+                    <div class="card-body"><BarChart :height="200" :dataChart="barChart"  /></div>
                 </div>
             </div>
         </div>
@@ -152,6 +152,8 @@
         computed: {
             ...mapState({
                 dashboard: state=> state.dashboard.data,
+                barChart: state=> state.dashboard.data.bar_chart,
+                pieChart: state=> state.dashboard.data.pie_chart
             })
         },
         mounted() {
