@@ -37,7 +37,7 @@
                     Contact
                 </router-link>
                  <router-link to="/admin/message/list" class="nav-link">
-                    <div class="sb-nav-link-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="sb-nav-link-icon"><i class="fas fa-phone-square-alt"></i></div>
                     Message
                 </router-link>
                 <router-link to="/admin/team/list" class="nav-link">

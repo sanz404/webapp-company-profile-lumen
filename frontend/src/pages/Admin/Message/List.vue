@@ -110,9 +110,6 @@
                     if (e.target.classList.contains('btn-view')) {
                         this.$router.push({ path: '/admin/message/detail/'+id});
                     }
-                    if (e.target.classList.contains('btn-delete')) {
-                        this.deleteConfirm(id)
-                    }
                 }
             }
         },

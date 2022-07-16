@@ -130,6 +130,7 @@ $app->router->group([
     require __DIR__.'/../routes/main/product.php';
     require __DIR__.'/../routes/main/project.php';
     require __DIR__.'/../routes/main/article.php';
+    require __DIR__.'/../routes/main/dashboard.php';
     require __DIR__.'/../routes/main/categories/article.php';
     require __DIR__.'/../routes/main/categories/product.php';
     require __DIR__.'/../routes/main/categories/project.php';
