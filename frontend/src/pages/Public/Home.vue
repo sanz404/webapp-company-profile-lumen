@@ -205,8 +205,11 @@
         methods: {
             ...mapActions('publication', [ 'getContent', 'getFeature']),
             getContentByKey(key, arr){
-                let obj = arr.find(o => o.key_name === key);
-                return obj ? obj.key_value : key
+                if(arr.length > 0){
+                    let obj = arr.find(o => o.key_name === key);
+                    return obj ? obj.key_value : key
+                }
+                return key
             }
         },
         setup(){
