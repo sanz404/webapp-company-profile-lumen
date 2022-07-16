@@ -31,7 +31,7 @@ class Article extends Model  {
     }
 
     public function Categories() {
-        return $this->belongsToMany(CategoryArticle::class, "articles_categories");
+        return $this->belongsToMany(CategoryArticle::class, "articles_categories", "article_id", "category_id");
     }
 
     public function getBySlug($slug){

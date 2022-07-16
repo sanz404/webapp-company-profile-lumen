@@ -23,6 +23,12 @@
                            <span v-if="file_error" class="invalid-feedback"> {{ file_error_message }} </span>
                         </div>
                     </div>
+                     <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Categories</label>
+                        <div class="col-sm-10">
+                            <v-select multiple  :options="categories" v-model="article.categorySelected" :disabled="status.sendRequest" :class="{ 'is-invalid': submitted  }"></v-select>
+                        </div>
+                    </div>
                     <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Title <span class="text-danger">*</span></label>
                         <div class="col-sm-10">
@@ -101,7 +107,8 @@
                     title: "",
                     content: "",
                     is_published: 0,
-                    image: ""
+                    image: "",
+                    categorySelected:[]
                 },
                 editor: ClassicEditor,
                 editorConfig: { },
@@ -112,16 +119,23 @@
         computed: {
             ...mapState('article', ['status']),
             ...mapState({
-                alert: state => state.alert
+                alert: state => state.alert,
+                categories: state=> state.article.articleCategories,
             })
         },
         created() { 
            this.alert.message = ''
         },
+        mounted() {
+            this.getCategories()
+        },
         methods: {
-            ...mapActions('article', ['create']),
             ...mapActions({
-                clearAlert: 'alert/clear' 
+                clearAlert: 'alert/clear'
+            }),
+            ...mapActions('article', {
+                create: 'create',
+                getCategories: 'categories'
             }),
             handleSubmit(e) {
                 this.submitted = true;

@@ -32,6 +32,13 @@
                         </div>
                     </div>
 
+                    <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Categories</label>
+                        <div class="col-sm-10">
+                            <v-select multiple  :options="categories" v-model="article.categorySelected" :disabled="status.sendRequest" :class="{ 'is-invalid': submitted  }"></v-select>
+                        </div>
+                    </div>
+
                      <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Title <span class="text-danger">*</span></label>
                         <div class="col-sm-10">
@@ -126,6 +133,7 @@
                 alert: state => state.alert,
                 status: state=> state.article.status,
                 article: state=> state.article.data,
+                categories: state=> state.article.articleCategories
 
             })
         },
@@ -134,11 +142,13 @@
         },
         mounted() {
             this.getArticle(this.param)
+            this.getCategories()
         },
         methods: {
             ...mapActions('article', {
                 getArticle: 'detail',
-                updateArticle: 'update'
+                updateArticle: 'update',
+                getCategories: 'categories'
             }),
             ...mapActions({
                 clearAlert: 'alert/clear' 

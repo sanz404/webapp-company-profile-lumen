@@ -27,6 +27,13 @@
                             </template>
                         </div>
                     </div>
+                    
+                     <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Categories </label>
+                        <div class="col-sm-10">
+                            <v-select multiple  :options="articleCategories" v-model="article.categorySelected" :disabled="true"></v-select>
+                        </div>
+                    </div>
                     <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Title </label>
                         <div class="col-sm-10">
@@ -87,6 +94,7 @@
                 alert: state => state.alert,
                 status: state=> state.article.status,
                 article: state=> state.article.data,
+                articleCategories: state=> state.article.data.categorySelected,
                 article_status: state=> parseInt(state.article.data.is_published) === 1 ? 'Published' : 'Draft'
             })
         },

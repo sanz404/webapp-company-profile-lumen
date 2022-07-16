@@ -54,6 +54,12 @@ class ArticleController extends AppController{
         }
 
         $data->save();
+
+        if($request->get("categories")){
+            $categories = $request->get("categories");
+            $data->Categories()->sync($categories);
+        }
+
         $response = array(
             "message"=> "Data has been created !",
             "data"=> $data
@@ -69,6 +75,15 @@ class ArticleController extends AppController{
             return abort(404);
         }
 
+        $categories = array();
+        $categoriesSelected = $data->Categories()->get();
+        foreach($categoriesSelected as $row){
+            $categories[] = array(
+                "code"=> $row->id,
+                "label"=> $row->name
+            );
+        }
+        $data->categorySelected = $categories;
         $response = array(
             "message"=> "Data has been founded !",
             "data"=> $data
@@ -104,6 +119,13 @@ class ArticleController extends AppController{
         $data->content = $request->get("content");
         $data->image = $imagePath;
         $data->save();
+
+        if($request->get("categories")){
+            $categories = $request->get("categories");
+            $data->Categories()->sync($categories);
+        }else{
+            $data->Categories()->sync([]);
+        }
 
         $response = array(
             "message"=> "Data has been updated !",

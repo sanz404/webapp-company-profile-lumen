@@ -15,12 +15,27 @@ const mutations = {
         state.data = {};
         state.status = {};
     },
+    setArticleCategoriesSuccess(state, data){
+        state.articleCategories = data
+        state.status = {};
+    },
+    setArticleCategoriesFailure(state){
+        state.articleCategories = {};
+        state.status = {};
+    },
     submit(state) {
         state.status = { sendRequest: true };
     },
 }
 
 const actions = {
+    categories({ commit }) {
+        articleService.categoriesArticle()
+            .then(
+                response => commit('setArticleCategoriesSuccess', response),
+                error => commit('setArticleCategoriesFailure', error)
+            );
+    },
     detail({ commit }, id) {
         articleService.detailArticle(id)
             .then(
@@ -45,6 +60,15 @@ const actions = {
     },
     create({ dispatch, commit }, data) {
         commit('submit', data);
+        let categories = []
+        if(data.categorySelected){
+            let i = 0
+            while(i < data.categorySelected.length){
+                categories[i] = data.categorySelected[i].code
+                i++;
+            }
+        }
+        data.categories = categories
         articleService.createArticle(data)
             .then(
                 response => {
@@ -62,6 +86,15 @@ const actions = {
     },
     update({ dispatch, commit }, data) {
         commit('submit', data.article);
+        let categories = []
+        if(data.article.categorySelected){
+            let i = 0
+            while(i < data.article.categorySelected.length){
+                categories[i] = data.article.categorySelected[i].code
+                i++;
+            }
+        }
+        data.article.categories = categories
         articleService.updateArticle(data.article, data.param)
             .then(
                 response => {
