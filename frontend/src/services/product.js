@@ -11,48 +11,48 @@ function handleResponse(response) {
     });
 }
 
-function categoriesFaq() {
+function categoriesProduct() {
     const requestOptions = {
         method: 'GET',
         headers: helper.authHeader()
     };
-    return fetch(`${process.env.VUE_APP_SERVICE}/main/faqs/categories`, requestOptions).then(handleResponse);
+    return fetch(`${process.env.VUE_APP_SERVICE}/main/products/categories`, requestOptions).then(handleResponse);
 }
 
 
-function detailFaq(id) {
+function detailProduct(id) {
     const requestOptions = {
         method: 'GET',
         headers: helper.authHeader()
     };
-    return fetch(`${process.env.VUE_APP_SERVICE}/main/faqs/detail/`+id, requestOptions).then(handleResponse);
+    return fetch(`${process.env.VUE_APP_SERVICE}/main/products/detail/`+id, requestOptions).then(handleResponse);
 }
 
-function deleteFaq(id) {
+function deleteProduct(id) {
     const requestOptions = {
         method: 'DELETE',
         headers: helper.authHeader()
     };
-    return fetch(`${process.env.VUE_APP_SERVICE}/main/faqs/delete/`+id, requestOptions).then(handleResponse);
+    return fetch(`${process.env.VUE_APP_SERVICE}/main/products/delete/`+id, requestOptions).then(handleResponse);
 }
 
 
-function createFaq(data) {
+function createProduct(data) {
     const requestOptions = {
         method: 'POST',
         headers: helper.authHeader(),
         body: JSON.stringify(data)
     };
-    return fetch(`${process.env.VUE_APP_SERVICE}/main/faqs/create`, requestOptions).then(handleResponse);
+    return fetch(`${process.env.VUE_APP_SERVICE}/main/products/create`, requestOptions).then(handleResponse);
 }
 
-function updateFaq(data, id) {
+function updateProduct(data, id) {
     const requestOptions = {
         method: 'PUT',
         headers: helper.authHeader(),
         body: JSON.stringify(data)
     };
-    return fetch(`${process.env.VUE_APP_SERVICE}/main/faqs/update/`+id, requestOptions).then(handleResponse);
+    return fetch(`${process.env.VUE_APP_SERVICE}/main/products/update/`+id, requestOptions).then(handleResponse);
 }
 
-export default { detailFaq, deleteFaq, createFaq, updateFaq, categoriesFaq }
+export default { detailProduct, deleteProduct, createProduct, updateProduct, categoriesProduct }

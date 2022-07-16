@@ -4,7 +4,7 @@
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><router-link to="/admin/dashboard">Home</router-link></li>
             <li class="breadcrumb-item"><a href="#">Reference</a></li>
-            <li class="breadcrumb-item"><router-link to="/admin/faq/list">{{ title }}</router-link></li>
+            <li class="breadcrumb-item"><router-link to="/admin/product/list">{{ title }}</router-link></li>
             <li class="breadcrumb-item active">Create</li>
         </ol>
          <div v-if="alert.message" :class="`alert alert-dismissible fade show ${alert.type}`" role="alert">
@@ -19,39 +19,46 @@
                     <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Category <span class="text-danger">*</span></label>
                         <div class="col-sm-10">
-                            <v-select :options="categories" v-model="faq.categorySelected" :disabled="status.sendRequest" :class="{ 'is-invalid': submitted && v$.faq.categorySelected.$error }"></v-select>
-                             <span v-if="v$.faq.categorySelected.$error" class="invalid-feedback"> {{ v$.faq.categorySelected.$errors[0].$message }} </span>
+                            <v-select :options="categories" v-model="product.categorySelected" :disabled="status.sendRequest" :class="{ 'is-invalid': submitted && v$.product.categorySelected.$error }"></v-select>
+                             <span v-if="v$.product.categorySelected.$error" class="invalid-feedback"> {{ v$.product.categorySelected.$errors[0].$message }} </span>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label  class="col-sm-2 col-form-label">Question <span class="text-danger">*</span></label>
+                        <label  class="col-sm-2 col-form-label">Image</label>
                         <div class="col-sm-10">
-                            <input type="text" v-model="faq.question"  class="form-control" :disabled="status.sendRequest" :class="{ 'is-invalid': submitted && v$.faq.question.$error }">
-                            <span v-if="v$.faq.question.$error" class="invalid-feedback"> {{ v$.faq.question.$errors[0].$message }} </span>
+                           <input type="file" class="form-control" v-on:change="handleFileUpload" accept="image/*" :disabled="status.sendRequest" :class="{ 'is-invalid': file_error }" />
+                           <span v-if="file_error" class="invalid-feedback"> {{ file_error_message }} </span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Name <span class="text-danger">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" v-model="product.name"  class="form-control" :disabled="status.sendRequest" :class="{ 'is-invalid': submitted && v$.product.name.$error }">
+                            <span v-if="v$.product.name.$error" class="invalid-feedback"> {{ v$.product.name.$errors[0].$message }} </span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Price <span class="text-danger">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="number" v-model="product.price" step="any" min="0" class="form-control" :disabled="status.sendRequest" :class="{ 'is-invalid': submitted && v$.product.price.$error }">
+                            <span v-if="v$.product.price.$error" class="invalid-feedback"> {{ v$.product.price.$errors[0].$message }} </span>
                         </div>
                     </div>
                      <div class="row mb-3">
-                        <label  class="col-sm-2 col-form-label">Answer <span class="text-danger">*</span></label>
+                        <label  class="col-sm-2 col-form-label">Description</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" v-model="faq.answer" rows="6" :disabled="status.sendRequest" :class="{ 'is-invalid': submitted && v$.faq.answer.$error }"></textarea>
-                            <span v-if="v$.faq.answer.$error" class="invalid-feedback"> {{ v$.faq.answer.$errors[0].$message }} </span>
-                        </div>
-                    </div>
-                     <div class="row mb-3">
-                        <label  class="col-sm-2 col-form-label">Sort</label>
-                        <div class="col-sm-10">
-                            <input type="number" v-model="faq.sort"  class="form-control" :disabled="status.sendRequest">
+                            <textarea class="form-control" v-model="product.description" rows="6" :disabled="status.sendRequest"></textarea>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Status</label>
                         <div class="col-sm-10">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" value="1" v-model="faq.is_published">
+                                <input class="form-check-input" type="radio" value="1" v-model="product.is_published">
                                 <label class="form-check-label" for="inlineRadio1">Published</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" value="0" v-model="faq.is_published">
+                                <input class="form-check-input" type="radio" value="0" v-model="product.is_published">
                                 <label class="form-check-label text-nowrap" for="inlineRadio2">Draft</label>
                             </div>
                         </div>
@@ -59,7 +66,7 @@
                 </div>
                 <div class="card-footer clearfix">
                     <div class="float-start">
-                         <router-link to="/admin/faq/list" data-bs-toggle="tooltip" data-bs-placement="top" title="Back To List" class="btn btn-secondary">
+                         <router-link to="/admin/product/list" data-bs-toggle="tooltip" data-bs-placement="top" title="Back To List" class="btn btn-secondary">
                             <i class="fas fa-arrow-left"></i>&nbsp;Back To List
                         </router-link>
                         &nbsp;
@@ -87,11 +94,12 @@
     import { mapState, mapActions } from 'vuex'
     import useValidate from '@vuelidate/core'
     import { required } from '@vuelidate/validators'
+    import helper from "../../../helpers/index"
 
-    const SITE_TITLE = "Faq";
+    const SITE_TITLE = "Product";
 
     export default {
-        name: "CreateFaq",
+        name: "CreateProduct",
         components: {
             Layout
         },
@@ -100,20 +108,23 @@
                 title: SITE_TITLE,
                 submitted: false,
                 v$: useValidate(),
-                faq:{
-                    question: "",
-                    answer: "",
-                    sort: 0,
+                product:{
+                    name: "",
+                    price: 0,
+                    description: "",
                     is_published: 0,
-                    categorySelected: { code: "", label: "" }
-                }
+                    categorySelected: { code: "", label: "" },
+                    image: ""
+                },
+                file_error: false,
+                file_error_message: ""
             }
         },
         computed: {
-            ...mapState('faq', ['status']),
+            ...mapState('product', ['status']),
             ...mapState({
                 alert: state => state.alert,
-                categories: state=> state.faq.faqCategories,
+                categories: state=> state.product.productCategories,
             })
         },
         created() { 
@@ -126,16 +137,42 @@
             ...mapActions({
                 clearAlert: 'alert/clear',
             }),
-            ...mapActions('faq', {
+            ...mapActions('product', {
                 create: 'create',
                 getCategories: 'categories'
             }),
             handleSubmit(e) {
                 this.submitted = true;
-                this.v$.faq.$validate()
-                if (!this.v$.faq.$error) {
-                    this.create(this.faq)
+                this.v$.product.$validate()
+                if (!this.v$.product.$error) {
+                    this.create(this.product)
                 } 
+            },
+             handleFileUpload(e){
+                if(e.target.files){
+                    let files = e.target.files
+                    if(files[0]){
+                        let fileSelected = files[0]
+                        let fileSize = fileSelected.size / 1024 / 1024;
+                        if (!fileSelected.name.match(/.(jpg|jpeg|png|gif)$/i)){
+                            e.target.value = ""
+                            this.product.image = ""
+                            this.file_error = true
+                            this.file_error_message = "The file must be an image."
+                        }else if(fileSize > 2){
+                            e.target.value = ""
+                            this.product.image = ""
+                            this.file_error = true
+                            this.file_error_message = "Maximum upload file size: 2MB."
+                        }else{
+                            this.file_error = false
+                            this.file_error_message = ""
+                            helper.getBase64(fileSelected).then(
+                                data => this.product.image = data
+                            );
+                        }
+                    }
+                }
             }
         },
         setup() {
@@ -151,10 +188,10 @@
         },
         validations() {
             return {
-                faq: {
+                product: {
                     categorySelected: { required },
-                    question: { required },
-                    answer: { required }
+                    name: { required },
+                    price: { required }
                 }
             }
         },

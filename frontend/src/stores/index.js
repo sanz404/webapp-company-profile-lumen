@@ -5,17 +5,21 @@ import contact from './modules/contact';
 import content from './modules/content';
 import faq from './modules/faq';
 import team from './modules/team';
+import about from './modules/about';
 import feature from './modules/feature';
+import product from './modules/product';
 import message from './modules/message';
 import user from './modules/user';
 import notification from './modules/notification';
 import categoryArticle from './modules/categoryArticle';
 import categoryProduct from './modules/categoryProduct';
 import categoryProject from './modules/categoryProject';
+import categoryFaq from './modules/categoryFaq';
 
 export default { 
     alert, 
     auth, 
+    about,
     account, 
     contact, 
     content,
@@ -23,9 +27,11 @@ export default {
     faq,
     team,
     feature,
+    product,
     user, 
     notification,
     categoryArticle,
     categoryProduct,
-    categoryProject
+    categoryProject,
+    categoryFaq
 }

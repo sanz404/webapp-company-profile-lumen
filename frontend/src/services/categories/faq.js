@@ -1,4 +1,4 @@
-import helper from "../helpers/index"
+import helper from "../../helpers/index"
 
 function handleResponse(response) {
     return response.text().then(text => {
@@ -11,21 +11,12 @@ function handleResponse(response) {
     });
 }
 
-function categoriesFaq() {
-    const requestOptions = {
-        method: 'GET',
-        headers: helper.authHeader()
-    };
-    return fetch(`${process.env.VUE_APP_SERVICE}/main/faqs/categories`, requestOptions).then(handleResponse);
-}
-
-
 function detailFaq(id) {
     const requestOptions = {
         method: 'GET',
         headers: helper.authHeader()
     };
-    return fetch(`${process.env.VUE_APP_SERVICE}/main/faqs/detail/`+id, requestOptions).then(handleResponse);
+    return fetch(`${process.env.VUE_APP_SERVICE}/main/categories/faq/detail/`+id, requestOptions).then(handleResponse);
 }
 
 function deleteFaq(id) {
@@ -33,7 +24,7 @@ function deleteFaq(id) {
         method: 'DELETE',
         headers: helper.authHeader()
     };
-    return fetch(`${process.env.VUE_APP_SERVICE}/main/faqs/delete/`+id, requestOptions).then(handleResponse);
+    return fetch(`${process.env.VUE_APP_SERVICE}/main/categories/faq/delete/`+id, requestOptions).then(handleResponse);
 }
 
 
@@ -43,7 +34,7 @@ function createFaq(data) {
         headers: helper.authHeader(),
         body: JSON.stringify(data)
     };
-    return fetch(`${process.env.VUE_APP_SERVICE}/main/faqs/create`, requestOptions).then(handleResponse);
+    return fetch(`${process.env.VUE_APP_SERVICE}/main/categories/faq/create`, requestOptions).then(handleResponse);
 }
 
 function updateFaq(data, id) {
@@ -52,7 +43,7 @@ function updateFaq(data, id) {
         headers: helper.authHeader(),
         body: JSON.stringify(data)
     };
-    return fetch(`${process.env.VUE_APP_SERVICE}/main/faqs/update/`+id, requestOptions).then(handleResponse);
+    return fetch(`${process.env.VUE_APP_SERVICE}/main/categories/faq/update/`+id, requestOptions).then(handleResponse);
 }
 
-export default { detailFaq, deleteFaq, createFaq, updateFaq, categoriesFaq }
+export default { detailFaq, deleteFaq, createFaq, updateFaq }

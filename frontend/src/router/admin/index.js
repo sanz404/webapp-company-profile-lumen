@@ -7,16 +7,20 @@ import Faq from "./faq"
 import Feature from "./feature"
 import Message from "./message"
 import Team from "./team"
+import About from "./about"
+import Product from "./product"
 import User from "./user"
 import Notification from "./notification"
 import CategoryArticle from "../../router/admin/categories/article"
 import CategoryProduct from "../../router/admin/categories/product"
 import CategoryProject from "../../router/admin/categories/project"
+import CategoryFaq from "../../router/admin/categories/faq"
 
 export default [
     ...Contact,
     ...Content,
     ...Feature,
+    ...About,
     ...Team,
     ...Faq,
     ...User,
@@ -24,7 +28,9 @@ export default [
     ...CategoryArticle,
     ...CategoryProduct,
     ...CategoryProject,
+    ...CategoryFaq,
     ...Message,
+    ...Product,
     {
         path: "/admin/dashboard",
         name: "AdminDashboard",

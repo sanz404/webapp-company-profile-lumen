@@ -15,6 +15,7 @@
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <router-link to="/admin/categories/article/list" class="nav-link">Article</router-link>
+                        <router-link to="/admin/categories/faq/list" class="nav-link">Faq</router-link>
                         <router-link to="/admin/categories/product/list" class="nav-link">Product</router-link>
                         <router-link to="/admin/categories/project/list" class="nav-link">Project</router-link>
                     </nav>
@@ -22,6 +23,10 @@
                 <router-link to="/admin/content/list" class="nav-link">
                     <div class="sb-nav-link-icon"><i class="fas fa-laptop"></i></div>
                     Content
+                </router-link>
+                <router-link to="/admin/about/list" class="nav-link">
+                    <div class="sb-nav-link-icon"><i class="fas fa-clone"></i></div>
+                    About Page
                 </router-link>
                 <router-link to="/admin/article/list" class="nav-link">
                     <div class="sb-nav-link-icon"><i class="fas fa-clipboard"></i></div>
@@ -35,11 +40,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-envelope"></i></div>
                     Message
                 </router-link>
-                 <router-link to="/admin/service/list" class="nav-link">
-                    <div class="sb-nav-link-icon"><i class="fas fa-gift"></i></div>
-                    Service
-                </router-link>
-                  <router-link to="/admin/team/list" class="nav-link">
+                <router-link to="/admin/team/list" class="nav-link">
                     <div class="sb-nav-link-icon"><i class="fas fa-user-circle"></i></div>
                     Team
                 </router-link>
@@ -48,7 +49,7 @@
                     Faq
                 </router-link>
                  <router-link to="/admin/feature/list" class="nav-link">
-                    <div class="sb-nav-link-icon"><i class="fas fa-check"></i></div>
+                    <div class="sb-nav-link-icon"><i class="fas fa-outdent"></i></div>
                     Feature
                 </router-link>
                  <router-link to="/admin/product/list" class="nav-link">

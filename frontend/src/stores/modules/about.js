@@ -1,31 +1,18 @@
-import FaqService from '../../services/faq';
+import aboutService from '../../services/about';
 import router from '../../router'
 
 const state = {
     status: {},
-    data: {},
-    faqCategories:[]
+    data: {}
 }
 
 const mutations = {
-    setFaqSuccess(state, data){
-        data.categorySelected = {
-            code : data.category ? data.category.id : "",
-            label : data.category ? data.category.name : "",
-        }
+    setAboutSuccess(state, data){
         state.data = data
         state.status = {};
     },
-    setFaqFailure(state){
+    setAboutFailure(state){
         state.data = {};
-        state.status = {};
-    },
-    setFaqCategoriesSuccess(state, data){
-        state.faqCategories = data
-        state.status = {};
-    },
-    setFaqCategoriesFailure(state){
-        state.faqCategories = {};
         state.status = {};
     },
     submit(state) {
@@ -34,67 +21,58 @@ const mutations = {
 }
 
 const actions = {
-    categories({ commit }) {
-        FaqService.categoriesFaq()
-            .then(
-                response => commit('setFaqCategoriesSuccess', response),
-                error => commit('setFaqCategoriesFailure', error)
-            );
-    },
     detail({ commit }, id) {
-        FaqService.detailFaq(id)
+        aboutService.detailAbout(id)
             .then(
-                response => commit('setFaqSuccess', response.data),
-                error => commit('setFaqFailure', error)
+                response => commit('setAboutSuccess', response.data),
+                error => commit('setAboutFailure', error)
             );
     },
     delete({ dispatch, commit }, id) {
-        FaqService.deleteFaq(id)
+        aboutService.deleteAbout(id)
             .then(
                 response => {
-                    commit('setFaqSuccess', response.data);
+                    commit('setAboutSuccess', response.data);
                     setTimeout(() => {
                         dispatch('alert/success', 'Your record has been delete !!', { root: true });
                     })
                 },
                 error => {
-                    commit('setFaqFailure', error);
+                    commit('setAboutFailure', error);
                     dispatch('alert/error', error, { root: true });
                 }
             );
     },
     create({ dispatch, commit }, data) {
         commit('submit', data);
-        data.category_id = data.categorySelected.code
-        FaqService.createFaq(data)
+        aboutService.createAbout(data)
             .then(
                 response => {
-                    commit('setFaqSuccess', response.data);
+                    commit('setAboutSuccess', response.data);
                     setTimeout(() => {
                         dispatch('alert/success', 'Your record has been created !!', { root: true });
                     })
-                    router.push('/admin/faq/detail/'+response.data.id);
+                    router.push('/admin/about/detail/'+response.data.id);
                 },
                 error => {
-                    commit('setFaqFailure', error);
+                    commit('setAboutFailure', error);
                     dispatch('alert/error', error, { root: true });
                 }
             );
     },
     update({ dispatch, commit }, data) {
-        commit('submit', data.faq);
-        data.faq.category_id = data.faq.categorySelected.code
-        FaqService.updateFaq(data.faq, data.param)
+        commit('submit', data.about);
+        aboutService.updateAbout(data.about, data.param)
             .then(
                 response => {
-                    commit('setFaqSuccess', response.data);
+                    commit('setAboutSuccess', response.data);
                     setTimeout(() => {
                         dispatch('alert/success', 'Your record has been updated !!', { root: true });
                     })
-                    router.push('/admin/faq/detail/'+data.param);
+                    router.push('/admin/about/detail/'+data.param);
                 },
                 error => {
-                    commit('setFaqFailure', error);
+                    commit('setAboutFailure', error);
                     dispatch('alert/error', error, { root: true });
                 }
             );
@@ -102,11 +80,11 @@ const actions = {
 }
 
 
-const faq = {
+const about = {
     namespaced : true,
     state,
     actions,
     mutations
 }
 
-export default faq
+export default about

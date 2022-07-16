@@ -1,31 +1,32 @@
-import FaqService from '../../services/faq';
+import ProductService from '../../services/product';
 import router from '../../router'
 
 const state = {
     status: {},
     data: {},
-    faqCategories:[]
+    productCategories:[]
 }
 
 const mutations = {
-    setFaqSuccess(state, data){
+    setProductSuccess(state, data){
         data.categorySelected = {
             code : data.category ? data.category.id : "",
             label : data.category ? data.category.name : "",
         }
+        data.price = parseFloat(data.price)
         state.data = data
         state.status = {};
     },
-    setFaqFailure(state){
+    setProductFailure(state){
         state.data = {};
         state.status = {};
     },
-    setFaqCategoriesSuccess(state, data){
-        state.faqCategories = data
+    setProductCategoriesSuccess(state, data){
+        state.productCategories = data
         state.status = {};
     },
-    setFaqCategoriesFailure(state){
-        state.faqCategories = {};
+    setProductCategoriesFailure(state){
+        state.productCategories = {};
         state.status = {};
     },
     submit(state) {
@@ -35,30 +36,30 @@ const mutations = {
 
 const actions = {
     categories({ commit }) {
-        FaqService.categoriesFaq()
+        ProductService.categoriesProduct()
             .then(
-                response => commit('setFaqCategoriesSuccess', response),
-                error => commit('setFaqCategoriesFailure', error)
+                response => commit('setProductCategoriesSuccess', response),
+                error => commit('setProductCategoriesFailure', error)
             );
     },
     detail({ commit }, id) {
-        FaqService.detailFaq(id)
+        ProductService.detailProduct(id)
             .then(
-                response => commit('setFaqSuccess', response.data),
-                error => commit('setFaqFailure', error)
+                response => commit('setProductSuccess', response.data),
+                error => commit('setProductFailure', error)
             );
     },
     delete({ dispatch, commit }, id) {
-        FaqService.deleteFaq(id)
+        ProductService.deleteProduct(id)
             .then(
                 response => {
-                    commit('setFaqSuccess', response.data);
+                    commit('setProductSuccess', response.data);
                     setTimeout(() => {
                         dispatch('alert/success', 'Your record has been delete !!', { root: true });
                     })
                 },
                 error => {
-                    commit('setFaqFailure', error);
+                    commit('setProductFailure', error);
                     dispatch('alert/error', error, { root: true });
                 }
             );
@@ -66,35 +67,35 @@ const actions = {
     create({ dispatch, commit }, data) {
         commit('submit', data);
         data.category_id = data.categorySelected.code
-        FaqService.createFaq(data)
+        ProductService.createProduct(data)
             .then(
                 response => {
-                    commit('setFaqSuccess', response.data);
+                    commit('setProductSuccess', response.data);
                     setTimeout(() => {
                         dispatch('alert/success', 'Your record has been created !!', { root: true });
                     })
-                    router.push('/admin/faq/detail/'+response.data.id);
+                    router.push('/admin/product/detail/'+response.data.id);
                 },
                 error => {
-                    commit('setFaqFailure', error);
+                    commit('setProductFailure', error);
                     dispatch('alert/error', error, { root: true });
                 }
             );
     },
     update({ dispatch, commit }, data) {
-        commit('submit', data.faq);
-        data.faq.category_id = data.faq.categorySelected.code
-        FaqService.updateFaq(data.faq, data.param)
+        commit('submit', data.product);
+        data.product.category_id = data.product.categorySelected.code
+        ProductService.updateProduct(data.product, data.param)
             .then(
                 response => {
-                    commit('setFaqSuccess', response.data);
+                    commit('setProductSuccess', response.data);
                     setTimeout(() => {
                         dispatch('alert/success', 'Your record has been updated !!', { root: true });
                     })
-                    router.push('/admin/faq/detail/'+data.param);
+                    router.push('/admin/product/detail/'+data.param);
                 },
                 error => {
-                    commit('setFaqFailure', error);
+                    commit('setProductFailure', error);
                     dispatch('alert/error', error, { root: true });
                 }
             );
@@ -102,11 +103,11 @@ const actions = {
 }
 
 
-const faq = {
+const product = {
     namespaced : true,
     state,
     actions,
     mutations
 }
 
-export default faq
+export default product

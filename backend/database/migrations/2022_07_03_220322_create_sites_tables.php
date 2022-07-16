@@ -94,10 +94,20 @@ class CreateSitesTables extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id')->index();
             $table->string('name', 64);
-            $table->longText('images')->nullable();
+            $table->text('image')->nullable();
             $table->decimal('price', 18, 4)->default(0)->index();
             $table->longText('description')->nullable();
             $table->tinyInteger('is_published')->default(0)->index();
+            $table->timestamps();
+            $table->softDeletes();
+            $table->engine = 'InnoDB';
+        });
+
+        // category_faqs
+        Schema::create('category_faqs', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name', 64);
+            $table->longText('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->engine = 'InnoDB';
@@ -116,6 +126,7 @@ class CreateSitesTables extends Migration
         // faqs
         Schema::create('faqs', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('category_id')->index();
             $table->string('question', 100);
             $table->longText('answer');
             $table->Integer('sort')->default(0)->index();
@@ -202,6 +213,7 @@ class CreateSitesTables extends Migration
         Schema::dropIfExists('products');
         Schema::dropIfExists('category_products');
         Schema::dropIfExists('faqs');
+        Schema::dropIfExists('category_faqs');
         Schema::dropIfExists('messages');
         Schema::dropIfExists('teams');
         Schema::dropIfExists('contents');

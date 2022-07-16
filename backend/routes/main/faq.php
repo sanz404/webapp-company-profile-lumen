@@ -5,6 +5,13 @@ use Illuminate\Http\Request;
 
 $router->group(['middleware' => 'auth:api'], function ($router){
 
+     // Categories
+    $router->get("main/faqs/categories", function(){
+        $response = new FaqController;
+        return $response->categories();
+    });
+
+
     // List
     $router->post("main/faqs/list",function(Request $request){
         $response = new FaqController;

@@ -4,39 +4,28 @@ namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\AppController;
 use Illuminate\Http\Request;
+use App\Utils\DataTable;
 // load models
-use App\Models\Faq;
 use App\Models\CategoryFaq;
 
-class FaqController extends AppController{
-
-    public function categories(){
-        $data = CategoryFaq::where("id", "<>", 0)
-            ->select(["id as code", "name as label"])
-            ->orderBy("name")
-            ->get();
-        return response()->json($data);
-    }
+class CategoryFaqController extends AppController{
 
 
     public function list(Request $request){
         $postData = $request->all();
-        $data = Faq::getAllData($postData);
+        $columns = array(
+            "id",
+            'name',
+            'description'
+        );
+        $data = DataTable::build($postData, $columns, CategoryFaq::class);
         return response()->json($data);
     }
 
     public function create(Request $request){
-
-        $data = new Faq;
-        $data->question = $request->get("question");
-        $data->answer = $request->get("answer");
-        $data->category_id = $request->get("category_id");
-
-        if($request->get("sort")){
-            $data->sort = $request->get("sort");
-        }
-
-        $data->is_published = $request->get("is_published") ? $request->get("is_published") : 0;
+        $data = new CategoryFaq;
+        $data->name = $request->get("name");
+        $data->description = $request->get("description");
         $data->save();
         $response = array(
             "message"=> "Data has been created !",
@@ -48,12 +37,10 @@ class FaqController extends AppController{
 
     public function detail($id){
 
-        $data = Faq::where("id", $id)->first();
+        $data = CategoryFaq::where("id", $id)->first();
         if(is_null($data)){
             return abort(404);
         }
-
-        $data->category = CategoryFaq::where("id", $data->category_id)->first();
 
         $response = array(
             "message"=> "Data has been founded !",
@@ -64,21 +51,14 @@ class FaqController extends AppController{
 
     public function update($id, Request $request){
 
-        $data = Faq::where("id", $id)->first();
+        $data = CategoryFaq::where("id", $id)->first();
 
         if(is_null($data)){
             return abort(404);
         }
 
-        $data->question = $request->get("question");
-        $data->answer = $request->get("answer");
-        $data->category_id = $request->get("category_id");
-
-        if($request->get("sort")){
-            $data->sort = $request->get("sort");
-        }
-
-        $data->is_published = $request->get("is_published") ? $request->get("is_published") : 0;
+        $data->name = $request->get("name");
+        $data->description = $request->get("description");
         $data->save();
 
         $response = array(
@@ -91,13 +71,13 @@ class FaqController extends AppController{
 
     public function delete($id){
 
-        $data = Faq::where("id", $id)->first();
+        $data = CategoryFaq::where("id", $id)->first();
 
         if(is_null($data)){
             return abort(404);
         }
 
-        Faq::where("id", $id)->delete();
+        CategoryFaq::where("id", $id)->delete();
         $response = array(
             "message"=> "Data has been deleted !",
             "data"=> $data

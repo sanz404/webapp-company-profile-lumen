@@ -12,19 +12,18 @@
             </div>
             <div class="card-body">
                 <div class="clearfix mb-4">
-                    <router-link to="/admin/faq/create" data-bs-toggle="tooltip" data-bs-placement="top" title="Create New" class="btn btn-success float-end">
+                    <router-link to="/admin/about/create" data-bs-toggle="tooltip" data-bs-placement="top" title="Create New" class="btn btn-success float-end">
                         <i class="fas fa-plus"></i>&nbsp;Create New
                     </router-link>
                 </div>
-                <table class="table table-striped" id="table-faq" @click="onClick">
+                <table class="table table-striped" id="table-contact" @click="onClick">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Category</th>
-                            <th>Question</th>
-                            <th>Answer</th>
-                            <th>Sort</th>
-                            <th class="text-center">Status</th>
+                            <th>Image</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Status</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -40,10 +39,10 @@
     import { mapState, mapActions } from 'vuex'
     import helper from '../../../helpers/index'
 
-    const SITE_TITLE = "Faq";
+    const SITE_TITLE = "About";
 
     export default {
-        name: "ListFaq",
+        name: "ListAbout",
         components: {
             Layout
         },
@@ -56,7 +55,7 @@
             this.showDataTable();
         },
         computed: {
-            ...mapState('faq', ['status']),
+            ...mapState('contact', ['status']),
             ...mapState({
                 alert: state => state.alert
             })
@@ -65,7 +64,7 @@
            this.alert.message = ''
         },
         methods:{
-            ...mapActions('faq', ['delete']),
+            ...mapActions('contact', ['delete']),
             ...mapActions({
                 clearAlert: 'alert/clear' 
             }),
@@ -95,8 +94,9 @@
                 );
             },
             showDataTable: function(){
-                let element = "#table-faq";
-                let url = `${process.env.VUE_APP_SERVICE}/main/faqs/list`;
+                let element = "#table-contact";
+                let url = `${process.env.VUE_APP_SERVICE}/main/abouts/list`;
+                let uploadURL = `${process.env.VUE_APP_SERVICE}/uploads`;
                 let  columns = [
                     {
                         "data": "id",
@@ -106,16 +106,21 @@
                         }
                     },
                     {
-                        data: 'category_name',
+                        data: 'image',
+                        render: function (data, type, row, meta) {
+                            let baseUrl = window.location.origin
+                            if(data){
+                                 return `<img src="`+uploadURL+`/`+data+`" width="100" class="img-thumbnail" />`;
+                            }else{  
+                                 return `<img src="`+baseUrl+`/images/no-image.png" width="100" class="img-thumbnail" />`;
+                            }
+                        }
                     },
                     {
-                        data: 'question',
+                        data: 'title',
                     },
                     {
-                        data: 'answer',
-                    },
-                    {
-                        data: 'sort',
+                        data: 'description',
                     },
                     {
                         data: 'is_published',
@@ -153,10 +158,10 @@
                 if(e.target.dataset && e.target.dataset.id){
                     let id = e.target.dataset.id
                     if (e.target.classList.contains('btn-view')) {
-                        this.$router.push({ path: '/admin/faq/detail/'+id});
+                        this.$router.push({ path: '/admin/about/detail/'+id});
                     }
                     if (e.target.classList.contains('btn-edit')) {
-                        this.$router.push({ path: '/admin/faq/edit/'+id});
+                        this.$router.push({ path: '/admin/about/edit/'+id});
                     }
                     if (e.target.classList.contains('btn-delete')) {
                         this.deleteConfirm(id)

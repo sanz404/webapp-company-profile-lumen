@@ -4,7 +4,7 @@
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><router-link to="/admin/dashboard">Home</router-link></li>
             <li class="breadcrumb-item"><a href="#">Reference</a></li>
-            <li class="breadcrumb-item"><router-link to="/admin/faq/list">{{ title }}</router-link></li>
+            <li class="breadcrumb-item"><router-link to="/admin/product/list">{{ title }}</router-link></li>
             <li class="breadcrumb-item active">Detail</li>
         </ol>
         <div v-if="alert.message" :class="`alert alert-dismissible fade show ${alert.type}`" role="alert">
@@ -16,42 +16,53 @@
                     <h6><i class="fas fa-search"></i>&nbsp;Detail of {{ title }}</h6>
                 </div>
                 <div class="card-body">
-                    <template v-if="faq.category">
+                     <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Image </label>
+                        <div class="col-sm-10">
+                             <template v-if="product.image">
+                                <img :src="this.backendURL+'/uploads/'+product.image" class="img-thumbnail" width="400" />
+                            </template>
+                            <template v-else>
+                                 <img :src="'/images/no-image.png'" class="img-thumbnail" width="400" />
+                            </template>
+                        </div>
+                    </div>
+                    <template v-if="product.category">
                         <div class="row mb-3">
                             <label  class="col-sm-2 col-form-label">Category </label>
                             <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext" v-model="faq.category.name" />
+                                <input type="text" readonly class="form-control-plaintext" v-model="product.category.name" />
                             </div>
                         </div>
                     </template>
                     <div class="row mb-3">
-                        <label  class="col-sm-2 col-form-label">Question </label>
+                        <label  class="col-sm-2 col-form-label">Name </label>
                         <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" v-model="faq.question" />
-                        </div>
-                    </div>
-                     <div class="row mb-3">
-                        <label  class="col-sm-2 col-form-label">Answer</label>
-                        <div class="col-sm-10">
-                             <input type="text" readonly class="form-control-plaintext" v-model="faq.answer"  />
+                            <input type="text" readonly class="form-control-plaintext" v-model="product.name" />
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label  class="col-sm-2 col-form-label">Sort</label>
+                        <label  class="col-sm-2 col-form-label">Price </label>
                         <div class="col-sm-10">
-                             <input type="text" readonly class="form-control-plaintext" v-model="faq.sort"  />
+                            <input type="text" readonly class="form-control-plaintext" v-model="product.price" />
+                        </div>
+                    </div>
+                     <div class="row mb-3">
+                        <label  class="col-sm-2 col-form-label">Description </label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" v-model="product.description" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Status</label>
                         <div class="col-sm-10">
-                             <input type="text" readonly class="form-control-plaintext" v-model="faq_status"  />
+                             <input type="text" readonly class="form-control-plaintext" v-model="product_status"  />
                         </div>
                     </div>
                 </div>
                 <div class="card-footer clearfix">
                     <div class="float-start">
-                         <router-link to="/admin/faq/list" data-bs-toggle="tooltip" data-bs-placement="top" title="Back To List" class="btn btn-secondary">
+                         <router-link to="/admin/product/list" data-bs-toggle="tooltip" data-bs-placement="top" title="Back To List" class="btn btn-secondary">
                             <i class="fas fa-arrow-left"></i>&nbsp;Back To List
                         </router-link>
                         &nbsp;
@@ -68,25 +79,26 @@
     import { useMeta } from 'vue-meta'
     import { mapState, mapActions } from 'vuex'
 
-    const SITE_TITLE = "Faq";
+    const SITE_TITLE = "Product";
 
     export default {
-        name: "DetailFaq",
+        name: "DetailProduct",
         components: {
             Layout
         },
         props: ['param'],
         data(){
             return {
-                title: SITE_TITLE
+                title: SITE_TITLE,
+                backendURL: process.env.VUE_APP_SERVICE
             }
         },
         computed: {
             ...mapState({
                 alert: state => state.alert,
-                status: state=> state.faq.status,
-                faq: state=> state.faq.data,
-                faq_status: state=> parseInt(state.faq.data.is_published) === 1 ? 'Published' : 'Draft'
+                status: state=> state.product.status,
+                product: state=> state.product.data,
+                product_status: state=> parseInt(state.product.data.is_published) === 1 ? 'Published' : 'Draft'
             })
         },
         created() {
@@ -96,7 +108,7 @@
             this.getDataById(this.param)
         },
         methods: {
-            ...mapActions('faq', {
+            ...mapActions('product', {
                 getDataById: 'detail'
             }),
             ...mapActions({

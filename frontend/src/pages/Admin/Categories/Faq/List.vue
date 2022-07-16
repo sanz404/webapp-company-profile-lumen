@@ -3,7 +3,7 @@
         <h1 class="mt-4">{{ title }}</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><router-link to="/admin/dashboard">Home</router-link></li>
-            <li class="breadcrumb-item"><a href="#">Reference</a></li>
+            <li class="breadcrumb-item"><a href="#">Categories</a></li>
             <li class="breadcrumb-item active">{{ title }}</li>
         </ol>
         <div class="card mb-4">
@@ -12,19 +12,16 @@
             </div>
             <div class="card-body">
                 <div class="clearfix mb-4">
-                    <router-link to="/admin/faq/create" data-bs-toggle="tooltip" data-bs-placement="top" title="Create New" class="btn btn-success float-end">
+                    <router-link to="/admin/categories/faq/create" data-bs-toggle="tooltip" data-bs-placement="top" title="Create New" class="btn btn-success float-end">
                         <i class="fas fa-plus"></i>&nbsp;Create New
                     </router-link>
                 </div>
-                <table class="table table-striped" id="table-faq" @click="onClick">
+                <table class="table table-striped" id="table-category-faq" @click="onClick">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Category</th>
-                            <th>Question</th>
-                            <th>Answer</th>
-                            <th>Sort</th>
-                            <th class="text-center">Status</th>
+                            <th>Name</th>
+                            <th>Description</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -35,15 +32,15 @@
 </template>
 <script>
 
-    import Layout from "../../../components/Admin/Layout.vue"
+    import Layout from "../../../../components/Admin/Layout.vue"
     import { useMeta } from 'vue-meta'
     import { mapState, mapActions } from 'vuex'
-    import helper from '../../../helpers/index'
+    import helper from '../../../../helpers/index'
 
-    const SITE_TITLE = "Faq";
+    const SITE_TITLE = "Category Faq";
 
     export default {
-        name: "ListFaq",
+        name: "ListCategoryFaq",
         components: {
             Layout
         },
@@ -56,7 +53,7 @@
             this.showDataTable();
         },
         computed: {
-            ...mapState('faq', ['status']),
+            ...mapState('categoryFaq', ['status']),
             ...mapState({
                 alert: state => state.alert
             })
@@ -65,7 +62,7 @@
            this.alert.message = ''
         },
         methods:{
-            ...mapActions('faq', ['delete']),
+            ...mapActions('categoryFaq', ['delete']),
             ...mapActions({
                 clearAlert: 'alert/clear' 
             }),
@@ -95,8 +92,8 @@
                 );
             },
             showDataTable: function(){
-                let element = "#table-faq";
-                let url = `${process.env.VUE_APP_SERVICE}/main/faqs/list`;
+                let element = "#table-category-faq";
+                let url = `${process.env.VUE_APP_SERVICE}/main/categories/faq/list`;
                 let  columns = [
                     {
                         "data": "id",
@@ -106,27 +103,10 @@
                         }
                     },
                     {
-                        data: 'category_name',
+                        data: 'name',
                     },
                     {
-                        data: 'question',
-                    },
-                    {
-                        data: 'answer',
-                    },
-                    {
-                        data: 'sort',
-                    },
-                    {
-                        data: 'is_published',
-                        "className": "text-center",
-                        render: function (data, type, row, meta) {
-                            if(parseInt(data) === 1){
-                                return `<span class="badge bg-success">Published</span>`;
-                            }else{
-                                return `<span class="badge bg-danger">Draft</span>`;
-                            }
-                        }
+                        data: 'description',
                     },
                     {
                         data: 'id',
@@ -153,10 +133,10 @@
                 if(e.target.dataset && e.target.dataset.id){
                     let id = e.target.dataset.id
                     if (e.target.classList.contains('btn-view')) {
-                        this.$router.push({ path: '/admin/faq/detail/'+id});
+                        this.$router.push({ path: '/admin/categories/faq/detail/'+id});
                     }
                     if (e.target.classList.contains('btn-edit')) {
-                        this.$router.push({ path: '/admin/faq/edit/'+id});
+                        this.$router.push({ path: '/admin/categories/faq/edit/'+id});
                     }
                     if (e.target.classList.contains('btn-delete')) {
                         this.deleteConfirm(id)
