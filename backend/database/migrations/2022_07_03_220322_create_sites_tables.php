@@ -71,7 +71,7 @@ class CreateSitesTables extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id')->index();
             $table->string('name', 64);
-            $table->longText('images')->nullable();
+            $table->text('image')->nullable();
             $table->longText('description')->nullable();
             $table->tinyInteger('is_published')->default(0)->index();
             $table->timestamps();

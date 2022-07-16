@@ -14,6 +14,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { dom } from "@fortawesome/fontawesome-svg-core";
 import VueSweetalert2 from 'vue-sweetalert2';
 import vSelect from 'vue-select'
+import CKEditor from '@ckeditor/ckeditor5-vue'
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-icons/font/bootstrap-icons.scss"
@@ -97,6 +98,7 @@ const store = createStore({
 createApp(App)
     .use(createMetaManager())
     .use(VueSweetalert2)
+    .use(CKEditor)
     .use(router)
     .use(store)
     .component("font-awesome-icon", FontAwesomeIcon)

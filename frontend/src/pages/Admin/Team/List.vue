@@ -16,7 +16,7 @@
                         <i class="fas fa-plus"></i>&nbsp;Create New
                     </router-link>
                 </div>
-                <table class="table table-striped" id="table-contact" @click="onClick">
+                <table class="table table-striped" id="table-team" @click="onClick">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -95,7 +95,7 @@
                 );
             },
             showDataTable: function(){
-                let element = "#table-contact";
+                let element = "#table-team";
                 let url = `${process.env.VUE_APP_SERVICE}/main/teams/list`;
                 let uploadURL = `${process.env.VUE_APP_SERVICE}/uploads`;
                 let  columns = [

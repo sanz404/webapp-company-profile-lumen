@@ -12,17 +12,17 @@
             </div>
             <div class="card-body">
                 <div class="clearfix mb-4">
-                    <router-link to="/admin/about/create" data-bs-toggle="tooltip" data-bs-placement="top" title="Create New" class="btn btn-success float-end">
+                    <router-link to="/admin/article/create" data-bs-toggle="tooltip" data-bs-placement="top" title="Create New" class="btn btn-success float-end">
                         <i class="fas fa-plus"></i>&nbsp;Create New
                     </router-link>
                 </div>
-                <table class="table table-striped" id="table-about" @click="onClick">
+                <table class="table table-striped" id="table-article" @click="onClick">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Image</th>
                             <th>Title</th>
-                            <th>Description</th>
+                            <th>Craated At</th>
                             <th>Status</th>
                             <th class="text-center">Action</th>
                         </tr>
@@ -39,10 +39,10 @@
     import { mapState, mapActions } from 'vuex'
     import helper from '../../../helpers/index'
 
-    const SITE_TITLE = "About";
+    const SITE_TITLE = "Article";
 
     export default {
-        name: "ListAbout",
+        name: "ListArticle",
         components: {
             Layout
         },
@@ -94,8 +94,8 @@
                 );
             },
             showDataTable: function(){
-                let element = "#table-about";
-                let url = `${process.env.VUE_APP_SERVICE}/main/abouts/list`;
+                let element = "#table-article";
+                let url = `${process.env.VUE_APP_SERVICE}/main/articles/list`;
                 let uploadURL = `${process.env.VUE_APP_SERVICE}/uploads`;
                 let  columns = [
                     {
@@ -120,7 +120,7 @@
                         data: 'title',
                     },
                     {
-                        data: 'description',
+                        data: 'created_at',
                     },
                     {
                         data: 'is_published',
@@ -158,10 +158,10 @@
                 if(e.target.dataset && e.target.dataset.id){
                     let id = e.target.dataset.id
                     if (e.target.classList.contains('btn-view')) {
-                        this.$router.push({ path: '/admin/about/detail/'+id});
+                        this.$router.push({ path: '/admin/article/detail/'+id});
                     }
                     if (e.target.classList.contains('btn-edit')) {
-                        this.$router.push({ path: '/admin/about/edit/'+id});
+                        this.$router.push({ path: '/admin/article/edit/'+id});
                     }
                     if (e.target.classList.contains('btn-delete')) {
                         this.deleteConfirm(id)

@@ -8,6 +8,8 @@ import team from './modules/team';
 import about from './modules/about';
 import feature from './modules/feature';
 import product from './modules/product';
+import project from './modules/project';
+import article from './modules/article';
 import message from './modules/message';
 import user from './modules/user';
 import notification from './modules/notification';
@@ -24,6 +26,8 @@ export default {
     contact, 
     content,
     message,
+    article,
+    project,
     faq,
     team,
     feature,

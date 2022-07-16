@@ -12,18 +12,18 @@
             </div>
             <div class="card-body">
                 <div class="clearfix mb-4">
-                    <router-link to="/admin/about/create" data-bs-toggle="tooltip" data-bs-placement="top" title="Create New" class="btn btn-success float-end">
+                    <router-link to="/admin/project/create" data-bs-toggle="tooltip" data-bs-placement="top" title="Create New" class="btn btn-success float-end">
                         <i class="fas fa-plus"></i>&nbsp;Create New
                     </router-link>
                 </div>
-                <table class="table table-striped" id="table-about" @click="onClick">
+                <table class="table table-striped" id="table-project" @click="onClick">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Image</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Status</th>
+                            <th>Category</th>
+                            <th>Name</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -39,10 +39,10 @@
     import { mapState, mapActions } from 'vuex'
     import helper from '../../../helpers/index'
 
-    const SITE_TITLE = "About";
+    const SITE_TITLE = "Portfolio";
 
     export default {
-        name: "ListAbout",
+        name: "ListProject",
         components: {
             Layout
         },
@@ -55,7 +55,7 @@
             this.showDataTable();
         },
         computed: {
-            ...mapState('contact', ['status']),
+            ...mapState('project', ['status']),
             ...mapState({
                 alert: state => state.alert
             })
@@ -64,7 +64,7 @@
            this.alert.message = ''
         },
         methods:{
-            ...mapActions('contact', ['delete']),
+            ...mapActions('project', ['delete']),
             ...mapActions({
                 clearAlert: 'alert/clear' 
             }),
@@ -94,8 +94,8 @@
                 );
             },
             showDataTable: function(){
-                let element = "#table-about";
-                let url = `${process.env.VUE_APP_SERVICE}/main/abouts/list`;
+                let element = "#table-project";
+                let url = `${process.env.VUE_APP_SERVICE}/main/projects/list`;
                 let uploadURL = `${process.env.VUE_APP_SERVICE}/uploads`;
                 let  columns = [
                     {
@@ -117,10 +117,10 @@
                         }
                     },
                     {
-                        data: 'title',
+                        data: 'category_name',
                     },
                     {
-                        data: 'description',
+                        data: 'name',
                     },
                     {
                         data: 'is_published',
@@ -158,10 +158,10 @@
                 if(e.target.dataset && e.target.dataset.id){
                     let id = e.target.dataset.id
                     if (e.target.classList.contains('btn-view')) {
-                        this.$router.push({ path: '/admin/about/detail/'+id});
+                        this.$router.push({ path: '/admin/project/detail/'+id});
                     }
                     if (e.target.classList.contains('btn-edit')) {
-                        this.$router.push({ path: '/admin/about/edit/'+id});
+                        this.$router.push({ path: '/admin/project/edit/'+id});
                     }
                     if (e.target.classList.contains('btn-delete')) {
                         this.deleteConfirm(id)

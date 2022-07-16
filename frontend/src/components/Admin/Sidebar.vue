@@ -56,7 +56,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-cubes"></i></div>
                     Product
                 </router-link>
-                 <router-link to="/admin/portfolio/list" class="nav-link">
+                 <router-link to="/admin/project/list" class="nav-link">
                     <div class="sb-nav-link-icon"><i class="fas fa-address-card"></i></div>
                     Portfolio
                 </router-link>
