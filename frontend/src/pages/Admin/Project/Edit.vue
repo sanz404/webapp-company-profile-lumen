@@ -34,7 +34,12 @@
                             </template>
                             <template v-else>
                                 <h1></h1>
-                                <img :src="project.image" class="img-thumbnail" width="250" />
+                                <template v-if="project.image">
+                                    <img :src="project.image" class="img-thumbnail" width="250" />
+                                </template>
+                                <template v-else>
+                                    <img :src="'/images/no-image.png'" class="img-thumbnail" width="400" />
+                                </template>
                             </template>
                         </div>
                     </div>

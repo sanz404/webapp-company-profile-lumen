@@ -34,7 +34,12 @@
                             </template>
                             <template v-else>
                                 <h1></h1>
-                                <img :src="product.image" class="img-thumbnail" width="250" />
+                                <template v-if="product.image">
+                                    <img :src="product.image" class="img-thumbnail" width="250" />
+                                </template>
+                                <template v-else>
+                                    <img :src="'/images/no-image.png'" class="img-thumbnail" width="400" />
+                                </template>
                             </template>
                         </div>
                     </div>
@@ -55,7 +60,7 @@
                      <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Description</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" v-model="product.description" rows="6" :disabled="status.sendRequest"></textarea>
+                             <ckeditor :editor="editor" v-model="product.description" :config="editorConfig"></ckeditor>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -103,6 +108,7 @@
     import useValidate from '@vuelidate/core'
     import { required } from '@vuelidate/validators'
     import helper from "../../../helpers/index"
+    import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 
     const SITE_TITLE = "Product";
 
@@ -119,7 +125,9 @@
                 submitted: false,
                 v$: useValidate(),
                 file_error: false,
-                file_error_message: ""
+                file_error_message: "",
+                editor: ClassicEditor,
+                editorConfig: { },
             }
         },
         computed: {

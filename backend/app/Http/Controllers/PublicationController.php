@@ -14,8 +14,39 @@ use App\Models\About;
 use App\Models\Team;
 use App\Models\Faq;
 use App\Models\CategoryFaq;
+use App\Models\Product;
+use App\Models\Project;
+use App\Models\ArticleComment;
 
 class PublicationController extends AppController{
+
+    public function getArticleBySlug($slug){
+
+        $data = Article::where("slug", $slug)->first();
+
+        if(is_null($data)){
+            return response()->json(['message' => 'Data not found. !!'], 400);
+        }
+
+        $user = User::where("id", $data->user_id)->first();
+
+        $comments = ArticleComment::where("articles_comments.article_id", $data->id)
+            ->select(["articles_comments.*", "users.email"])
+            ->join("users", "users.id", "articles_comments.user_id")
+            ->orderBy("articles_comments.id", "DESC")
+            ->get();
+
+        foreach($comments as $comment){
+            $comment->date_created = $comment->created_at->diffForHumans();
+        }
+
+        $data->author =  $user;
+        $data->date_joined = $user->created_at->diffForHumans();
+        $data->date_created = $data->created_at->diffForHumans();
+        $data->categories = $data->Categories()->get();
+        $data->comments = $comments;
+        return response()->json($data);
+    }
 
     public function getHomeArticle(){
 
@@ -66,6 +97,21 @@ class PublicationController extends AppController{
         return response()->json($data);
     }
 
+    public function getProduct(){
+        $data = Product::where("is_published", 1)->orderBy("price", "ASC")->get();
+        return response()->json($data);
+    }
+
+    public function getProject(){
+        $data = Project::where("is_published", 1)->orderBy("id", "DESC")->get();
+        return response()->json($data);
+    }
+
+    public function getProjectById($id){
+        $data = Project::where("id", $id)->first();
+        $data->information = $this->first_sentence($data->description);
+        return response()->json($data);
+    }
 
     public function getContent(){
         $data = Content::where("id", "<>", 0)
@@ -81,6 +127,19 @@ class PublicationController extends AppController{
             "email"=> $request->get("email"),
             "phone"=> $request->get("phone"),
             "message"=> $request->get("message")
+        ]);
+        return response()->json($data);
+    }
+
+    public function sendComment(Request $request){
+        $user = \Auth::User();
+        $user_id = $user->id;
+        $slug = $request->get("slug");
+        $article = Article::where("slug", $slug)->first();
+        $data = ArticleComment::create([
+            "user_id"=> $user_id,
+            "article_id"=> $article->id,
+            "description"=> $request->get("description")
         ]);
         return response()->json($data);
     }

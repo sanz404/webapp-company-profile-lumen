@@ -65,7 +65,7 @@ export default [
         component: PublicPortfolio
     },
     {
-        path: "/portfolio/:slug",
+        path: "/portfolio/:param",
         name: "PortfolioDetail",
         props: true,
         component: PublicPortfolioDetail

@@ -50,7 +50,7 @@
                      <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Description </label>
                         <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" v-model="product.description" />
+                            <ckeditor :editor="editor" v-model="product.description" :disabled="true" :config="editorConfig"></ckeditor>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -78,6 +78,7 @@
     import Layout from "../../../components/Admin/Layout.vue"
     import { useMeta } from 'vue-meta'
     import { mapState, mapActions } from 'vuex'
+    import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 
     const SITE_TITLE = "Product";
 
@@ -90,7 +91,9 @@
         data(){
             return {
                 title: SITE_TITLE,
-                backendURL: process.env.VUE_APP_SERVICE
+                backendURL: process.env.VUE_APP_SERVICE,
+                editor: ClassicEditor,
+                editorConfig: { },
             }
         },
         computed: {

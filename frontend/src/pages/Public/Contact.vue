@@ -42,21 +42,6 @@
                                     <div v-if="v$.contact.message.$error" class="invalid-feedback"> {{ v$.contact.message.$errors[0].$message }} </div>
                                 </div>
                                
-                              
-                                <div class="d-none" id="submitSuccessMessage">
-                                    <div class="text-center mb-3">
-                                        <div class="fw-bolder">Form submission successful!</div>
-                                        To activate this form, sign up at
-                                        <br />
-                                        <a
-                                            href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                                    </div>
-                                </div>
-                                
-                                <div class="d-none" id="submitErrorMessage">
-                                    <div class="text-center text-danger mb-3">Error sending message!</div>
-                                </div>
-                                <!-- Submit Button-->
                                 <div class="d-grid">
                                     <button class="btn btn-primary btn-lg" id="submitButton" type="submit">
                                          <template v-if="status.sendRequest === true">
@@ -74,28 +59,24 @@
                 <!-- Contact cards-->
                 <div class="row gx-5 row-cols-2 row-cols-lg-4 py-5">
                     <div class="col">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i
-                                class="bi bi-chat-dots"></i></div>
-                        <div class="h5 mb-2">Chat with us</div>
-                        <p class="text-muted mb-0">Chat live with one of our support specialists.</p>
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i :class="helper.getContentByKey('page-contact-footer1-icon', contents)"></i></div>
+                        <div class="h5 mb-2">{{ helper.getContentByKey('page-contact-footer1-title', contents) }}</div>
+                        <p class="text-muted mb-0">{{ helper.getContentByKey('page-contact-footer1-text', contents) }}</p>
                     </div>
                     <div class="col">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-people"></i>
-                        </div>
-                        <div class="h5">Ask the community</div>
-                        <p class="text-muted mb-0">Explore our community forums and communicate with other users.</p>
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i :class="helper.getContentByKey('page-contact-footer2-icon', contents)"></i></div>
+                        <div class="h5">{{ helper.getContentByKey('page-contact-footer2-title', contents) }}</div>
+                        <p class="text-muted mb-0">{{ helper.getContentByKey('page-contact-footer2-text', contents) }}</p>
                     </div>
                     <div class="col">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i
-                                class="bi bi-question-circle"></i></div>
-                        <div class="h5">Support center</div>
-                        <p class="text-muted mb-0">Browse FAQ's and support articles to find solutions.</p>
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i :class="helper.getContentByKey('page-contact-footer3-icon', contents)"></i></div>
+                        <div class="h5">{{ helper.getContentByKey('page-contact-footer3-title', contents) }}</div>
+                        <p class="text-muted mb-0">{{ helper.getContentByKey('page-contact-footer3-text', contents) }}</p>
                     </div>
                     <div class="col">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i
-                                class="bi bi-telephone"></i></div>
-                        <div class="h5">Call us</div>
-                        <p class="text-muted mb-0">Call us during normal business hours at (555) 892-9403.</p>
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i :class="helper.getContentByKey('page-contact-footer4-icon', contents)"></i></div>
+                        <div class="h5">{{ helper.getContentByKey('page-contact-footer4-title', contents) }}</div>
+                        <p class="text-muted mb-0">{{ helper.getContentByKey('page-contact-footer4-text', contents) }}</p>
                     </div>
                 </div>
             </div>
@@ -111,6 +92,7 @@
     import { mapState, mapActions } from 'vuex'
     import Layout from "../../components/Public/Layout.vue"
     import Footer from "../../components/Public/Footer.vue"
+    import helper from "../../helpers/index"
 
     export default {
        name: "Contact",
@@ -127,13 +109,15 @@
                     email: "",
                     phone: "",
                     message: "",
-                }
+                },
+                helper: helper
             }
         },
         computed: {
             ...mapState('publication', ['status']),
             ...mapState({
-                alert: state => state.alert
+                alert: state => state.alert,
+                contents: state=> state.publication.contents
             })
         },
         created() { 

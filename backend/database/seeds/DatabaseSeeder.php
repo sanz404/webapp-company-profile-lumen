@@ -23,6 +23,7 @@ use App\Models\Setting;
 use App\Models\Team;
 use App\Models\User;
 
+
 class DatabaseSeeder extends Seeder
 {
 
@@ -32,7 +33,48 @@ class DatabaseSeeder extends Seeder
         $this->createUsers();
         $this->createContacts();
         $this->createNotification();
+        $this->creatArticles();
     }
+
+    private function toSlug($text){
+        $text = preg_replace('~[^\pL\d]+~u', '-', $text);
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        $text = preg_replace('~[^-\w]+~', '', $text);
+        $text = trim($text, '-');
+        $text = preg_replace('~-+~', '-', $text);
+        $text = strtolower($text);
+        return $text;
+    }
+
+    private function creatArticles(){
+        $max = 100;
+        for($i = 1; $i <= $max; $i++){
+            $faker = Faker::create();
+            $user = User::where("is_admin", 1)->first();
+            if(!is_null($user)){
+                $title = $faker->sentence;
+                if(strlen($title) <= 64){
+                    $slug = $this->toSlug($title);
+                    $article = Article::where("slug", $slug)->first();
+                    if(is_null($article)){
+                        $formData = array(
+                            "user_id"=> $user->id,
+                            "slug"=> $slug,
+                            "title"=> $title,
+                            "content"=> $faker->paragraph(10),
+                            "is_published"=> 1
+                        );
+                        $newArticle = Article::create($formData);
+                        $categories = CategoryArticle::inRandomOrder()->take(1)->get()->pluck("id")->toArray();
+                        if(count($categories) > 0){
+                            $newArticle->Categories()->sync($categories);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     private function createNotification(){
         $max = 100;

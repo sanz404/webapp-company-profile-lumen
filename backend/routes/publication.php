@@ -34,8 +34,36 @@ $router->get('/faq/load', function () use ($router) {
     return $response->getFaq();
 });
 
+$router->get('/product/load', function () use ($router) {
+    $response = new PublicationController;
+    return $response->getProduct();
+});
+
+$router->get('/project/load', function () use ($router) {
+    $response = new PublicationController;
+    return $response->getProject();
+});
+
+$router->get("/project/find/{id}", function($id){
+    $response = new PublicationController;
+    return $response->getProjectById($id);
+});
+
+$router->get('/article/read/{slug}', function ($slug)  {
+    $response = new PublicationController;
+    return $response->getArticleBySlug($slug);
+});
+
 $router->get('/home/article', function () use ($router) {
     $response = new PublicationController;
     return $response->getHomeArticle();
 });
+
+$router->group(['middleware' => 'auth:api'], function ($router){
+    $router->post("article/comment/send",function(Request $request){
+        $response = new PublicationController;
+        return $response->sendComment($request);
+    });
+});
+
 

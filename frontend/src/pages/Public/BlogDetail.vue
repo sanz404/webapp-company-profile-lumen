@@ -6,11 +6,10 @@
                 <div class="row gx-5">
                     <div class="col-lg-3">
                         <div class="d-flex align-items-center mt-lg-5 mb-4">
-                            <img class="img-fluid rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
-                                alt="..." />
+                            <img class="img-fluid rounded-circle" width="40" src="/images/user.png" :alt="article.author.email" />
                             <div class="ms-3">
-                                <div class="fw-bold">Valerie Luna</div>
-                                <div class="text-muted">News, Business</div>
+                                <div class="fw-bold">{{ article.author.email }}</div>
+                                <div class="text-muted">{{ article.date_joined }}</div>
                             </div>
                         </div>
                     </div>
@@ -20,86 +19,54 @@
                             <!-- Post header-->
                             <header class="mb-4">
                                 <!-- Post title-->
-                                <h1 class="fw-bolder mb-1">Welcome to Blog Post!</h1>
+                                <h1 class="fw-bolder mb-1">{{ article.title }}</h1>
                                 <!-- Post meta content-->
-                                <div class="text-muted fst-italic mb-2">January 1, 2022</div>
+                                <div class="text-muted fst-italic mb-2">{{ article.date_created }}</div>
                                 <!-- Post categories-->
-                                <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
-                                <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+                                <div  v-for="(category) in article.categories" :key="category.id">
+                                   <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ category.name }}</a>
+                                </div>
                             </header>
                             <!-- Preview image figure-->
-                            <figure class="mb-4"><img class="img-fluid rounded"
-                                    src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
+                            <template v-if="article.image">
+                                <figure class="mb-4"><img class="img-fluid rounded" :src="backendURL+'/uploads/'+article.image" :alt="article.title" /></figure>
+                            </template>
+                            <template v-else>
+                                <figure class="mb-4"><img class="img-fluid rounded" src="/images/no-image.png" :alt="article.title" /></figure>
+                            </template>
                             <!-- Post content-->
-                            <section class="mb-5">
-                                <p class="fs-5 mb-4">Science is an enterprise that should be cherished as an activity of the
-                                    free human mind. Because it transforms who we are, how we live, and it gives us an
-                                    understanding of our place in the universe.</p>
-                                <p class="fs-5 mb-4">The universe is large and old, and the ingredients for life as we know
-                                    it are everywhere, so there's no reason to think that Earth would be unique in that
-                                    regard. Whether of not the life became intelligent is a different question, and we'll
-                                    see if we find that.</p>
-                                <p class="fs-5 mb-4">If you get asteroids about a kilometer in size, those are large enough
-                                    and carry enough energy into our system to disrupt transportation, communication, the
-                                    food chains, and that can be a really bad day on Earth.</p>
-                                <h2 class="fw-bolder mb-4 mt-5">I have odd cosmic thoughts every day</h2>
-                                <p class="fs-5 mb-4">For me, the most fascinating interface is Twitter. I have odd cosmic
-                                    thoughts every day and I realized I could hold them to myself or share them with people
-                                    who might be interested.</p>
-                                <p class="fs-5 mb-4">Venus has a runaway greenhouse effect. I kind of want to know what
-                                    happened there because we're twirling knobs here on Earth without knowing the
-                                    consequences of it. Mars once had running water. It's bone dry today. Something bad
-                                    happened there as well.</p>
-                            </section>
+                            <section class="mb-5" v-html="article.content"></section>
                         </article>
                         <!-- Comments section-->
                         <section>
                             <div class="card bg-light">
                                 <div class="card-body">
                                     <!-- Comment form-->
-                                    <form class="mb-4"><textarea class="form-control" rows="3"
-                                            placeholder="Join the discussion and leave a comment!"></textarea></form>
-                                    <!-- Comment with nested comments-->
-                                    <div class="d-flex mb-4">
-                                        <!-- Parent comment-->
-                                        <div class="flex-shrink-0"><img class="rounded-circle"
-                                                src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                        <div class="ms-3">
-                                            <div class="fw-bold">Commenter Name</div>
-                                            If you're going to lead a space frontier, it has to be government; it'll never
-                                            be private enterprise. Because the space frontier is dangerous, and it's
-                                            expensive, and it has unquantified risks.
-                                            <!-- Child comment 1-->
-                                            <div class="d-flex mt-4">
-                                                <div class="flex-shrink-0"><img class="rounded-circle"
-                                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
-                                                </div>
-                                                <div class="ms-3">
-                                                    <div class="fw-bold">Commenter Name</div>
-                                                    And under those conditions, you cannot establish a capital-market
-                                                    evaluation of that enterprise. You can't get investors.
-                                                </div>
-                                            </div>
-                                            <!-- Child comment 2-->
-                                            <div class="d-flex mt-4">
-                                                <div class="flex-shrink-0"><img class="rounded-circle"
-                                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
-                                                </div>
-                                                <div class="ms-3">
-                                                    <div class="fw-bold">Commenter Name</div>
-                                                    When you put money directly to a problem, it makes a good headline.
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div v-if="alert.message" :class="`alert alert-dismissible fade show ${alert.type}`" role="alert">
+                                        <small><i class="fa" v-bind:class="[ alert.type === 'alert-success' ? 'fa-check' : 'fa-warning']"></i> &nbsp;{{alert.message}}</small>
                                     </div>
+                                    <form class="mb-4" v-if="canComment" autocomplete="off" @submit.prevent="handleSubmit">
+                                        <input type="hidden" v-model="formComment.slug" />
+                                        <textarea class="form-control" rows="3" v-model="formComment.description" :disabled="status.sendRequest" :class="{ 'is-invalid': submitted && v$.formComment.description.$error }"  placeholder="Join the discussion and leave a comment!"></textarea>
+                                         <div v-if="v$.formComment.description.$error" class="invalid-feedback"> {{ v$.formComment.description.$errors[0].$message }} </div>
+                                        <button class="btn btn-primary btn-sm mt-2" id="submitButton" type="submit">
+                                            <template v-if="status.sendRequest === true">
+                                                <i class="fa fa-spinner fa-spin"></i>&nbsp;Send Data...
+                                            </template>
+                                            <template v-else>
+                                                Send Comment
+                                            </template>
+                                        </button>
+                                    </form>
                                     <!-- Single comment-->
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0"><img class="rounded-circle"
-                                                src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                    <div class="d-flex mt-3" v-for="(comment) in article.comments" :key="comment.id">
+                                        <div class="flex-shrink-0  mt-10"><img class="rounded-circle" width="65"  src="/images/user.png" alt="..." /></div>
                                         <div class="ms-3">
-                                            <div class="fw-bold">Commenter Name</div>
-                                            When I look at the universe and all the ways the universe wants to kill us, I
-                                            find it hard to reconcile that with statements of beneficence.
+                                            <div class="fw-bold">
+                                                <small>{{ comment.date_created }}</small>
+                                                <h4><small>{{ comment.email }}</small></h4>
+                                            </div>
+                                           {{ comment.description }}
                                         </div>
                                     </div>
                                 </div>
@@ -113,16 +80,95 @@
     </Layout>
 </template>
 <script>
-    import {
-        useMeta
-    } from 'vue-meta'
+
     import Layout from "../../components/Public/Layout.vue"
     import Footer from "../../components/Public/Footer.vue"
+    import { mapState, mapActions } from 'vuex'
+    import { useMeta } from 'vue-meta'
+    import helper from "../../helpers/index"
+    import { required, minLength } from '@vuelidate/validators'
+    import useValidate from '@vuelidate/core'
+
     export default {
-        name: "BlogDetail",
+       name: "BlogDetail",
        components: {
             Footer,
             Layout
+        },
+        props: ['slug'],
+        computed: {
+            ...mapState('publication', ['status']),
+            ...mapState({
+                alert: state => state.alert,
+                article: state=> state.publication.article,
+                comment: state=> state.publication.comment
+            })
+        },
+        data(){
+            return {
+                helper: helper,
+                backendURL: process.env.VUE_APP_SERVICE,
+                canComment: this.checkAuth(),
+                submitted: false,
+                v$: useValidate(),
+                formComment:{
+                    description: '',
+                    slug: this.slug
+                },
+            }
+        },
+        created() { 
+           this.alert.message = ''
+        },
+        mounted() {
+            this.getArticleBySlug(this.slug)
+        },
+        methods: {
+            ...mapActions('publication', [ 'getArticleBySlug', 'sendComment']),
+            ...mapActions({
+                clearAlert: 'alert/clear' 
+            }),
+            handleSubmit(e) {
+                this.submitted = true;
+                this.v$.formComment.$validate()
+                if (!this.v$.formComment.$error) {
+                    this.sendComment(this.formComment)
+                    this.getArticleBySlug(this.slug)
+                    this.submitted = false;
+                } 
+                this.formComment.description = ''
+                this.alert.message = ''
+            },
+            checkAuth(){
+                let user = JSON.parse(localStorage.getItem('user'));
+                if (user && user.token) {
+                    let date_now = Math.floor(Date.now() / 1000)
+                    let expired = user.expires_in
+                    if(parseInt(date_now) > parseInt(expired)){
+                        return false;
+                    }else{  
+                        return parseInt(user.is_admin) === 0 ? true : false;
+                    }
+                }else{
+                    return false;
+                }
+            }
+        },
+        watch: {
+            $route (to, from){
+                // clear alert on location change
+                this.clearAlert();
+            }
+        },
+        validations() {
+            return {
+                formComment: {
+                    description: { 
+                        required,
+                        minLength: minLength(10)
+                    },
+                }
+            }
         },
         setup() {
             useMeta({

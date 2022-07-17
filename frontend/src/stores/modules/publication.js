@@ -8,7 +8,12 @@ const state = {
     homeArticle:[],
     abouts:[],
     teams:[],
-    faqs:[]
+    faqs:[],
+    products:[],
+    projects:[],
+    project:{},
+    article:{},
+    comment:{}
 }
 
 const mutations = {
@@ -68,12 +73,68 @@ const mutations = {
         state.faqs = [];
         state.status = {};
     },
+    setProductSuccess(state, data){
+        state.products = data
+        state.status = {};
+    },
+    setProductFailure(state){
+        state.products = [];
+        state.status = {};
+    },
+    setProjectsSuccess(state, data){
+        state.projects = data
+        state.status = {};
+    },
+    setProjectsFailure(state){
+        state.projects = [];
+        state.status = {};
+    },
+    setProjectSuccess(state, data){
+        state.project = data
+        state.status = {};
+    },
+    setProjecsFailure(state){
+        state.project = [];
+        state.status = {};
+    },
+    setArticleSuccess(state, data){
+        state.article = data
+        state.status = {};
+    },
+    setArticleFailure(state){
+        state.article = {}
+        state.status = {};
+    },
+    setCommentSuccess(state, data){
+        state.comment = data
+        state.status = {};
+    },
+    setCommentFailure(state){
+        state.comment = {}
+        state.status = {};
+    },
     submit(state) {
         state.status = { sendRequest: true };
     },
 }
 
 const actions = {
+    sendComment({ dispatch, commit }, data) {
+        commit('submit', data);
+        publicationService.sendComment(data)
+            .then(
+                response => {
+                    commit('setCommentSuccess', response);
+                    setTimeout(() => {
+                        dispatch('alert/success', 'Your comment has been added !!', { root: true });
+                    })
+                },
+                error => {
+                    commit('setCommentFailure', error);
+                    dispatch('alert/error', error, { root: true });
+                }
+            );
+    },
     sendContact({ dispatch, commit }, data) {
         commit('submit', data);
         publicationService.contactSend(data)
@@ -89,6 +150,34 @@ const actions = {
                     commit('setContactFailure', error);
                     dispatch('alert/error', error, { root: true });
                 }
+            );
+    },
+    getArticleBySlug({ commit }, slug) {
+        publicationService.getArticleBySlug(slug)
+            .then(
+                response => commit('setArticleSuccess', response),
+                error => commit('setArticleFailure', error)
+            );
+    },
+    getProjectById({ commit }, id) {
+        publicationService.getProjectById(id)
+            .then(
+                response => commit('setProjectSuccess', response),
+                error => commit('setProjectFailure', error)
+            );
+    },
+    getProjects({ commit }) {
+        publicationService.getProject()
+            .then(
+                response => commit('setProjectsSuccess', response),
+                error => commit('setProjectsFailure', error)
+            );
+    },
+    getProduct({ commit }) {
+        publicationService.getProduct()
+            .then(
+                response => commit('setProductSuccess', response),
+                error => commit('setProductFailure', error)
             );
     },
     getContent({ commit }) {

@@ -47,7 +47,7 @@
                      <div class="row mb-3">
                         <label  class="col-sm-2 col-form-label">Description</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" v-model="product.description" rows="6" :disabled="status.sendRequest"></textarea>
+                            <ckeditor :editor="editor" v-model="product.description" :config="editorConfig"></ckeditor>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -95,6 +95,7 @@
     import useValidate from '@vuelidate/core'
     import { required } from '@vuelidate/validators'
     import helper from "../../../helpers/index"
+    import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 
     const SITE_TITLE = "Product";
 
@@ -117,7 +118,9 @@
                     image: ""
                 },
                 file_error: false,
-                file_error_message: ""
+                file_error_message: "",
+                editor: ClassicEditor,
+                editorConfig: { },
             }
         },
         computed: {

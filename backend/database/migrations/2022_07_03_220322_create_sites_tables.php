@@ -13,16 +13,6 @@ class CreateSitesTables extends Migration
      */
     public function up()
     {
-        // settings
-        Schema::create('settings', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('key_name', 64)->unique();
-            $table->longText('key_value');
-            $table->timestamps();
-            $table->softDeletes();
-            $table->engine = 'InnoDB';
-        });
-
         // articles
         Schema::create('articles', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -203,7 +193,6 @@ class CreateSitesTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('settings');
         Schema::dropIfExists('articles');
         Schema::dropIfExists('category_articles');
         Schema::dropIfExists('articles_categories');

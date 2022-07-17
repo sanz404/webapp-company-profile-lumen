@@ -13,6 +13,7 @@ const mutations = {
             code : data.category ? data.category.id : "",
             label : data.category ? data.category.name : "",
         }
+        data.description = !data.description ? "" : data.description
         data.price = parseFloat(data.price)
         state.data = data
         state.status = {};

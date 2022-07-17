@@ -1,3 +1,5 @@
+import helper from "../helpers/index"
+
 function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
@@ -59,6 +61,32 @@ function getFaq() {
     return fetch(`${process.env.VUE_APP_SERVICE}/faq/load`, requestOptions).then(handleResponse);
 }
 
+function getProduct() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+    return fetch(`${process.env.VUE_APP_SERVICE}/product/load`, requestOptions).then(handleResponse);
+}
+
+function getProject() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+    return fetch(`${process.env.VUE_APP_SERVICE}/project/load`, requestOptions).then(handleResponse);
+}
+
+
+function getProjectById(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+    return fetch(`${process.env.VUE_APP_SERVICE}/project/find/`+id, requestOptions).then(handleResponse);
+}
+
+
 
 function getHomeArticle() {
     const requestOptions = {
@@ -68,4 +96,21 @@ function getHomeArticle() {
     return fetch(`${process.env.VUE_APP_SERVICE}/home/article`, requestOptions).then(handleResponse);
 }
 
-export default { contactSend, getContent, getFeature, getHomeArticle, getAbout, getTeam, getFaq }
+function getArticleBySlug(slug) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+    return fetch(`${process.env.VUE_APP_SERVICE}/article/read/`+slug, requestOptions).then(handleResponse);
+}
+
+function sendComment(data) {
+    const requestOptions = {
+        method: 'POST',
+        headers: helper.authHeader(),
+        body: JSON.stringify(data)
+    };
+    return fetch(`${process.env.VUE_APP_SERVICE}/article/comment/send`, requestOptions).then(handleResponse);
+}
+
+export default { contactSend, getContent, getFeature, getHomeArticle, getAbout, getTeam, getFaq, getProduct, getProject, getProjectById, getArticleBySlug, sendComment }
