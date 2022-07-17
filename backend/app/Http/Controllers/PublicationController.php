@@ -20,6 +20,36 @@ use App\Models\ArticleComment;
 
 class PublicationController extends AppController{
 
+    public function getListArticle(Request $request){
+
+        $limit =  $request->get("limit");
+        $offset =  $request->get("offset");
+
+        $data = Article::where("is_published", 1);
+
+        $filtered = false;
+        if($request->get("search")){
+            $filtered = true;
+            $searchValue = $request->get("search");
+            $data = $data->where("title", 'LIKE', '%' . $searchValue . '%')->orWhere("content", 'LIKE', '%' . $searchValue . '%');
+        }
+
+        $totalFiltered = $data->count();
+        $data = $data->skip($offset)->take($limit)->orderBy("id", "DESC")->get();
+
+        foreach($data as $row){
+            $row->date_created = $row->created_at->diffForHumans();
+            $row->content = $this->first_sentence(strip_tags($row->content));
+        }
+
+        $response = array(
+            "data"=> $data,
+            "total_records"=> $filtered ? $totalFiltered : Article::where("is_published", 1)->count()
+        );
+
+        return response()->json($response);
+    }
+
     public function getArticleBySlug($slug){
 
         $data = Article::where("slug", $slug)->first();

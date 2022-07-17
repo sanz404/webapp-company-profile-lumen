@@ -2,6 +2,7 @@ import PublicHome from "../pages/Public/Home.vue"
 import PublicAbout from "../pages/Public/About.vue"
 import PublicBlog from "../pages/Public/Blog.vue"
 import PublicBlogDetail from "../pages/Public/BlogDetail.vue"
+import PublicBlogList from "../pages/Public/BlogList.vue"
 import PublicContact from "../pages/Public/Contact.vue"
 import PublicFaq from "../pages/Public/Faq.vue"
 import PublicPortfolio from "../pages/Public/Portfolio.vue"
@@ -38,6 +39,11 @@ export default [
         name: "BlogDetail",
         props: true,
         component: PublicBlogDetail
+    },
+    {
+        path: "/articles/list",
+        name: "BlogList",
+        component: PublicBlogList
     },
     {
         path: "/contact",

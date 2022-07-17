@@ -13,7 +13,10 @@ const state = {
     projects:[],
     project:{},
     article:{},
-    comment:{}
+    comment:{},
+    listArticles:[],
+    listArticleLimit: 0,
+    listArticleTotal: 0
 }
 
 const mutations = {
@@ -113,12 +116,37 @@ const mutations = {
         state.comment = {}
         state.status = {};
     },
+    setListArticleSuccess(state, response){
+        state.listArticles = response.data
+        state.listArticleLimit = response.perpage
+        state.listArticleTotal = response.total_records
+        state.status = {};
+    },
+    setListArticleFailure(state){
+        state.listArticles = []
+        state.status = {};
+        state.listArticleLimit = 0
+        state.listArticleTotal = 0
+    },
     submit(state) {
         state.status = { sendRequest: true };
     },
 }
 
 const actions = {
+    getListArticle({ dispatch, commit }, data) {
+        commit('submit', data);
+        publicationService.getListArticle(data)
+            .then(
+                response => {
+                    commit('setListArticleSuccess', response);
+                },
+                error => {
+                    commit('setListArticleFailure', error);
+                    dispatch('alert/error', error, { root: true });
+                }
+            );
+    },
     sendComment({ dispatch, commit }, data) {
         commit('submit', data);
         publicationService.sendComment(data)

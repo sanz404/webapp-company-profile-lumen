@@ -3,6 +3,11 @@
 use App\Http\Controllers\PublicationController;
 use Illuminate\Http\Request;
 
+$router->post('/article/list', function (Request $request) use ($router) {
+    $response = new PublicationController;
+    return $response->getListArticle($request);
+});
+
 $router->post('/contact/send', function (Request $request) use ($router) {
     $response = new PublicationController;
     return $response->sendContact($request);

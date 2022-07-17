@@ -15,6 +15,7 @@ import { dom } from "@fortawesome/fontawesome-svg-core";
 import VueSweetalert2 from 'vue-sweetalert2';
 import vSelect from 'vue-select'
 import CKEditor from '@ckeditor/ckeditor5-vue'
+import Pagination from 'v-pagination-3';
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-icons/font/bootstrap-icons.scss"
@@ -103,4 +104,5 @@ createApp(App)
     .use(store)
     .component("font-awesome-icon", FontAwesomeIcon)
     .component("v-select", vSelect)
+    .component("pagination", Pagination)
     .mount('#app')

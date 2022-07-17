@@ -38,7 +38,7 @@
                             <section class="mb-5" v-html="article.content"></section>
                         </article>
                         <!-- Comments section-->
-                        <section>
+                        <section v-if="comment.length > 0">
                             <div class="card bg-light">
                                 <div class="card-body">
                                     <!-- Comment form-->

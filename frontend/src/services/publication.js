@@ -113,4 +113,27 @@ function sendComment(data) {
     return fetch(`${process.env.VUE_APP_SERVICE}/article/comment/send`, requestOptions).then(handleResponse);
 }
 
-export default { contactSend, getContent, getFeature, getHomeArticle, getAbout, getTeam, getFaq, getProduct, getProject, getProjectById, getArticleBySlug, sendComment }
+function getListArticle(data) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    };
+    return fetch(`${process.env.VUE_APP_SERVICE}/article/list`, requestOptions).then(handleResponse);
+}
+
+export default { 
+    contactSend, 
+    getContent, 
+    getFeature, 
+    getHomeArticle, 
+    getAbout, 
+    getTeam, 
+    getFaq, 
+    getProduct, 
+    getProject, 
+    getProjectById, 
+    getArticleBySlug, 
+    getListArticle,
+    sendComment
+}
