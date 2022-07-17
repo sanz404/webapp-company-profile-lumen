@@ -8,8 +8,29 @@ use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Models\Content;
 use App\Models\Feature;
+use App\Models\Article;
+use App\Models\User;
 
 class PublicationController extends AppController{
+
+    public function getHomeArticle(){
+
+        $data = array();
+        $articles = Article::where("is_published", 1)->take(3)->orderBy("id", "DESC")->get();
+
+        foreach($articles as $row){
+            $row->content = $this->first_sentence(strip_tags($row->content));
+            $row->author = User::where("id", $row->user_id)->first();
+            $row->date_created = $row->created_at->diffForHumans();
+            $data[]  = array(
+                "detail"=> $row,
+                "categories"=> $row->Categories()->pluck("name")->toArray(),
+                "imageAuthor"=> "https://www.kindpng.com/picc/m/269-2697881_computer-icons-user-clip-art-transparent-png-icon.png"
+            );
+        }
+
+        return response()->json($data);
+    }
 
     public function getFeature(){
         $data = Feature::where("is_published", 1)->get();

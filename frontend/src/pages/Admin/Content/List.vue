@@ -20,9 +20,9 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Key Name</th>
+                            <th width="250">Key Name</th>
                             <th>Key Value</th>
-                            <th class="text-center">Action</th>
+                            <th class="text-center" width="120">Action</th>
                         </tr>
                     </thead>
                 </table>

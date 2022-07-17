@@ -4,7 +4,8 @@ const state = {
     status: {},
     contact: {},
     contents:[],
-    features:[]
+    features:[],
+    homeArticle:[]
 }
 
 const mutations = {
@@ -30,6 +31,14 @@ const mutations = {
     },
     setFeatureFailure(state){
         state.features = [];
+        state.status = {};
+    },
+    setHomeArticleSuccess(state, data){
+        state.homeArticle = data
+        state.status = {};
+    },
+    setHomeArticleFailure(state){
+        state.homeArticle = [];
         state.status = {};
     },
     submit(state) {
@@ -67,6 +76,13 @@ const actions = {
             .then(
                 response => commit('setFeatureSuccess', response),
                 error => commit('setFeatureFailure', error)
+            );
+    },
+    getHomeArticle({ commit }) {
+        publicationService.getHomeArticle()
+            .then(
+                response => commit('setHomeArticleSuccess', response),
+                error => commit('setHomeArticleFailure', error)
             );
     }
 }

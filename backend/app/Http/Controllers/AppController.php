@@ -57,4 +57,9 @@ class AppController extends BaseController
     public function getRandomColor() {
         return '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
     }
+
+    public function first_sentence($content) {
+        $pos = strpos($content, '.');
+        return substr($content, 0, $pos+1);
+    }
 }

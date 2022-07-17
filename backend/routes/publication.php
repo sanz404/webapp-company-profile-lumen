@@ -18,3 +18,9 @@ $router->get('/feature/load', function () use ($router) {
     $response = new PublicationController;
     return $response->getFeature();
 });
+
+$router->get('/home/article', function () use ($router) {
+    $response = new PublicationController;
+    return $response->getHomeArticle();
+});
+

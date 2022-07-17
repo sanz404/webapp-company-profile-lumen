@@ -34,4 +34,12 @@ function getFeature() {
     return fetch(`${process.env.VUE_APP_SERVICE}/feature/load`, requestOptions).then(handleResponse);
 }
 
-export default { contactSend, getContent, getFeature }
+function getHomeArticle() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+    return fetch(`${process.env.VUE_APP_SERVICE}/home/article`, requestOptions).then(handleResponse);
+}
+
+export default { contactSend, getContent, getFeature, getHomeArticle }
