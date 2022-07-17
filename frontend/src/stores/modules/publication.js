@@ -5,7 +5,10 @@ const state = {
     contact: {},
     contents:[],
     features:[],
-    homeArticle:[]
+    homeArticle:[],
+    abouts:[],
+    teams:[],
+    faqs:[]
 }
 
 const mutations = {
@@ -39,6 +42,30 @@ const mutations = {
     },
     setHomeArticleFailure(state){
         state.homeArticle = [];
+        state.status = {};
+    },
+    setAboutSuccess(state, data){
+        state.abouts = data
+        state.status = {};
+    },
+    setAboutFailure(state){
+        state.abouts = [];
+        state.status = {};
+    },
+    setTeamSuccess(state, data){
+        state.teams = data
+        state.status = {};
+    },
+    setTeamFailure(state){
+        state.teams = [];
+        state.status = {};
+    },
+    setFaqSuccess(state, data){
+        state.faqs = data
+        state.status = {};
+    },
+    setFaqFailure(state){
+        state.faqs = [];
         state.status = {};
     },
     submit(state) {
@@ -76,6 +103,27 @@ const actions = {
             .then(
                 response => commit('setFeatureSuccess', response),
                 error => commit('setFeatureFailure', error)
+            );
+    },
+    getAbout({ commit }) {
+        publicationService.getAbout()
+            .then(
+                response => commit('setAboutSuccess', response),
+                error => commit('setAboutFailure', error)
+            );
+    },
+    getTeam({ commit }) {
+        publicationService.getTeam()
+            .then(
+                response => commit('setTeamSuccess', response),
+                error => commit('setTeamFailure', error)
+            );
+    },
+    getFaq({ commit }) {
+        publicationService.getFaq()
+            .then(
+                response => commit('setFaqSuccess', response),
+                error => commit('setFaqFailure', error)
             );
     },
     getHomeArticle({ commit }) {

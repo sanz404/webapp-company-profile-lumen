@@ -21,10 +21,10 @@
                         <tr>
                             <th>#</th>
                             <th>Image</th>
-                            <th>Title</th>
+                            <th width="150">Title</th>
                             <th>Description</th>
                             <th>Status</th>
-                            <th class="text-center">Action</th>
+                            <th class="text-center" width="150">Action</th>
                         </tr>
                     </thead>
                 </table>

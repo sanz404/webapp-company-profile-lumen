@@ -54,8 +54,7 @@
                         <div class="text-center">
                             <div class="fs-4 mb-4 fst-italic">"{{ helper.getContentByKey('page-home-testimonial-content', contents) }}"</div>
                             <div class="d-flex align-items-center justify-content-center">
-                                <img class="rounded-circle me-3" width="85" :src="helper.getContentByKey('page-home-testimonial-image', contents)"
-                                    alt="..." />
+                                <img class="rounded-circle me-3" width="85" src="/images/user.png"  alt="..." />
                                 <div class="fw-bold">
                                     {{ helper.getContentByKey('page-home-testimonial-name', contents) }}
                                     <span class="fw-bold text-primary mx-1">/</span>
@@ -101,7 +100,7 @@
                             <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                                 <div class="d-flex align-items-end justify-content-between">
                                     <div class="d-flex align-items-center">
-                                        <img class="rounded-circle me-3" width="40" :src="helper.getContentByKey('page-home-testimonial-image', contents)" :alt="article.detail.title" />
+                                        <img class="rounded-circle me-3" width="40" src="/images/user.png" :alt="article.detail.title" />
                                         <div class="small">
                                             <div class="fw-bold">{{ article.detail.author.email  }}</div>
                                             <div class="text-muted">{{ article.detail.date_created  }}</div>

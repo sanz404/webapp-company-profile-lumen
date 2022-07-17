@@ -34,6 +34,32 @@ function getFeature() {
     return fetch(`${process.env.VUE_APP_SERVICE}/feature/load`, requestOptions).then(handleResponse);
 }
 
+function getAbout() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+    return fetch(`${process.env.VUE_APP_SERVICE}/about/load`, requestOptions).then(handleResponse);
+}
+
+
+function getTeam() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+    return fetch(`${process.env.VUE_APP_SERVICE}/team/load`, requestOptions).then(handleResponse);
+}
+
+function getFaq() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+    return fetch(`${process.env.VUE_APP_SERVICE}/faq/load`, requestOptions).then(handleResponse);
+}
+
+
 function getHomeArticle() {
     const requestOptions = {
         method: 'GET',
@@ -42,4 +68,4 @@ function getHomeArticle() {
     return fetch(`${process.env.VUE_APP_SERVICE}/home/article`, requestOptions).then(handleResponse);
 }
 
-export default { contactSend, getContent, getFeature, getHomeArticle }
+export default { contactSend, getContent, getFeature, getHomeArticle, getAbout, getTeam, getFaq }

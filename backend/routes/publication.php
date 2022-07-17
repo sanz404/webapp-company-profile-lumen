@@ -19,6 +19,21 @@ $router->get('/feature/load', function () use ($router) {
     return $response->getFeature();
 });
 
+$router->get('/about/load', function () use ($router) {
+    $response = new PublicationController;
+    return $response->getAbout();
+});
+
+$router->get('/team/load', function () use ($router) {
+    $response = new PublicationController;
+    return $response->getTeam();
+});
+
+$router->get('/faq/load', function () use ($router) {
+    $response = new PublicationController;
+    return $response->getFaq();
+});
+
 $router->get('/home/article', function () use ($router) {
     $response = new PublicationController;
     return $response->getHomeArticle();

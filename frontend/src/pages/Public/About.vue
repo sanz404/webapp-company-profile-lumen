@@ -6,43 +6,33 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-xxl-6">
                         <div class="text-center my-5">
-                            <h1 class="fw-bolder mb-3">Our mission is to make building websites easier for everyone.</h1>
-                            <p class="lead fw-normal text-muted mb-4">Start Bootstrap was built on the idea that quality,
-                                functional website templates and themes should be available to everyone. Use our open
-                                source, free products, or support us by purchasing one of our premium products or services.
+                            <h1 class="fw-bolder mb-3">{{ helper.getContentByKey('page-about-header-title', contents) }}</h1>
+                            <p class="lead fw-normal text-muted mb-4">
+                                {{ helper.getContentByKey('page-about-header-info', contents) }}
                             </p>
-                            <a class="btn btn-primary btn-lg" href="#scroll-target">Read our story</a>
+                            <a class="btn btn-primary btn-lg" href="#scroll-target">{{ helper.getContentByKey('page-about-header-button-text', contents) }}</a>
                         </div>
                     </div>
                 </div>
             </div>
         </header>
         <!-- About section one-->
-        <section class="py-5 bg-light" id="scroll-target">
+        <section :class="about.id % 2 === 0 ? 'py-5' : 'py-5  bg-light' "  id="scroll-target" v-for="(about) in abouts" :key="about.id">
             <div class="container px-5 my-5">
                 <div class="row gx-5 align-items-center">
-                    <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0"
-                            src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                    <div class="col-lg-6">
-                        <h2 class="fw-bolder">Our founding</h2>
-                        <p class="lead fw-normal text-muted mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Iusto est, ut esse a labore aliquam beatae expedita. Blanditiis impedit numquam libero molestiae
-                            et fugit cupiditate, quibusdam expedita, maiores eaque quisquam.</p>
+                    <div :class="about.id % 2 === 0 ? 'col-lg-6 order-first order-lg-last' : 'col-lg-6' ">
+                        <template v-if="about.image">
+                            <img class="img-fluid rounded mb-5 mb-lg-0" :src="backendURL+'/uploads/'+about.image" :alt="about.title" />
+                        </template>
+                        <template v-else>
+                            <img class="img-fluid rounded mb-5 mb-lg-0" src="/images/no-image.png" :alt="about.title" />
+                        </template>
                     </div>
-                </div>
-            </div>
-        </section>
-        <!-- About section two-->
-        <section class="py-5">
-            <div class="container px-5 my-5">
-                <div class="row gx-5 align-items-center">
-                    <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0"
-                            src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
                     <div class="col-lg-6">
-                        <h2 class="fw-bolder">Growth &amp; beyond</h2>
-                        <p class="lead fw-normal text-muted mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Iusto est, ut esse a labore aliquam beatae expedita. Blanditiis impedit numquam libero molestiae
-                            et fugit cupiditate, quibusdam expedita, maiores eaque quisquam.</p>
+                        <h2 class="fw-bolder">{{ about.title }}</h2>
+                        <p class="lead fw-normal text-muted mb-0">
+                            {{ about.description }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -51,40 +41,20 @@
         <section class="py-5 bg-light">
             <div class="container px-5 my-5">
                 <div class="text-center">
-                    <h2 class="fw-bolder">Our team</h2>
-                    <p class="lead fw-normal text-muted mb-5">Dedicated to quality and your success</p>
+                    <h2 class="fw-bolder">{{ helper.getContentByKey('page-about-team-title', contents) }}</h2>
+                    <p class="lead fw-normal text-muted mb-5">{{ helper.getContentByKey('page-about-team-information', contents) }}</p>
                 </div>
                 <div class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center">
-                    <div class="col mb-5 mb-5 mb-xl-0">
+                    <div class="col mb-5 mb-5 mb-xl-0" v-for="(team) in teams" :key="team.id"> 
                         <div class="text-center">
-                            <img class="img-fluid rounded-circle mb-4 px-4"
-                                src="https://dummyimage.com/150x150/ced4da/6c757d" alt="..." />
-                            <h5 class="fw-bolder">Ibbie Eckart</h5>
-                            <div class="fst-italic text-muted">Founder &amp; CEO</div>
-                        </div>
-                    </div>
-                    <div class="col mb-5 mb-5 mb-xl-0">
-                        <div class="text-center">
-                            <img class="img-fluid rounded-circle mb-4 px-4"
-                                src="https://dummyimage.com/150x150/ced4da/6c757d" alt="..." />
-                            <h5 class="fw-bolder">Arden Vasek</h5>
-                            <div class="fst-italic text-muted">CFO</div>
-                        </div>
-                    </div>
-                    <div class="col mb-5 mb-5 mb-sm-0">
-                        <div class="text-center">
-                            <img class="img-fluid rounded-circle mb-4 px-4"
-                                src="https://dummyimage.com/150x150/ced4da/6c757d" alt="..." />
-                            <h5 class="fw-bolder">Toribio Nerthus</h5>
-                            <div class="fst-italic text-muted">Operations Manager</div>
-                        </div>
-                    </div>
-                    <div class="col mb-5">
-                        <div class="text-center">
-                            <img class="img-fluid rounded-circle mb-4 px-4"
-                                src="https://dummyimage.com/150x150/ced4da/6c757d" alt="..." />
-                            <h5 class="fw-bolder">Malvina Cilla</h5>
-                            <div class="fst-italic text-muted">CTO</div>
+                            <template v-if="team.image">
+                                <img class="img-fluid rounded-circle mb-4 px-4" :src="backendURL+'/uploads/'+team.image" :alt="team.name" />
+                            </template>
+                            <template v-else>
+                                <img class="img-fluid rounded-circle mb-4 px-4" src="/images/user.png" :alt="team.name" />
+                            </template>
+                            <h5 class="fw-bolder">{{ team.name }}</h5>
+                            <div class="fst-italic text-muted">{{ team.position }}</div>
                         </div>
                     </div>
                 </div>
@@ -94,16 +64,39 @@
     </Layout>
 </template>
 <script>
+
     import Layout from "../../components/Public/Layout.vue"
     import Footer from "../../components/Public/Footer.vue"
-    import {
-        useMeta
-    } from 'vue-meta'
+    import { mapState, mapActions } from 'vuex'
+    import { useMeta } from 'vue-meta'
+    import helper from "../../helpers/index"
+    
     export default {
         name: "About",
         components: {
             Footer,
             Layout
+        },
+         computed: {
+            ...mapState({
+                contents: state=> state.publication.contents,
+                teams: state=> state.publication.teams,
+                abouts: state=> state.publication.abouts
+            })
+        },
+        data(){
+            return {
+                helper: helper,
+                backendURL: process.env.VUE_APP_SERVICE
+            }
+        },
+        mounted() {
+            this.getContent()
+            this.getAbout()
+            this.getTeam()
+        },
+        methods: {
+            ...mapActions('publication', [ 'getContent', 'getAbout', 'getTeam'])
         },
         setup() {
             useMeta({
