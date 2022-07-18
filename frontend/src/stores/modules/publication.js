@@ -14,12 +14,21 @@ const state = {
     project:{},
     article:{},
     comment:{},
+    categories:[],
     listArticles:[],
     listArticleLimit: 0,
     listArticleTotal: 0
 }
 
 const mutations = {
+    setCategoriesSuccess(state, data){
+        state.categories = data
+        state.status = {};
+    },
+    setCategoriesFailure(state){
+        state.categories = {};
+        state.status = {};
+    },
     setContactSuccess(state, data){
         state.contact = data
         state.status = {};
@@ -213,6 +222,13 @@ const actions = {
             .then(
                 response => commit('setContentSuccess', response),
                 error => commit('setContentSuccess', error)
+            );
+    },
+    getCategories({ commit }) {
+        publicationService.getArticleCategories()
+            .then(
+                response => commit('setCategoriesSuccess', response),
+                error => commit('setCategoriesFailure', error)
             );
     },
     getFeature({ commit }) {

@@ -13,6 +13,10 @@ $router->post('/contact/send', function (Request $request) use ($router) {
     return $response->sendContact($request);
 });
 
+$router->get('/article/categories', function () use ($router) {
+    $response = new PublicationController;
+    return $response->getCategories();
+});
 
 $router->get('/content/load', function () use ($router) {
     $response = new PublicationController;

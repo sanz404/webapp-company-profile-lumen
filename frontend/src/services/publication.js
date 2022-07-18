@@ -122,6 +122,14 @@ function getListArticle(data) {
     return fetch(`${process.env.VUE_APP_SERVICE}/article/list`, requestOptions).then(handleResponse);
 }
 
+function getArticleCategories(data) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+    return fetch(`${process.env.VUE_APP_SERVICE}/article/categories`, requestOptions).then(handleResponse);
+}
+
 export default { 
     contactSend, 
     getContent, 
@@ -135,5 +143,6 @@ export default {
     getProjectById, 
     getArticleBySlug, 
     getListArticle,
+    getArticleCategories,
     sendComment
 }

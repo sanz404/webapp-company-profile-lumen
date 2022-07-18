@@ -102,7 +102,7 @@
                         <div class="card-body">
                             <div class="input-group">
                                 <input class="form-control" v-model="search"  type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                                <button class="btn btn-primary" id="button-search" @click="searchData" type="button">Go!</button>
+                                <button class="btn btn-primary" id="button-search" @click.prevent="searchData" type="button">Go!</button>
                             </div>
                         </div>
                     </div>
@@ -113,16 +113,20 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">Web Design</a></li>
-                                        <li><a href="#!">HTML</a></li>
-                                        <li><a href="#!">Freebies</a></li>
+                                        <li v-for="(category, index) in categories" :key="category.id">
+                                            <template v-if="(index + 1) % 2 === 0">
+                                                <a href="#" @click.prevent="filterByCategory(category.id)" >{{ category.name }}</a>
+                                            </template>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="col-sm-6">
                                     <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">JavaScript</a></li>
-                                        <li><a href="#!">CSS</a></li>
-                                        <li><a href="#!">Tutorials</a></li>
+                                        <li v-for="(category, index) in categories" :key="category.id">
+                                            <template v-if="(index + 1) % 2 !== 0">
+                                               <a href="#"  @click.prevent="filterByCategory(category.id)" >{{ category.name }}</a>
+                                            </template>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -156,6 +160,7 @@ export default {
     computed: {
         ...mapState({
             contents: state=> state.publication.contents,
+            categories: state=> state.publication.categories,
             articles: state=> state.publication.homeArticle,
             listArticles: state=> state.publication.listArticles,
             totalRecords: state=> state.publication.listArticleTotal
@@ -171,12 +176,13 @@ export default {
         }
     },
     mounted() {
+        this.getCategories()
         this.getContent()
         this.getHomeArticle()
         this.getListArticle({ limit: this.limitperpage, offset: Math.round(this.page / this.limitperpage), search : this.search  })
     },
     methods: {
-        ...mapActions('publication', [ 'getContent', 'getHomeArticle', 'getListArticle']),
+        ...mapActions('publication', [ 'getContent', 'getHomeArticle', 'getListArticle', 'getCategories']),
         myCallback(e){
             let limit = this.limitperpage
             let offset = e/limit
@@ -185,6 +191,9 @@ export default {
         },
         searchData(){
             this.getListArticle({ limit: this.limitperpage, offset: Math.round(this.page / this.limitperpage), search : this.search  })
+        },
+        filterByCategory(category_id){
+            this.getListArticle({ limit: this.limitperpage, offset: Math.round(this.page / this.limitperpage), category_id : category_id  })
         }
     },
     setup(){

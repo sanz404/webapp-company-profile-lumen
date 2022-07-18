@@ -17,8 +17,14 @@ use App\Models\CategoryFaq;
 use App\Models\Product;
 use App\Models\Project;
 use App\Models\ArticleComment;
+use App\Models\CategoryArticle;
 
 class PublicationController extends AppController{
+
+    public function getCategories(){
+        $data = CategoryArticle::orderBy("name")->get();
+        return response()->json($data);
+    }
 
     public function getListArticle(Request $request){
 
@@ -26,6 +32,17 @@ class PublicationController extends AppController{
         $offset =  $request->get("offset");
 
         $data = Article::where("is_published", 1);
+
+        $category = array();
+        if($request->get("category_id")){
+            $category = CategoryArticle::where("id",$request->get("category_id"))->first();
+            if(!is_null($category)){
+                $article_id = $category->Articles()->get()->pluck("id")->toArray();
+                if(count($article_id) > 0){
+                    $data = $data->whereIn("id", $article_id);
+                }
+            }
+        }
 
         $filtered = false;
         if($request->get("search")){
