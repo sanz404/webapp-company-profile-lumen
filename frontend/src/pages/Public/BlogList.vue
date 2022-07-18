@@ -179,22 +179,32 @@ export default {
         this.getCategories()
         this.getContent()
         this.getHomeArticle()
-        this.getListArticle({ limit: this.limitperpage, offset: Math.round(this.page / this.limitperpage), search : this.search  })
+        this.loadData(this.page)
     },
     methods: {
         ...mapActions('publication', [ 'getContent', 'getHomeArticle', 'getListArticle', 'getCategories']),
         myCallback(e){
-            let limit = this.limitperpage
-            let offset = e/limit
-            offset = Math.round(offset)
-            this.getListArticle({ limit: limit, offset: offset, search : this.search })
+           this.loadData(e)
         },
         searchData(){
-            this.getListArticle({ limit: this.limitperpage, offset: Math.round(this.page / this.limitperpage), search : this.search  })
+            this.loadData(this.page)
         },
-        filterByCategory(category_id){
-            this.getListArticle({ limit: this.limitperpage, offset: Math.round(this.page / this.limitperpage), category_id : category_id  })
-        }
+        filterByCategory(category_id){  
+           this.loadData(this.page, category_id)
+        },
+        loadData(num, category_id = 0){
+            let parmQuery = {
+                limit: this.limitperpage, 
+                offset: (num - 1) * this.limitperpage,
+                search: this.search
+            }
+
+            if(category_id !== 0){
+                parmQuery.category_id = category_id
+            }
+
+            this.getListArticle(parmQuery)
+        }   
     },
     setup(){
         useMeta({  title: 'Blog' })
