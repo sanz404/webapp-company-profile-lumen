@@ -1,0 +1,200 @@
+{
+  "RECORDS": [
+    {
+      "key_name": "page-home-header-heading",
+      "key_value": "A Bootstrap 5 template for modern businesses "
+    },
+    {
+      "key_name": "page-home-header-information",
+      "key_value": "Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit! "
+    },
+    {
+      "key_name": "page-home-header-button1",
+      "key_value": "Get Started"
+    },
+    {
+      "key_name": "page-home-header-button2",
+      "key_value": "Learn More"
+    },
+    {
+      "key_name": "page-home-header-image",
+      "key_value": "https://wallpapers.com/images/high/hd-vacation-house-in-the-beach-j4jasqgcc5ismew8.jpg"
+    },
+    {
+      "key_name": "page-home-feature-section-title",
+      "key_value": "A better way to start building."
+    },
+    {
+      "key_name": "page-home-testimonial-content",
+      "key_value": "Working with Start Bootstrap templates has saved me tons of development time when building new projects! Starting with a Bootstrap template just makes things easier!"
+    },
+    {
+      "key_name": "page-home-testimonial-image",
+      "key_value": "https://www.kindpng.com/picc/m/269-2697881_computer-icons-user-clip-art-transparent-png-icon.png"
+    },
+    {
+      "key_name": "page-home-testimonial-name",
+      "key_value": "Tom Ato"
+    },
+    {
+      "key_name": "page-home-testimonial-position",
+      "key_value": "CEO"
+    },
+    {
+      "key_name": "page-home-testimonial-company",
+      "key_value": "Pomodoro"
+    },
+    {
+      "key_name": "page-home-blog-title",
+      "key_value": "From our blog"
+    },
+    {
+      "key_name": "page-home-blog-subtitle",
+      "key_value": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque fugit ratione dicta mollitia. Officiis ad"
+    },
+    {
+      "key_name": "page-home-call-to-action-info1",
+      "key_value": "New products, delivered to you."
+    },
+    {
+      "key_name": "page-home-call-to-action-info2",
+      "key_value": "Sign up for our newsletter for the latest updates."
+    },
+    {
+      "key_name": "page-home-call-to-action-info3",
+      "key_value": "We care about privacy, and will never share your data."
+    },
+    {
+      "key_name": "page-about-header-title",
+      "key_value": "Our mission is to make building websites easier for everyone."
+    },
+    {
+      "key_name": "page-about-header-info",
+      "key_value": "Start Bootstrap was built on the idea that quality, functional website templates and themes should be available to everyone. Use our open source, free products, or support us by purchasing one of our premium products or services."
+    },
+    {
+      "key_name": "page-about-header-button-text",
+      "key_value": "Read our story"
+    },
+    {
+      "key_name": "page-about-team-title",
+      "key_value": "Our team"
+    },
+    {
+      "key_name": "page-about-team-information",
+      "key_value": "Dedicated to quality and your success"
+    },
+    {
+      "key_name": "page-faq-header-title",
+      "key_value": "Frequently Asked Questions"
+    },
+    {
+      "key_name": "page-faq-header-question",
+      "key_value": "How can we help you?"
+    },
+    {
+      "key_name": "contact-email",
+      "key_value": "support@domain.com"
+    },
+    {
+      "key_name": "contact-facebook",
+      "key_value": "loremipsum"
+    },
+    {
+      "key_name": "contact-twitter",
+      "key_value": "loremipsum"
+    },
+    {
+      "key_name": "contact-linked-in",
+      "key_value": "loremipsum"
+    },
+    {
+      "key_name": "contact-youtube",
+      "key_value": "loremipsum"
+    },
+    {
+      "key_name": "page-pricing-header-title",
+      "key_value": "Pay as you grow"
+    },
+    {
+      "key_name": "page-pricing-header-information",
+      "key_value": "With our no hassle pricing plans"
+    },
+    {
+      "key_name": "page-portfolio-header-title",
+      "key_value": "Our Work"
+    },
+    {
+      "key_name": "page-portfolio-header-information",
+      "key_value": "Company portfolio"
+    },
+    {
+      "key_name": "page-portfolio-footer-quote",
+      "key_value": "Let's build something together"
+    },
+    {
+      "key_name": "page-contact-footer1-icon",
+      "key_value": "bi bi-chat-dots"
+    },
+    {
+      "key_name": "page-contact-footer1-title",
+      "key_value": "Chat with us"
+    },
+    {
+      "key_name": "page-contact-footer1-text",
+      "key_value": "Chat live with one of our support specialists."
+    },
+    {
+      "key_name": "page-contact-footer2-icon",
+      "key_value": "bi bi-people"
+    },
+    {
+      "key_name": "page-contact-footer2-title",
+      "key_value": "Ask the community"
+    },
+    {
+      "key_name": "page-contact-footer2-text",
+      "key_value": "Explore our community forums and communicate with other users."
+    },
+    {
+      "key_name": "page-contact-footer3-icon",
+      "key_value": "bi bi-question-circle"
+    },
+    {
+      "key_name": "page-contact-footer3-title",
+      "key_value": "Support center"
+    },
+    {
+      "key_name": "page-contact-footer3-text",
+      "key_value": "Browse FAQ's and support articles to find solutions."
+    },
+    {
+      "key_name": "page-contact-footer4-icon",
+      "key_value": "bi bi-telephone"
+    },
+    {
+      "key_name": "page-contact-footer4-title",
+      "key_value": "Call us"
+    },
+    {
+      "key_name": "page-contact-footer4-text",
+      "key_value": "Call us during normal business hours at (555) 892-9403."
+    },
+    {
+      "key_name": "page-blog-header-title",
+      "key_value": "Welcome to Blog Home!"
+    },
+    {
+      "key_name": "page-blog-header-information",
+      "key_value": "A Bootstrap 5 starter layout for your next blog homepage"
+    },
+    {
+      "key_name": "page-blog-sidebar-information",
+      "key_value": "You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!"
+    },
+    {
+      "key_name": "page-blog-sidebar-title",
+      "key_value": "Side Widget"
+    }
+  ]
+}

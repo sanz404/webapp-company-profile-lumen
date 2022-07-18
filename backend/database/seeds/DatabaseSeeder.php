@@ -9,6 +9,7 @@ use App\Models\ArticleComment;
 use App\Models\CategoryArticle;
 use App\Models\CategoryProduct;
 use App\Models\CategoryProject;
+use App\Models\CategoryFaq;
 use App\Models\Content;
 use App\Models\Contact;
 use App\Models\Country;
@@ -29,12 +30,151 @@ class DatabaseSeeder extends Seeder
 
     public function run()
     {
-        $this->createCountries();
-        $this->createUsers();
-        $this->createContacts();
-        $this->createNotification();
-        $this->creatArticles();
+        // $this->createOthers();
+        // $this->createCountries();
+        // $this->createUsers();
+        // $this->createContacts();
+        // $this->createNotification();
+        // $this->creatArticles();
+        // $this->createContent();
+        // $this->createFaqs();
+        $this->createFeature();
     }
+
+    private function createFeature(){
+
+        $data = array(
+            array(
+                "icon"=> "bi bi-collection",
+                "title"=> "Featured title",
+                "description"=> "Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.",
+                "is_published"=> 1
+            ),
+            array(
+                "icon"=> "bi bi-building",
+                "title"=> "Featured title",
+                "description"=> "Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.",
+                "is_published"=> 1
+            ),
+            array(
+                "icon"=> "bi bi-toggles2",
+                "title"=> "Featured title",
+                "description"=> "Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.",
+                "is_published"=> 1
+            ),
+            array(
+                "icon"=> "bi bi-toggles2",
+                "title"=> "Featured title",
+                "description"=> "Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.",
+                "is_published"=> 1
+            )
+        );
+
+        foreach($data as $row){
+            Feature::create($row);
+        }
+    }
+
+    private function createFaqs(){
+        $data = array(
+            array(
+                "question"=> "Accordion Item #1",
+                "answer"=> "This is the first item's accordion body. It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the .accordion-body , though the transition does limit overflow."
+            ),
+            array(
+                "question"=> "Accordion Item #2",
+                "answer"=> "This is the second item's accordion body. It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the .accordion-body , though the transition does limit overflow."
+            ),
+            array(
+                "question"=> "Accordion Item #3",
+                "answer"=> "This is the third item's accordion body. It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the .accordion-body , though the transition does limit overflow."
+            )
+        );
+        $categories = CategoryFaq::all();
+        foreach($categories as $category){
+            $sort = 1;
+            foreach($data as $row){
+                Faq::create([
+                    "question"=> $row["question"],
+                    "answer"=> $row["answer"],
+                    "sort"=> $sort,
+                    "is_published"=> 1,
+                    "category_id"=> $category->id
+                ]);
+                $sort++;
+            }
+        }
+    }
+
+    private function createContent(){
+        $json_contents = file_get_contents(storage_path("json/contents.json"));
+        $contents = json_decode($json_contents, true);
+        $data = $contents["RECORDS"];
+        foreach($data as $row){
+            $check_code = Content::where("key_name", $row["key_name"])->first();
+            if(is_null($check_code)){
+                Content::create([
+                    "key_name"=> $row["key_name"],
+                    "key_value"=> $row["key_value"]
+                ]);
+            }
+        }
+    }
+
+    private function createOthers(){
+
+        // about
+        $abouts = array("Our founding", "Growth & beyond");
+        foreach($abouts as $row){
+            $faker = Faker::create();
+            About::create([
+                "title"=> $row,
+                "decsription"=> $faker->text
+            ]);
+        }
+
+        // category articles
+        $category_articles = array("News", "Media");
+        foreach($category_articles as $row){
+            $faker = Faker::create();
+            CategoryArticle::create([
+                "title"=> $row,
+                "decsription"=> $faker->text
+            ]);
+        }
+
+        // category faqs
+        $category_faqs = array("Account & Billing", "Website Issues");
+        foreach($category_faqs as $row){
+            $faker = Faker::create();
+            CategoryFaq::create([
+                "title"=> $row,
+                "decsription"=> $faker->text
+            ]);
+        }
+
+        // category products
+        $category_products = array("Website", "Mobile Apps");
+        foreach($category_products as $row){
+            $faker = Faker::create();
+            CategoryProduct::create([
+                "title"=> $row,
+                "decsription"=> $faker->text
+            ]);
+        }
+
+        // category projects
+        $category_projects = array("Personal", "Corporate", "Government");
+        foreach($category_products as $row){
+            $faker = Faker::create();
+            CategoryProject::create([
+                "title"=> $row,
+                "decsription"=> $faker->text
+            ]);
+        }
+
+    }
+
 
     private function toSlug($text){
         $text = preg_replace('~[^\pL\d]+~u', '-', $text);
@@ -47,7 +187,7 @@ class DatabaseSeeder extends Seeder
     }
 
     private function creatArticles(){
-        $max = 100;
+        $max = 50;
         for($i = 1; $i <= $max; $i++){
             $faker = Faker::create();
             $user = User::where("is_admin", 1)->first();
