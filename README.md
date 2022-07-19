@@ -1,14 +1,14 @@
 # Screenshot
 
-<img src="screenshots/home.png" />
+<img src="screenshots/home.png" width="300" />
 <br/>
-<img src="screenshots/admin-dashboard.png" />
+<img src="screenshots/admin-dashboard.png" width="300" />
 <br/>
-<img src="screenshots/login.png" />
+<img src="screenshots/login.png" width="300" />
 <br/>
-<img src="screenshots/admin-article.png" />
+<img src="screenshots/admin-article.png" width="300" />
 <br/>
-<img src="screenshots/admin-profile.png" />
+<img src="screenshots/admin-profile.png" width="300" />
 <br/>
 
 # Introduction
