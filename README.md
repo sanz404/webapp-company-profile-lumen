@@ -1,6 +1,15 @@
 # Screenshot
 
 <img src="screenshots/home.png" />
+<br/>
+<img src="screenshots/admin-dashboard.png" />
+<br/>
+<img src="screenshots/login.png" />
+<br/>
+<img src="screenshots/admin-article.png" />
+<br/>
+<img src="screenshots/admin-profile.png" />
+<br/>
 
 # Introduction
 <p>Company profie website will generally include : </p>
@@ -16,7 +25,7 @@
     <li>User compelling content that encourages users to buy into the product or service </li>
 </ul>
 
-<img src="screenshots/login.png" />
+
 
 
 <br/>
@@ -33,17 +42,13 @@
 </ul>
 <br/>
 
-<img src="screenshots/admin-dashboard.png" />
 
 # How To Install
 <br/>
 <br/>
 <strong>Clone this repository using command <em>git clone https://github.com/sanz404/webapp-company-profile-lumen.git</em></strong>
 <br/>
-<img src="screenshots/admin-article.png" />
-<br/>
 
-<br/>
 <br/>
 <br/>
 <strong>Backend</strong>
@@ -61,8 +66,6 @@
         </ul>
     </li>
 </ul>
-
-<img src="screenshots/admin-profile.png" />
 
 <br/>
 
