@@ -1,5 +1,6 @@
-Web Company Profile
-====================
+# Screenshot
+
+<img src="screenshots/home.png" />
 
 # Introduction
 <p>Company profie website will generally include : </p>
