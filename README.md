@@ -1,15 +1,17 @@
 # Screenshot
 
-<img src="screenshots/home.png" width="300" />
-<br/>
-<img src="screenshots/admin-dashboard.png" width="300" />
-<br/>
-<img src="screenshots/login.png" width="300" />
-<br/>
-<img src="screenshots/admin-article.png" width="300" />
-<br/>
-<img src="screenshots/admin-profile.png" width="300" />
-<br/>
+<p align="center">
+    <img src="screenshots/home.png" width="500" />
+    <br/>
+    <img src="screenshots/admin-dashboard.png" width="500" />
+    <br/>
+    <img src="screenshots/login.png" width="500" />
+    <br/>
+    <img src="screenshots/admin-article.png" width="500" />
+    <br/>
+    <img src="screenshots/admin-profile.png" width="500" />
+    <br/>
+</p>
 
 # Introduction
 <p>Company profie website will generally include : </p>
