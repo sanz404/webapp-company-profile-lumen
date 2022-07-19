@@ -39,8 +39,9 @@
 <br/>
 <br/>
 <strong>Clone this repository using command <em>git clone https://github.com/sanz404/webapp-company-profile-lumen.git</em></strong>
-
+<br/>
 <img src="screenshots/admin-article.png" />
+<br/>
 
 <br/>
 <br/>
