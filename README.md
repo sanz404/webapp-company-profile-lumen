@@ -59,14 +59,14 @@
     <li>Move to backend directory and open command line then run script <em><strong>composer update</strong></em>.</li>
     <li>Make file .env in root backend directory, copy all variable from env.example.</li>
     <li>In .env file, please fill all empty configuration variable such as database connection, email and frontend URL.</li>
-    <li>Please run 
+    <li>Please run script to installing backend service.
         <ul>
             <li><em><strong>php artisan jwt:secret</strong></em></li>
             <li><em><strong>php artisan migrate</strong></em></li>
             <li><em><strong>php artisan db:seed</strong></em></li>
-            <li><em><strong>php -S 127.0.0.1:8000 -t public</strong></em></li>
         </ul>
     </li>
+    <li>To starting backend service, please run <em><strong>php -S 127.0.0.1:8000 -t public</strong></em></li>
 </ul>
 
 <br/>
@@ -74,7 +74,7 @@
 <strong>Frontend</strong>
 <ul>
     <li>Move to frontend directory and open command line.</li>
-    <li>Please run <em><strong>npm install</strong> and then <strong>npm run serve</strong></em>.</li>
+    <li>Please run <em><strong>npm install</strong> and then <strong>npm run serve</strong> to starting frontend application</em>.</li>
     <li>Open your web browser with address <em><strong>localhost:8080</strong></em>.</li>
     <li>Login with user admin : <em><strong>Email : admin@devel.com, Password : 5ecReT!</strong></em></li>
 </ul>
